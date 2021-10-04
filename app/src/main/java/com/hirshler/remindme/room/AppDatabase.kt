@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
 import com.hirshler.remindme.model.Reminder
 
 
-@Database(entities = [Reminder::class], version = 1, exportSchema = false)
+@Database(entities = [Reminder::class], version = 2, exportSchema = true)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -26,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                             AppDatabase::class.java,
                             "remindme.db"
                         )
+                        .addMigrations()
                         .allowMainThreadQueries()
                         .build()
                 }

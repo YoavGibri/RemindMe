@@ -38,7 +38,7 @@ class ReminderFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val reminder = Reminder(1, "this is my first reminder, you'll!")
+        val reminder = Reminder(text = "this is my first reminder, you'll!")
         AppDatabase.getInstance(requireContext())
         val reminderRepo = ReminderRepo(requireContext())
         reminderRepo.insert(reminder)
