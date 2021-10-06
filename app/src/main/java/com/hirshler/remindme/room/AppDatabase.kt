@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.hirshler.remindme.model.Reminder
 
 
-@Database(entities = [Reminder::class], version = 2, exportSchema = true)
+@Database(entities = [Reminder::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -26,7 +28,6 @@ abstract class AppDatabase : RoomDatabase() {
                             AppDatabase::class.java,
                             "remindme.db"
                         )
-                        .addMigrations()
                         .allowMainThreadQueries()
                         .build()
                 }
@@ -37,5 +38,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun destroyInstance() {
             INSTANCE = null
         }
+
+
     }
 }

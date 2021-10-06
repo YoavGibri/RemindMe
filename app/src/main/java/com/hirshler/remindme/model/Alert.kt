@@ -2,6 +2,6 @@ package com.hirshler.remindme.model
 
 
 data class Alert(
-    var time: Int,
+    var time: Long,
     var isRepeat: Boolean
 )

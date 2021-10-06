@@ -74,7 +74,7 @@
         app:tint="?attr/colorPrimary" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/minutes_button"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/days_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="0dp"
@@ -106,9 +106,9 @@
         android:layout_marginEnd="16dp"
         android:text="In"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintEnd_toStartOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="@+id/minutes_button"
+        app:layout_constraintEnd_toStartOf="@+id/minutes_button"
+        app:layout_constraintTop_toTopOf="@+id/minutes_button" />
 
     <TextView
         android:id="@+id/textView5"
@@ -117,9 +117,9 @@
         android:layout_marginStart="16dp"
         android:text="Minutes"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/button"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintBottom_toBottomOf="@+id/minutes_button"
+        app:layout_constraintStart_toEndOf="@+id/minutes_button"
+        app:layout_constraintTop_toTopOf="@+id/minutes_button" />
 
     <TextView
         android:id="@+id/textView6"
@@ -128,10 +128,10 @@
         android:layout_marginTop="16dp"
         android:text="Or exactly at"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/minutes_button"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintStart_toStartOf="@+id/minutes_button"
+        app:layout_constraintTop_toBottomOf="@+id/minutes_button" />
 
     <TextView
         android:id="@+id/textView7"
@@ -156,9 +156,9 @@
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_round_repeat_24"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="@+id/days_button"
+        app:layout_constraintEnd_toStartOf="@+id/days_button"
+        app:layout_constraintTop_toTopOf="@+id/days_button"
         app:tint="?attr/colorPrimary" />
 
     <ImageButton
@@ -170,9 +170,9 @@
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_baseline_calendar_today_24"
-        app:layout_constraintBottom_toBottomOf="@+id/button2"
-        app:layout_constraintStart_toEndOf="@+id/button2"
-        app:layout_constraintTop_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toBottomOf="@+id/days_button"
+        app:layout_constraintStart_toEndOf="@+id/days_button"
+        app:layout_constraintTop_toTopOf="@+id/days_button"
         app:tint="?attr/colorPrimary" />
 
     <ImageButton
