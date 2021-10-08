@@ -43,7 +43,7 @@
 
     <!--    TODO: make auto size-->
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/text"
         android:layout_width="0dp"
         android:layout_height="67dp"
         android:layout_marginStart="8dp"
@@ -68,9 +68,9 @@
         android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_round_mic_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextMultiLine"
+        app:layout_constraintBottom_toBottomOf="@+id/text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintTop_toTopOf="@+id/text"
         app:tint="?attr/colorPrimary" />
 
     <Button

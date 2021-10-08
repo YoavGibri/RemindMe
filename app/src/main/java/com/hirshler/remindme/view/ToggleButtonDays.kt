@@ -1,23 +1,21 @@
 package com.hirshler.remindme.view
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
-import android.widget.Button
+import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.hirshler.remindme.R
+import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
-@SuppressLint("AppCompatCustomView")
 class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
-    Button(context, attrs) {
+    AppCompatButton(context, attrs) {
 
     private var currDays = MutableLiveData<Int>(0)
-    var callback: ((Int) -> Unit)? = null
+    private var callback: ((Int) -> Unit)? = null
+    private var date = MutableLiveData<Calendar?>(null)
 
 
     fun setOnToggleCallback(callback: ((Int) -> Unit)?) {
@@ -27,7 +25,10 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
 
     init {
         setOnClickListener {
-            if (currDays.value == 6)
+            if (date.value != null) {
+                date.value = null
+                currDays.value = 0
+            } else if (currDays.value == 6)
                 currDays.value = 0
             else {
                 currDays.value = (currDays.value ?: 0) + 1
@@ -38,27 +39,46 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
             text = getDayDesByDays(days)
             callback?.invoke(days)
         })
+
+        date.observe(context as LifecycleOwner, { date ->
+            if (date != null) {
+                val today = Calendar.getInstance()
+                val days = TimeUnit.DAYS.convert(date.time.time - today.time.time, TimeUnit.MILLISECONDS).toInt()
+                text = getDayDesByDays(days)
+            }
+//                text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)
+        })
     }
 
     private fun getDayDesByDays(days: Int): String {
         val today: Calendar = Calendar.getInstance()
-        when (days) {
-            0 -> return "Today"
-            1 -> return "Tomorrow"
+        return when (days) {
+            0 -> "Today"
+            1 -> "Tomorrow"
             else -> {
                 today.add(Calendar.DAY_OF_MONTH, days)
-                when (today.get(Calendar.DAY_OF_WEEK)) {
-                    1 -> return context.getString(R.string.sunday)
-                    2 -> return context.getString(R.string.monday)
-                    3 -> return context.getString(R.string.tuesday)
-                    4 -> return context.getString(R.string.wednesday)
-                    5 -> return context.getString(R.string.thursday)
-                    6 -> return context.getString(R.string.friday)
-                    7 -> return context.getString(R.string.saturday)
-                }
+                getDayDesByDate(today)
             }
         }
-        return ""
+
+    }
+
+    private fun getDayDesByDate(day: Calendar): String {
+        when (day.get(Calendar.DAY_OF_WEEK)) {
+            1 -> return context.getString(R.string.sunday)
+            2 -> return context.getString(R.string.monday)
+            3 -> return context.getString(R.string.tuesday)
+            4 -> return context.getString(R.string.wednesday)
+            5 -> return context.getString(R.string.thursday)
+            6 -> return context.getString(R.string.friday)
+            7 -> return context.getString(R.string.saturday)
+        }
+        return SimpleDateFormat("dd/MM", Locale.getDefault()).format(day.time)
+    }
+
+    fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
+        date.value = Calendar.getInstance().apply { set(year, monthOfYear, dayOfMonth) }
+
     }
 
 
