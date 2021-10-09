@@ -2,11 +2,15 @@ package com.hirshler.remindme.ui.reminder
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -58,22 +62,13 @@ class ReminderFragment : Fragment() {
         }
 
         binding.timePickerButton.setOnClickListener {
-            val c = vm.currentCalendar.value!!
-            val timePicker = TimePickerDialog(
-                requireActivity(), AlertDialog.THEME_HOLO_LIGHT, { view, hourOfDay, minute ->
-                    vm.setTime(hourOfDay, minute)
-                    binding.minutesButton.disable()
-                },
-                c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
-            )
-
-            timePicker.show()
-
+            showTimePicker()
         }
 
         binding.doneButton.setOnClickListener {
-            createReminder()
+            vm.createReminder(binding.text.text.toString())
             vm.saveReminderToDb(requireContext())
+            vm.setAlerts(requireContext())
             Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
         }
 
@@ -84,6 +79,31 @@ class ReminderFragment : Fragment() {
 //            binding.daysButton.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         })
 
+    }
+
+    private fun showTimePicker(){
+        val c = vm.currentCalendar.value!!
+        val timePicker = TimePickerDialog(
+            requireActivity(), AlertDialog.THEME_HOLO_LIGHT, { view, hourOfDay, minute ->
+                if (timeIsValidForToday(hourOfDay, minute)) {
+                    vm.setTime(hourOfDay, minute)
+                    binding.minutesButton.disable()
+                } else {
+                    Toast.makeText(requireActivity(), "Please choose only future time", Toast.LENGTH_LONG).show()
+                    showTimePicker()
+                }
+            },
+            c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
+        )
+        timePicker.show()
+    }
+
+
+    private fun timeIsValidForToday(hourOfDay: Int, minute: Int): Boolean {
+        val cal = Calendar.getInstance()
+        val currHour = cal.get(Calendar.HOUR_OF_DAY)
+        val currMinutes = cal.get(Calendar.MINUTE)
+        return (hourOfDay * 60 + minute) > (currHour * 60 + currMinutes)
     }
 
     private fun getAlertString(): String {
@@ -97,13 +117,7 @@ class ReminderFragment : Fragment() {
     }
 
 
-    private fun createReminder() {
-        vm.currentReminder.value = Reminder().apply {
-            text = binding.text.text.toString()
-            delayInMinutes = vm.minutesDelay
-            alerts = listOf(Alert(vm.currentCalendar.value!!.timeInMillis))
-        }
-    }
+
 
 
     override fun onDestroyView() {
