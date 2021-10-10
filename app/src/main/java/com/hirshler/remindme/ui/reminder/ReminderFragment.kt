@@ -1,9 +1,12 @@
 package com.hirshler.remindme.ui.reminder
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -19,6 +24,11 @@ import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
 import java.text.SimpleDateFormat
 import java.util.*
+import android.content.Intent
+import android.os.Build
+import android.provider.Settings
+import com.hirshler.remindme.BuildConfig
+
 
 class ReminderFragment : Fragment() {
 
@@ -79,9 +89,14 @@ class ReminderFragment : Fragment() {
 //            binding.daysButton.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         })
 
+
+
     }
 
-    private fun showTimePicker(){
+
+
+
+    private fun showTimePicker() {
         val c = vm.currentCalendar.value!!
         val timePicker = TimePickerDialog(
             requireActivity(), AlertDialog.THEME_HOLO_LIGHT, { view, hourOfDay, minute ->
@@ -89,7 +104,11 @@ class ReminderFragment : Fragment() {
                     vm.setTime(hourOfDay, minute)
                     binding.minutesButton.disable()
                 } else {
-                    Toast.makeText(requireActivity(), "Please choose only future time", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireActivity(),
+                        "Please choose only future time",
+                        Toast.LENGTH_LONG
+                    ).show()
                     showTimePicker()
                 }
             },
@@ -115,9 +134,6 @@ class ReminderFragment : Fragment() {
             SimpleDateFormat("kk:mm", Locale.getDefault()).format(vm.currentCalendar.value!!.time)
         return "New reminder is set to $date at $time"
     }
-
-
-
 
 
     override fun onDestroyView() {

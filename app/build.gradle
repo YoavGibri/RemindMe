@@ -54,7 +54,6 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.8'
 
-    implementation 'ir.mtajik.android:advancedPermissionsHandler:1.0.2'
 
 
 //    implementation 'com.google.android.gms:play-services-ads:20.4.0'
