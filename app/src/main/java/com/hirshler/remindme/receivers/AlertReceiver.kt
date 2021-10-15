@@ -7,17 +7,43 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.util.Log
 import android.view.WindowManager
+import android.widget.Toast
 import com.google.gson.Gson
+import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.App
+import com.hirshler.remindme.model.Reminder
+import java.util.*
 
 class AlertReceiver : BroadcastReceiver() {
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
-        // TODO: 09/10/21 add receiver to manifest
         Log.d("AlertReceiver", Gson().toJson(intent))
-        Log.d("AlertReceiver", context.toString())
+
+        val reminder = Gson().fromJson(intent?.getStringExtra("reminder"), Reminder::class.java)
+
+        Toast.makeText(
+            App.applicationContext(),
+            "alarm ${reminder.alerts?.get(0)?.id} onReceive",
+            Toast.LENGTH_SHORT
+        ).show()
+
+
+        // set snooze reminder
+        reminder.alerts?.get(0)?.time = Calendar.getInstance().apply {
+//            add(Calendar.SECOND, 10)
+            add(Calendar.MINUTE, 5)
+        }.timeInMillis
+
+        //  val snoozeTime = Calendar.getInstance().apply { add(Calendar.SECOND, 10) }.timeInMillis
+//        AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!, snoozeTime)
+        AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!)
+
 
         val alertIntent = Intent()
-        alertIntent.setClassName(context?.packageName!!, context.packageName + ".activities.AlertActivity")
+        alertIntent.setClassName(
+            context?.packageName!!,
+            context.packageName + ".activities.AlertActivity"
+        )
         alertIntent.putExtra("reminder", intent?.getStringExtra("reminder"))
         alertIntent.addFlags(
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +

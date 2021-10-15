@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.WindowManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.R
 import com.hirshler.remindme.databinding.ActivityMainBinding
 
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
             if (!Settings.canDrawOverlays(this)) {
                 AlertDialog.Builder(this)
                     .setTitle("Allow Permission")
-                    .setMessage("You are using Android version 10 or grater.\nWithout \"display on other app\" permission the reminders will not show")
+                    .setMessage("You are using Android version 10 or grater.\nWithout \"display on other apps\" permission the reminders will not show")
                     .setPositiveButton("grant permission") { _, _ ->
                         val myIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
                         startActivity(myIntent)
@@ -56,5 +58,14 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
 
+    }
+
+    override fun onAttachedToWindow() {
+        if (BuildConfig.DEBUG) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
+            window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
+        }
     }
 }

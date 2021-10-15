@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewTreeLifecycleOwner
+import com.hirshler.remindme.R
 
 @SuppressLint("AppCompatCustomView")
 class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
@@ -17,6 +18,7 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
 
     var callback: ((Int) -> Unit)? = null
     var disabled = false
+    var firstInit: Boolean = true;
 
     fun setOnToggleCallback(callback: ((Int) -> Unit)?) {
         this.callback = callback;
@@ -27,14 +29,29 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
         text = "-"
     }
 
-    private val minutes: List<Int> = listOf(5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 180)
+    private val minutes: MutableList<Int> =
+        mutableListOf(5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 180)
     var currMinutes = MutableLiveData<Int>(minutes[0])
 
 
     init {
+
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.ToggleButtonMinutes)
+        val withZero = attributes.getBoolean(R.styleable.ToggleButtonMinutes_withZero, false)
+        attributes.recycle()
+
+        if (withZero) {
+            minutes.add(0, 0)
+            currMinutes.value = minutes[0]
+        }
+
+
         currMinutes.observe(context as LifecycleOwner, { minutes ->
             text = minutes.toString()
-            callback?.invoke(minutes)
+            if (firstInit)
+                firstInit = false
+            else
+                callback?.invoke(minutes)
         })
         setOnClickListener {
             val currentIndex = if (disabled) {

@@ -1,6 +1,5 @@
 <resources>
-    <declare-styleable name="FullscreenAttrs">
-        <attr name="fullscreenBackgroundColor" format="color" />
-        <attr name="fullscreenTextColor" format="color" />
+    <declare-styleable name="ToggleButtonMinutes">
+        <attr name="withZero" format="boolean" />
     </declare-styleable>
 </resources>

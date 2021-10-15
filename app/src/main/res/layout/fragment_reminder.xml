@@ -41,7 +41,8 @@
                 android:autoSizeTextType="uniform"
                 android:inputType="textCapSentences"
                 android:maxLines="1"
-                android:hint="Buy milk"
+                android:text="תזכורת כלשהי!"
+                android:hint="Write something..."
                 android:textSize="30dp" />
             <!--        android:inputType="textMultiLine"-->
 
@@ -108,7 +109,8 @@
                     android:ems="3"
                     android:layout_height="wrap_content"
                     android:text="5"
-                    android:textSize="25dp" />
+                    android:textSize="25dp"
+                    app:withZero="false"/>
 
                 <TextView
                     android:id="@+id/textView5"
