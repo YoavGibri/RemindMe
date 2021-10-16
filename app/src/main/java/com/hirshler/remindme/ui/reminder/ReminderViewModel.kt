@@ -1,13 +1,11 @@
 package com.hirshler.remindme.ui.reminder
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
-import com.hirshler.remindme.room.AppDatabase
 import com.hirshler.remindme.room.ReminderRepo
 import java.util.*
 
@@ -46,14 +44,13 @@ class ReminderViewModel : ViewModel() {
         }
     }
 
-    fun saveReminderToDb(context: Context) {
-        AppDatabase.getInstance(context)
-        val reminderRepo = ReminderRepo(context)
+    fun saveReminderToDb() {
+        val reminderRepo = ReminderRepo()
         reminderRepo.insert(currentReminder.value!!)
         //reminderRepo.getAll().forEach { Log.d("ReminderFragment", Gson().toJson(it)) }
     }
 
-    fun setAlerts(context: Context) {
+    fun setAlerts() {
         val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
         currentReminder.value!!.alerts?.forEach {
             AlertsManager.setAlert(currentReminder.value!!, it, tempTime)

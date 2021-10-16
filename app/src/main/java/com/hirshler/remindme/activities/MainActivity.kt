@@ -6,11 +6,12 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.WindowManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.R
 import com.hirshler.remindme.databinding.ActivityMainBinding
@@ -58,6 +59,16 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
 
+    }
+
+    fun refreshFragment(){
+        findNavController(R.id.nav_host_fragment_activity_main).navigate(
+            R.id.navigation_reminder,
+            null,
+            NavOptions.Builder()
+                .setPopUpTo(R.id.navigation_reminder, true)
+                .build()
+        )
     }
 
     override fun onAttachedToWindow() {

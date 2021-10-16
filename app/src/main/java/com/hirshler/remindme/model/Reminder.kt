@@ -9,8 +9,12 @@ import androidx.room.PrimaryKey
 data class Reminder(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     var text: String? = null,
-    var voiceNotePath: String? = null,
+    var nextAlarmTime: Long = 0,
     var alerts: List<Alert>? = null,
     var delayInMinutes: Int? = null,
-    var alertRingtonePath: String? = null
+    var alertRingtonePath: String? = null,
+    var voiceNotePath: String? = null,
+    var repeat: Boolean = false,
+    var weekly: Boolean = false,
+    var isDismissed: Boolean = false,
 )

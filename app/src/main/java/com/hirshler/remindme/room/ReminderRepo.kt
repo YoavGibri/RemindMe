@@ -1,16 +1,14 @@
 package com.hirshler.remindme.room
 
-import android.content.Context
-import android.nfc.Tag
 import android.util.Log
 import com.hirshler.remindme.model.Reminder
 
 
 
-class ReminderRepo(context: Context) {
+class ReminderRepo {
     private val TAG = "ReminderRepo"
 
-    var db: ReminderDao = AppDatabase.getInstance(context)?.reminderDao()!!
+    var db: ReminderDao = AppDatabase.getInstance()?.reminderDao()!!
 
 
     //Fetch Reminder by id
@@ -21,6 +19,17 @@ class ReminderRepo(context: Context) {
     //Fetch All the Reminders
     fun getAll(): List<Reminder> {
         return db.getAll()
+    }
+
+    suspend fun getAllForList(): MutableList<Reminder> {
+        var reminders = db.getAll()
+        reminders.add(Reminder(id = 0, text="Repeat Reminders", repeat = true))
+        reminders.add(Reminder(id = 0, text="Dismissed Reminders", isDismissed = true))
+        reminders.sortBy { it.isDismissed }
+        reminders.sortBy { it.repeat }
+        reminders.sortBy { it.nextAlarmTime }
+
+        return reminders
     }
 
     // Insert new reminder
@@ -37,6 +46,11 @@ class ReminderRepo(context: Context) {
     // Delete reminder
     fun delete(reminder: Reminder) {
         db.delete(reminder)
+    }
+
+    fun setAsDismissed(reminder: Reminder){
+        reminder.isDismissed = true
+        db.update(reminder)
     }
 
 

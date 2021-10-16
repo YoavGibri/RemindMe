@@ -13,7 +13,7 @@ interface ReminderDao {
     fun findById(id: Int): Reminder
 
     @Query("select * from Reminder")
-    fun getAll(): List<Reminder>
+    fun getAll(): MutableList<Reminder>
 
     @Update
     fun update(reminder: Reminder)

@@ -1,33 +1,20 @@
 package com.hirshler.remindme.ui.reminder
 
-import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
-import android.content.DialogInterface
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentReminderBinding
-import com.hirshler.remindme.model.Alert
-import com.hirshler.remindme.model.Reminder
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Intent
-import android.os.Build
-import android.provider.Settings
-import com.hirshler.remindme.BuildConfig
 
 
 class ReminderFragment : Fragment() {
@@ -35,7 +22,6 @@ class ReminderFragment : Fragment() {
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
 
-    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -77,9 +63,10 @@ class ReminderFragment : Fragment() {
 
         binding.doneButton.setOnClickListener {
             vm.createReminder(binding.text.text.toString())
-            vm.saveReminderToDb(requireContext())
-            vm.setAlerts(requireContext())
+            vm.saveReminderToDb()
+            vm.setAlerts()
             Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
+            (requireActivity() as MainActivity).refreshFragment()
         }
 
 
@@ -89,11 +76,7 @@ class ReminderFragment : Fragment() {
 //            binding.daysButton.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         })
 
-
-
     }
-
-
 
 
     private fun showTimePicker() {

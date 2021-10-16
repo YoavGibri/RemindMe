@@ -1,12 +1,10 @@
 package com.hirshler.remindme.room
 
-import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
+import com.hirshler.remindme.App
 import com.hirshler.remindme.model.Reminder
 
 
@@ -19,15 +17,11 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase? {
+        fun getInstance(): AppDatabase? {
             if (INSTANCE == null) {
                 synchronized(AppDatabase::class) {
                     INSTANCE = Room
-                        .databaseBuilder(
-                            context.applicationContext,
-                            AppDatabase::class.java,
-                            "remindme.db"
-                        )
+                        .databaseBuilder(App.applicationContext(), AppDatabase::class.java, "remindme.db")
                         .allowMainThreadQueries()
                         .build()
                 }
