@@ -6,10 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.hirshler.remindme.RemindersOverviewAdapter
 import com.hirshler.remindme.databinding.FragmentOverviewBinding
+import com.hirshler.remindme.model.Reminder
 
 class OverviewFragment : Fragment() {
 
+    private val reminders: MutableList<Reminder> = mutableListOf()
+
+    //    private val reminders: MutableList<Reminder> = mutableListOf<Reminder>()
     private lateinit var vm: OverviewViewModel
     private var _binding: FragmentOverviewBinding? = null
 
@@ -17,18 +22,33 @@ class OverviewFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         vm = ViewModelProvider(this).get(OverviewViewModel::class.java)
 
         _binding = FragmentOverviewBinding.inflate(inflater, container, false)
 
+        binding.reminderList.apply {
+            adapter = RemindersOverviewAdapter(requireActivity(), reminders)
+        }
 
 
-        vm.reminders.observe(viewLifecycleOwner,  {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        vm.reminders.observe(viewLifecycleOwner, {
+            reminders.apply {
+                clear()
+                addAll(it)
+            }
 
         })
 
-        return binding.root
+        vm.getReminders()
     }
 
     override fun onDestroyView() {

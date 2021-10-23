@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 
 class OverviewViewModel : ViewModel() {
 
-    val reminders = MutableLiveData<MutableList<Reminder>>(null)
+    val reminders = MutableLiveData<MutableList<Reminder>>(mutableListOf())
 
     fun getReminders() {
         viewModelScope.launch {
