@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Reminder(
-    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @PrimaryKey(autoGenerate = true) var id: Long? = null,
     var text: String? = null,
     var nextAlarmTime: Long = 0,
     var alerts: List<Alert>? = null,

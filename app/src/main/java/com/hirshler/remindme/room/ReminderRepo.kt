@@ -4,7 +4,6 @@ import android.util.Log
 import com.hirshler.remindme.model.Reminder
 
 
-
 class ReminderRepo {
     private val TAG = "ReminderRepo"
 
@@ -12,7 +11,7 @@ class ReminderRepo {
 
 
     //Fetch Reminder by id
-    fun findById(id: Int): Reminder {
+    fun findById(id: Long): Reminder {
         return db.findById(id)
     }
 
@@ -22,20 +21,30 @@ class ReminderRepo {
     }
 
     suspend fun getAllForList(): MutableList<Reminder> {
-        var reminders = db.getAll()
-        reminders.add(Reminder(id = 0, text="Repeat Reminders", repeat = true))
-        reminders.add(Reminder(id = 0, text="Dismissed Reminders", isDismissed = true))
-        reminders.sortBy { it.isDismissed }
-        reminders.sortBy { it.repeat }
-        reminders.sortBy { it.nextAlarmTime }
+        val reminders = db.getAll()
+        reminders.add(Reminder(text = "Active", nextAlarmTime = 0))
+
+        if (reminders.any { reminder -> reminder.isDismissed }) {
+            reminders.add(Reminder(text = "Dismissed", isDismissed = true, nextAlarmTime = 0))
+            //reminders.sortBy { it.isDismissed }
+        }
+
+        if (reminders.any { reminder -> reminder.repeat }) {
+            reminders.add(Reminder(text = "Repeat", repeat = true, nextAlarmTime = 0))
+            //reminders.sortBy { it.repeat }
+        }
+
+
+        reminders.sortWith(compareBy({ it.isDismissed }, { it.repeat }, { it.id }))
 
         return reminders
     }
 
     // Insert new reminder
-    fun insert(reminder: Reminder) {
-        db.insert(reminder)
+    fun insert(reminder: Reminder): Long {
+        val id = db.insert(reminder)
         Log.d(TAG, "new reminder was added")
+        return id
     }
 
     // update reminder
@@ -48,7 +57,7 @@ class ReminderRepo {
         db.delete(reminder)
     }
 
-    fun setAsDismissed(reminder: Reminder){
+    fun setAsDismissed(reminder: Reminder) {
         reminder.isDismissed = true
         db.update(reminder)
     }

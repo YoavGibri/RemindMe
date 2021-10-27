@@ -16,4 +16,11 @@ class OverviewViewModel : ViewModel() {
             reminders.value = ReminderRepo().getAllForList()
         }
     }
+
+    fun deleteReminder(reminder: Reminder) {
+        viewModelScope.launch {
+            ReminderRepo().delete(reminder)
+            reminders.value = ReminderRepo().getAllForList()
+        }
+    }
 }

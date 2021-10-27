@@ -40,14 +40,14 @@ class ReminderViewModel : ViewModel() {
             this.text = text
             delayInMinutes = minutesDelay
             val time = currentCalendar.value!!.timeInMillis
-            alerts = listOf(Alert((time % 100000).toInt(), time))
+            alerts = listOf(Alert((time % 100000), time))
         }
     }
 
     fun saveReminderToDb() {
         val reminderRepo = ReminderRepo()
-        reminderRepo.insert(currentReminder.value!!)
-        //reminderRepo.getAll().forEach { Log.d("ReminderFragment", Gson().toJson(it)) }
+        val id = reminderRepo.insert(currentReminder.value!!)
+        currentReminder.value?.id = id
     }
 
     fun setAlerts() {

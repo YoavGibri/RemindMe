@@ -36,6 +36,11 @@ class ReminderFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        arguments?.getString("reminderToEdit")?.let {
+            // TODO: 24/10/21 populate field to start edit mode!
+        }
+
         binding.minutesButton.setOnToggleCallback { minutes ->
             vm.setMinutes(minutes)
         }
@@ -73,8 +78,8 @@ class ReminderFragment : Fragment() {
         vm.currentCalendar.observe(viewLifecycleOwner, { calendar ->
             binding.timePickerButton.text =
                 SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
-//            binding.daysButton.setDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         })
+
 
     }
 

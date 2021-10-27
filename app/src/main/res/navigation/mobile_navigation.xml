@@ -15,7 +15,16 @@
         android:id="@+id/navigation_overview"
         android:name="com.hirshler.remindme.ui.overview.OverviewFragment"
         android:label="@string/title_overview"
-        tools:layout="@layout/fragment_overview" />
+        tools:layout="@layout/fragment_overview">
+        <action
+            android:id="@+id/action_navigation_overview_to_navigation_reminder"
+            app:destination="@id/navigation_reminder">
+            <argument
+                android:name="reminderToEdit"
+                android:defaultValue=""
+                app:argType="string" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"

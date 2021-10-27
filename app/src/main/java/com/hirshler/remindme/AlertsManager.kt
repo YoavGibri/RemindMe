@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import com.hirshler.remindme.model.Alert
@@ -65,7 +64,7 @@ class AlertsManager() {
 
             return PendingIntent.getBroadcast(
                 context,
-                alert.id,
+                alert.id.toInt(),
                 intent,
                 PendingIntent.FLAG_IMMUTABLE
             )
