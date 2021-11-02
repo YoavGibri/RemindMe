@@ -2,10 +2,12 @@ package com.hirshler.remindme.ui.alert
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
+import kotlinx.coroutines.launch
 import java.util.*
 
 class AlertViewModel : ViewModel() {
@@ -40,8 +42,10 @@ class AlertViewModel : ViewModel() {
     }
 
     fun saveReminderToDb() {
-        ReminderRepo().update(currentReminder.value!!)
-        //reminderRepo.getAll().forEach { Log.d("ReminderFragment", Gson().toJson(it)) }
+        viewModelScope.launch {
+            ReminderRepo().update(currentReminder.value!!)
+            //reminderRepo.getAll().forEach { Log.d("ReminderFragment", Gson().toJson(it)) }
+        }
     }
 
     fun setAlerts() {
@@ -51,7 +55,9 @@ class AlertViewModel : ViewModel() {
     }
 
     fun dismissReminder() {
-        origReminder.value?.let { ReminderRepo().setAsDismissed(it) }
+        viewModelScope.launch {
+            origReminder.value?.let { ReminderRepo().setAsDismissed(it) }
+        }
     }
 
 

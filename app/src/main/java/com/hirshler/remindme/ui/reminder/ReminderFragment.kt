@@ -7,10 +7,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.hirshler.remindme.VoiceRecorderManager
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentReminderBinding
 import java.text.SimpleDateFormat
@@ -21,6 +26,7 @@ class ReminderFragment : Fragment() {
 
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
+    private lateinit var voiceRecorder: VoiceRecorderManager
 
     private val binding get() = _binding!!
 
@@ -40,6 +46,8 @@ class ReminderFragment : Fragment() {
         arguments?.getString("reminderToEdit")?.let {
             // TODO: 24/10/21 populate field to start edit mode!
         }
+
+        binding.text.addTextChangedListener { vm.currentReminder.value?.text = it.toString() }
 
         binding.minutesButton.setOnToggleCallback { minutes ->
             vm.setMinutes(minutes)
@@ -67,11 +75,25 @@ class ReminderFragment : Fragment() {
         }
 
         binding.doneButton.setOnClickListener {
-            vm.createReminder(binding.text.text.toString())
-            vm.saveReminderToDb()
-            vm.setAlerts()
-            Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
-            (requireActivity() as MainActivity).refreshFragment()
+            if (vm.currentReminder.value?.text.isNullOrEmpty() && vm.currentReminder.value?.voiceNotePath.isNullOrEmpty()) {
+                Snackbar.make(binding.rootLayout, "You must enter text or record a voice reminder!", Snackbar.LENGTH_LONG).show()
+            } else {
+                voiceRecorder.stopRecording()
+                vm.createReminder()
+                vm.saveReminderToDb()
+                vm.setAlerts()
+                Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
+                (requireActivity() as MainActivity).refreshFragment()
+            }
+        }
+
+
+        binding.recordButton.setOnClickListener {
+            if (voiceRecorder.isRecording()) {
+                voiceRecorder.stopRecording()
+            } else {
+                voiceRecorder.startRecording()
+            }
         }
 
 
@@ -79,6 +101,15 @@ class ReminderFragment : Fragment() {
             binding.timePickerButton.text =
                 SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
         })
+
+
+        voiceRecorder = VoiceRecorderManager(requireActivity(),
+            vm.currentReminder.value!!,
+            onRecordCallback = {
+                startButtonBlink(binding.recordButton)
+                Toast.makeText(requireActivity(), "Recording started", Toast.LENGTH_LONG).show()
+            }
+        ) { binding.recordButton.clearAnimation() }
 
 
     }
@@ -124,8 +155,22 @@ class ReminderFragment : Fragment() {
     }
 
 
+    private fun startButtonBlink(button: ImageButton) {
+        val anim: Animation = AlphaAnimation(0.0f, 1.0f)
+        anim.duration = 200 //You can manage the blinking time with this parameter
+
+        anim.startOffset = 20
+        anim.repeatMode = Animation.REVERSE
+        anim.repeatCount = Animation.INFINITE
+        button.startAnimation(anim)
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        voiceRecorder.onStop()
     }
+
+
 }

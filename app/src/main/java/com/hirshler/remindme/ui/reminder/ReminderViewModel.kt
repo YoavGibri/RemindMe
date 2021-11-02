@@ -2,11 +2,13 @@ package com.hirshler.remindme.ui.reminder
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
+import kotlinx.coroutines.launch
 import java.util.*
 
 class ReminderViewModel : ViewModel() {
@@ -15,10 +17,10 @@ class ReminderViewModel : ViewModel() {
     val currentReminder = MutableLiveData<Reminder>(Reminder())
 
     val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance())
-    var minutesDelay: Int = 0
+    //var minutesDelay: Int = 0
 
     fun setMinutes(minutes: Int) {
-        minutesDelay = minutes
+        currentReminder.value?.delayInMinutes = minutes
         currentCalendar.value = TimeManager.setMinutes(minutes)
     }
 
@@ -35,10 +37,8 @@ class ReminderViewModel : ViewModel() {
     }
 
 
-    fun createReminder(text: String) {
-        currentReminder.value = Reminder().apply {
-            this.text = text
-            delayInMinutes = minutesDelay
+    fun createReminder() {
+        currentReminder.value?.apply {
             val time = currentCalendar.value!!.timeInMillis
             alerts = listOf(Alert((time % 100000), time))
         }
@@ -46,8 +46,10 @@ class ReminderViewModel : ViewModel() {
 
     fun saveReminderToDb() {
         val reminderRepo = ReminderRepo()
-        val id = reminderRepo.insert(currentReminder.value!!)
-        currentReminder.value?.id = id
+        viewModelScope.launch {
+            val id = reminderRepo.insert(currentReminder.value!!)
+            currentReminder.value?.id = id
+        }
     }
 
     fun setAlerts() {
@@ -56,7 +58,6 @@ class ReminderViewModel : ViewModel() {
             AlertsManager.setAlert(currentReminder.value!!, it, tempTime)
         }
     }
-
 
 
 }

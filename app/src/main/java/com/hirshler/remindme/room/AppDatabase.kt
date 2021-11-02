@@ -22,7 +22,7 @@ abstract class AppDatabase : RoomDatabase() {
                 synchronized(AppDatabase::class) {
                     INSTANCE = Room
                         .databaseBuilder(App.applicationContext(), AppDatabase::class.java, "remindme.db")
-                        .allowMainThreadQueries()
+//                        .allowMainThreadQueries()
                         .build()
                 }
             }

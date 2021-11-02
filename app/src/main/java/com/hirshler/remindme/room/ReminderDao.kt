@@ -7,18 +7,18 @@ import com.hirshler.remindme.model.Reminder
 interface ReminderDao {
 
     @Insert
-    fun insert(reminder: Reminder) : Long
+    suspend fun insert(reminder: Reminder) : Long
 
     @Query("select * from Reminder where id = :id")
-    fun findById(id: Long): Reminder
+    suspend fun findById(id: Long): Reminder
 
     @Query("select * from Reminder")
-    fun getAll(): MutableList<Reminder>
+    suspend fun getAll(): MutableList<Reminder>
 
     @Update
-    fun update(reminder: Reminder)
+    suspend fun update(reminder: Reminder)
 
     @Delete
-    fun delete(reminder: Reminder)
+    suspend fun delete(reminder: Reminder)
 
 }

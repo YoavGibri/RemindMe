@@ -40,10 +40,7 @@ class RingManager(val context: Context, path: String?) {
 
     private fun getDefault() :Uri {
         val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        return alarmTone
-//        val ringtoneAlarm: Ringtone =
-//            RingtoneManager.getRingtone(App.applicationContext(), alarmTone)
-//        ringtoneAlarm.play()
+        return alarmTone;
     }
 
 }

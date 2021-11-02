@@ -45,10 +45,9 @@ class RemindersOverviewAdapter(
         if (holder.binding is RemindersOverviewRowItemBinding) {
             holder.binding.text.text = reminder.text
             holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmTime)
-            holder.binding.imgText.visibility =
-                if (reminder.text != null) View.VISIBLE else View.INVISIBLE
-            holder.binding.imgVoiceNote.visibility = View.VISIBLE
-//        holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath != null) View.VISIBLE else View.INVISIBLE
+
+            holder.binding.imgText.visibility = if (reminder.text?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
+            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
 
             holder.binding.imgEdit.setOnClickListener { clickListener.onEditClick(reminder) }
             holder.binding.imgDelete.setOnClickListener { clickListener.onDeleteClick(reminder) }
@@ -83,7 +82,7 @@ class RemindersOverviewAdapter(
         RecyclerView.ViewHolder(binding.root)
 
 
-    public interface ReminderClickListener {
+    interface ReminderClickListener {
         fun onEditClick(reminder: Reminder)
         fun onDeleteClick(reminder: Reminder)
     }
