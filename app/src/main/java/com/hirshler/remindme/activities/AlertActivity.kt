@@ -27,15 +27,14 @@ class AlertActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         vm = ViewModelProvider(this).get(AlertViewModel::class.java)
-        vm.currentReminder.value =
-            Gson().fromJson(intent.getStringExtra("reminder"), Reminder::class.java)
-        vm.origReminder.value =
-            Gson().fromJson(intent.getStringExtra("reminder"), Reminder::class.java)
+        vm.currentReminder.value = Gson().fromJson(intent.getStringExtra("reminder"), Reminder::class.java)
+//        vm.origReminder.value = Gson().fromJson(intent.getStringExtra("reminder"), Reminder::class.java)
 
-        val ringtonePath =
-            vm.currentReminder.value.let { it?.voiceNotePath ?: it?.alertRingtonePath }
+
+        val ringtonePath = vm.currentReminder.value.let { it?.voiceNotePath ?: it?.alertRingtonePath }
         ringManager = RingManager(this, ringtonePath)
         ringManager.play()
+
 
         binding = ActivityAlertBinding.inflate(layoutInflater)
         setContentView(binding.root)

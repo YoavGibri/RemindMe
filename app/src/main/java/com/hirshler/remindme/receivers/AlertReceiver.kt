@@ -10,32 +10,28 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.google.gson.Gson
 import com.hirshler.remindme.AlertsManager
-import com.hirshler.remindme.App
 import com.hirshler.remindme.model.Reminder
+import com.hirshler.remindme.showInDebug
 import java.util.*
 
 class AlertReceiver : BroadcastReceiver() {
+    private val toast: Toast? = null
+
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.d("AlertReceiver", Gson().toJson(intent))
 
         val reminder = Gson().fromJson(intent?.getStringExtra("reminder"), Reminder::class.java)
 
-        Toast.makeText(
-            App.applicationContext(),
-            "alarm ${reminder.alerts?.get(0)?.id} onReceive",
-            Toast.LENGTH_SHORT
-        ).show()
 
+        toast.showInDebug("alarm ${reminder.alerts?.get(0)?.id} onReceive")
 
         // set snooze reminder
         reminder.alerts?.get(0)?.time = Calendar.getInstance().apply {
-//            add(Calendar.SECOND, 10)
             add(Calendar.MINUTE, 5)
         }.timeInMillis
 
-        //  val snoozeTime = Calendar.getInstance().apply { add(Calendar.SECOND, 10) }.timeInMillis
-//        AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!, snoozeTime)
+
         AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!)
 
 

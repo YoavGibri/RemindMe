@@ -2,11 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rootLayout"
-    tools:context=".ui.reminder.ReminderFragment">
+    tools:context=".ui.reminder.ReminderFragment"
+    tools:ignore="SpUsage,ContentDescription">
 
 
     <TextView
@@ -39,12 +40,13 @@
                 android:autoSizeMaxTextSize="100sp"
                 android:autoSizeMinTextSize="12sp"
                 android:autoSizeTextType="uniform"
+                android:hint="@string/write_something"
                 android:inputType="textCapSentences"
                 android:maxLines="1"
-                android:text="תזכורת כלשהי!"
-                android:hint="Write something..."
-                android:textSize="30dp" />
-            <!--        android:inputType="textMultiLine"-->
+                android:textSize="30dp"
+                tools:ignore="Autofill,UnusedAttribute"
+                tools:text="תזכורת כלשהי!" />
+
 
             <ImageButton
                 android:id="@+id/recordButton"
@@ -56,7 +58,6 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_round_mic_24"
                 app:tint="?attr/colorSecondary" />
-
 
         </LinearLayout>
 
@@ -75,8 +76,8 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
         tools:cardElevation="4dp">
@@ -99,18 +100,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:gravity="end"
-                    android:text="In"
+                    android:text="@string/minutes_delay_in"
                     android:textSize="30dp" />
 
                 <com.hirshler.remindme.view.ToggleButtonMinutes
                     android:id="@+id/minutes_button"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="wrap_content"
-                    android:ems="3"
                     android:layout_height="wrap_content"
-                    android:text="5"
+                    android:ems="3"
                     android:textSize="25dp"
-                    app:withZero="false"/>
+                    app:withZero="false"
+                    tools:text="5" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -118,12 +119,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:gravity="start"
-                    android:text="Min."
+                    android:text="@string/minutes_delay_mins"
                     android:textSize="30dp" />
 
 
             </LinearLayout>
-
 
 
             <TextView
@@ -133,7 +133,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:text="Or exactly at"
+                android:text="@string/time_set_title"
                 android:textSize="20dp" />
 
             <TextView
@@ -141,20 +141,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="17:30"
                 android:textColor="?attr/colorSecondary"
                 android:textSize="40dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="17:30" />
 
 
             <com.hirshler.remindme.view.ToggleButtonDays
                 android:id="@+id/days_button"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:ems="8"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="TOMORROW"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                tools:text="TOMORROW" />
 
 
             <LinearLayout
@@ -166,22 +166,21 @@
                     android:id="@+id/recurringAlarmButton"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="60dp"
+                    android:layout_weight="1"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_round_repeat_24"
-                    app:tint="?attr/colorSecondary" />
-
-
+                    app:tint="?attr/colorSecondary"
+                    tools:ignore="NestedWeights" />
 
 
                 <ImageButton
                     android:id="@+id/datePickerButton"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="60dp"
+                    android:layout_weight="1"
                     android:padding="10dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_baseline_calendar_today_24"
@@ -191,15 +190,14 @@
             </LinearLayout>
 
 
-
-<!--            <TextView-->
-<!--                android:id="@+id/dateDisplay"-->
-<!--                android:paddingBottom="10dp"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textSize="25dp"-->
-<!--                android:gravity="center"-->
-<!--                android:text="friday, 8/10/21 at 12:20"/>-->
+<!--                        <TextView-->
+<!--                            android:id="@+id/dateDisplay"-->
+<!--                            android:paddingBottom="10dp"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:textSize="25dp"-->
+<!--                            android:gravity="center"-->
+<!--                            tools:text="friday, 8/10/21 at 12:20"/>-->
 
 
         </LinearLayout>

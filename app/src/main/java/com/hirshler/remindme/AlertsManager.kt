@@ -11,49 +11,33 @@ import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.receivers.AlertReceiver
 import java.util.*
 
-class AlertsManager() {
-
-    // private lateinit var alarmIntent: PendingIntent
+class AlertsManager {
 
     companion object {
-
+        private val toast: Toast? = null
 
         fun setAlert(reminder: Reminder, alert: Alert, time: Long = 0) {
             val alertTime = if (time != 0L) time else alert.time
 
-            val alarmManager =
-                App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager = App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
             val now = Calendar.getInstance().timeInMillis
 
 
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                alertTime,
-                createPendingIntent(reminder, alert)
-            )
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, createPendingIntent(reminder, alert))
 
-            Toast.makeText(
-                App.applicationContext(),
-                "alarm ${alert.id} set to ${(alertTime - now) / 1000} seconds",
-                Toast.LENGTH_SHORT
-            ).show()
 
+            toast.showInDebug("alarm ${alert.id} set to ${(alertTime - now) / 1000} seconds")
         }
 
         fun cancelAlert(reminder: Reminder, alert: Alert) {
-            val alarmManager =
-                App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val alarmManager = App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
             val pendingIntent = createPendingIntent(reminder, alert)
 
             alarmManager.cancel(pendingIntent);
 
-            Toast.makeText(
-                App.applicationContext(),
-                "alarm ${alert.id} canceled",
-                Toast.LENGTH_SHORT
-            ).show()
+            toast.showInDebug("alarm ${alert.id} canceled")
         }
 
         private fun createPendingIntent(reminder: Reminder, alert: Alert): PendingIntent {
@@ -62,12 +46,7 @@ class AlertsManager() {
                 putExtra("reminder", Gson().toJson(reminder))
             }
 
-            return PendingIntent.getBroadcast(
-                context,
-                alert.id.toInt(),
-                intent,
-                PendingIntent.FLAG_IMMUTABLE
-            )
+            return PendingIntent.getBroadcast(context, alert.id.toInt(), intent, PendingIntent.FLAG_IMMUTABLE)
         }
 
 

@@ -12,9 +12,9 @@ class RingManager(val context: Context, path: String?) {
 
     init {
         tryWithCatch {
-            val ringPath = path ?: getDefault()//SP.getDefaultRingtonePath()
+            val ringPath = if (path.isNullOrEmpty())  getDefault() else Uri.parse(path) //SP.getDefaultRingtonePath()
             mp.isLooping = true
-            mp.setDataSource(context, getDefault())
+            mp.setDataSource(context, ringPath)
             mp.prepare()
         }
     }
@@ -38,7 +38,7 @@ class RingManager(val context: Context, path: String?) {
         }
     }
 
-    private fun getDefault() :Uri {
+    private fun getDefault(): Uri {
         val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         return alarmTone;
     }

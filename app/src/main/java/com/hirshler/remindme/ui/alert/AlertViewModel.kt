@@ -14,7 +14,7 @@ class AlertViewModel : ViewModel() {
 
 
     val currentReminder = MutableLiveData<Reminder>(Reminder())
-    val origReminder = MutableLiveData<Reminder>(Reminder())
+    //val origReminder = MutableLiveData<Reminder>(Reminder())
 
     val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance())
     var minutesDelay: Int = 0
@@ -56,7 +56,8 @@ class AlertViewModel : ViewModel() {
 
     fun dismissReminder() {
         viewModelScope.launch {
-            origReminder.value?.let { ReminderRepo().setAsDismissed(it) }
+            //origReminder.value?.let { ReminderRepo().setAsDismissed(it) }
+            currentReminder.value?.let { ReminderRepo().setAsDismissed(it) }
         }
     }
 
