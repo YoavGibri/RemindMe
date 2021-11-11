@@ -27,7 +27,7 @@ class AlertsManager {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, createPendingIntent(reminder, alert))
 
 
-            toast.showInDebug("alarm ${alert.id} set to ${(alertTime - now) / 1000} seconds")
+            //toast.showInDebug("alarm ${alert.id} set to ${(alertTime - now) / 1000} seconds")
         }
 
         fun cancelAlert(reminder: Reminder, alert: Alert) {

@@ -47,7 +47,7 @@ class ReminderViewModel : ViewModel() {
     fun saveReminderToDb() {
         val reminderRepo = ReminderRepo()
         viewModelScope.launch {
-            val id = reminderRepo.insert(currentReminder.value!!)
+            val id = reminderRepo.upsert(currentReminder.value!!)
             currentReminder.value?.id = id
         }
     }

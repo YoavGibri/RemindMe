@@ -47,6 +47,20 @@ class ReminderRepo {
         return id
     }
 
+    suspend fun upsert(reminder: Reminder): Long {
+        var id = db.insert(reminder)
+
+        if (id != -1L) {
+            Log.d(TAG, "new reminder was added")
+
+        } else {
+            id = db.update(reminder).toLong()
+            Log.d(TAG, "reminder was updated")
+        }
+
+        return id
+    }
+
     // update reminder
     suspend fun update(reminder: Reminder) {
         db.update(reminder)

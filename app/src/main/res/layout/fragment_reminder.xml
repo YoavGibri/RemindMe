@@ -5,16 +5,21 @@
     android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
+    android:padding="8dp"
     tools:context=".ui.reminder.ReminderFragment"
-    tools:ignore="SpUsage,ContentDescription">
+    tools:ignore="SpUsage,ContentDescription"
+    tools:layout_marginBottom="60dp"
+    tools:layout_marginTop="50dp">
 
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="15dp"
         android:text="@string/remind_me_to"
         android:textSize="30dp" />
@@ -23,6 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+
         tools:cardElevation="4dp">
 
         <LinearLayout
@@ -30,22 +36,35 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <!--    TODO: make auto size-->
-            <EditText
-                android:id="@+id/text"
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                android:autoSizeMaxTextSize="100sp"
-                android:autoSizeMinTextSize="12sp"
-                android:autoSizeTextType="uniform"
-                android:hint="@string/write_something"
-                android:inputType="textCapSentences"
-                android:maxLines="1"
-                android:textSize="30dp"
-                tools:ignore="Autofill,UnusedAttribute"
-                tools:text="תזכורת כלשהי!" />
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/autoSizingTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:gravity="center_vertical"
+                    android:textSize="30dp"
+                    android:maxLength="70"
+                    android:visibility="invisible"
+                    app:autoSizeTextType="uniform" />
+
+                <EditText
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:hint="@string/write_something"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:gravity="center_vertical"
+                    android:maxLength="70"
+                    android:textSize="30dp"
+                    tools:ignore="Autofill,UnusedAttribute"
+                    tools:text="תזכורת" />
+
+            </FrameLayout>
 
 
             <ImageButton
@@ -69,16 +88,13 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:text="@string/when"
         android:textSize="30dp" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="10dp"
         android:layout_weight="1"
         tools:cardElevation="4dp">
 
@@ -91,7 +107,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1.5"
                 android:gravity="center">
 
                 <TextView
@@ -130,8 +146,8 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.6"
                 android:gravity="bottom"
                 android:text="@string/time_set_title"
                 android:textSize="20dp" />
@@ -147,20 +163,11 @@
                 tools:text="17:30" />
 
 
-            <com.hirshler.remindme.view.ToggleButtonDays
-                android:id="@+id/days_button"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:ems="8"
-                android:textSize="20dp"
-                tools:text="TOMORROW" />
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="2">
+                android:layout_weight="1.5"
+                android:gravity="center">
 
                 <ImageButton
                     android:id="@+id/recurringAlarmButton"
@@ -173,6 +180,15 @@
                     android:src="@drawable/ic_round_repeat_24"
                     app:tint="?attr/colorSecondary"
                     tools:ignore="NestedWeights" />
+
+                <com.hirshler.remindme.view.ToggleButtonDays
+                    android:id="@+id/days_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:ems="8"
+                    android:textSize="20dp"
+                    tools:text="TOMORROW" />
 
 
                 <ImageButton
@@ -190,14 +206,14 @@
             </LinearLayout>
 
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/dateDisplay"-->
-<!--                            android:paddingBottom="10dp"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:textSize="25dp"-->
-<!--                            android:gravity="center"-->
-<!--                            tools:text="friday, 8/10/21 at 12:20"/>-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/dateDisplay"-->
+            <!--                            android:paddingBottom="10dp"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:textSize="25dp"-->
+            <!--                            android:gravity="center"-->
+            <!--                            tools:text="friday, 8/10/21 at 12:20"/>-->
 
 
         </LinearLayout>
@@ -210,8 +226,9 @@
         android:id="@+id/doneButton"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_gravity="center"
+        android:background="@null"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_round_done_24"
         app:tint="?attr/colorSecondary" />

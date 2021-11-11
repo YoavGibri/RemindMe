@@ -13,13 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
-import com.hirshler.remindme.R
-import com.hirshler.remindme.VoiceRecorderManager
+import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentReminderBinding
-import com.hirshler.remindme.flash
 import com.hirshler.remindme.model.Reminder
-import com.hirshler.remindme.show
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -61,7 +58,14 @@ class ReminderFragment : Fragment() {
             }
         }
 
-        binding.text.addTextChangedListener { vm.currentReminder.value?.text = it.toString() }
+        binding.text.addTextChangedListener(
+            onTextChanged = { text, _, _, _ ->
+                binding.autoSizingTextView.text = text
+                binding.text.textSize = binding.autoSizingTextView.textSize/3
+            },
+            afterTextChanged = { vm.currentReminder.value?.text = it.toString() })
+
+        binding.text.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
 
         binding.minutesButton.setOnToggleCallback { minutes ->
             vm.setMinutes(minutes)

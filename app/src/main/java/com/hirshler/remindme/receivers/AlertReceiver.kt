@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.google.gson.Gson
@@ -19,7 +18,7 @@ class AlertReceiver : BroadcastReceiver() {
 
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("AlertReceiver", Gson().toJson(intent))
+        //Log.d("AlertReceiver", Gson().toJson(intent))
 
         val reminder = Gson().fromJson(intent?.getStringExtra("reminder"), Reminder::class.java)
 
