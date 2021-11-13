@@ -1,14 +1,15 @@
 package com.hirshler.remindme.ui.reminder
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class ReminderViewModel : ViewModel() {
@@ -46,18 +47,33 @@ class ReminderViewModel : ViewModel() {
 
     fun saveReminderToDb() {
         val reminderRepo = ReminderRepo()
-        viewModelScope.launch {
-            val id = reminderRepo.upsert(currentReminder.value!!)
-            currentReminder.value?.id = id
-        }
+        Log.d("viewmodel upsert", Gson().toJson(currentReminder.value!!))
+
+        val reminderId = runBlocking { reminderRepo.upsert(currentReminder.value!!) }
+
+        currentReminder.value = currentReminder.value?.apply { id = reminderId }
+
+        Log.d("viewmodel after upsert", Gson().toJson(currentReminder.value!!))
     }
 
     fun setAlerts() {
+        Log.d("viewmodel", "setAlerts")
         val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
-        currentReminder.value!!.alerts?.forEach {
-            AlertsManager.setAlert(currentReminder.value!!, it, tempTime)
-        }
+
+//        currentReminder.value!!.alerts?.forEach {
+//            AlertsManager.setAlert(currentReminder.value!!, it, tempTime)
+//        }
+        currentReminder.value?.initNextAlert()
+        AlertsManager.setAlert(currentReminder.value!!, tempTime)
     }
+
+//    fun saveAndSetAlerts() {
+//        viewModelScope.launch {
+//            saveReminderToDb()
+//            setAlerts()
+//            saveReminderToDb()
+//        }
+//    }
 
 
 }

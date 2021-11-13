@@ -7,39 +7,23 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.view.WindowManager
 import android.widget.Toast
-import com.google.gson.Gson
-import com.hirshler.remindme.AlertsManager
-import com.hirshler.remindme.model.Reminder
-import com.hirshler.remindme.showInDebug
-import java.util.*
+import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
 
 class AlertReceiver : BroadcastReceiver() {
     private val toast: Toast? = null
 
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
-        //Log.d("AlertReceiver", Gson().toJson(intent))
 
-        val reminder = Gson().fromJson(intent?.getStringExtra("reminder"), Reminder::class.java)
+//        val reminderId = intent?.getLongExtra(KEY_REMINDER_ID, -1)
 
-
-        toast.showInDebug("alarm ${reminder.alerts?.get(0)?.id} onReceive")
-
-        // set snooze reminder
-        reminder.alerts?.get(0)?.time = Calendar.getInstance().apply {
-            add(Calendar.MINUTE, 5)
-        }.timeInMillis
-
-
-        AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!)
+//        toast.showInDebug("alarm ${reminder.alerts?.get(0)?.id} onReceive")
 
 
         val alertIntent = Intent()
-        alertIntent.setClassName(
-            context?.packageName!!,
-            context.packageName + ".activities.AlertActivity"
-        )
-        alertIntent.putExtra("reminder", intent?.getStringExtra("reminder"))
+        alertIntent.setClassName(context?.packageName!!, context.packageName + ".activities.AlertActivity")
+
+        alertIntent.putExtra(KEY_REMINDER_ID, intent?.getLongExtra(KEY_REMINDER_ID, -1))
         alertIntent.addFlags(
             WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
                     WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD +
@@ -50,11 +34,5 @@ class AlertReceiver : BroadcastReceiver() {
 
         context.startActivity(alertIntent)
 
-//        context?.startActivity(
-//            Intent(context, MainActivity::class.java).apply {
-//                addFlags(FLAG_ACTIVITY_NEW_TASK)
-//                putExtra("reminder", intent?.getStringExtra("reminder"))
-//            }
-//        )
     }
 }

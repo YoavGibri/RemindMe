@@ -7,10 +7,9 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.hirshler.remindme.R
 
-class ToggleButtonMute(context: Context, attrs: AttributeSet?) :
-    AppCompatImageButton(context, attrs) {
+class ToggleButtonMute(context: Context, attrs: AttributeSet?) : AppCompatImageButton(context, attrs) {
 
-    var playback = MutableLiveData(true)
+    private var playback = MutableLiveData<Boolean>(null)
 
     var callback: ((Boolean) -> Unit)? = null
     fun setOnToggleCallback(callback: ((Boolean) -> Unit)?) {
@@ -20,15 +19,17 @@ class ToggleButtonMute(context: Context, attrs: AttributeSet?) :
     init {
 
         playback.observe(context as LifecycleOwner, { on ->
-            setImageResource(
-                if (on) R.drawable.ic_baseline_volume_off_24
-                else R.drawable.ic_baseline_volume_up_24
-            )
-            callback?.invoke(on)
+            on?.let {
+                setImageResource(
+                    if (on) R.drawable.ic_baseline_volume_off_24
+                    else R.drawable.ic_baseline_volume_up_24
+                )
+                callback?.invoke(on)
+            }
         })
 
         setOnClickListener {
-            playback.value = !playback.value!!
+            playback.value = !(playback.value ?: true)
         }
     }
 

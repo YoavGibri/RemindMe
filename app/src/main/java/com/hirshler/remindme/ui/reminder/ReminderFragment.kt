@@ -61,7 +61,7 @@ class ReminderFragment : Fragment() {
         binding.text.addTextChangedListener(
             onTextChanged = { text, _, _, _ ->
                 binding.autoSizingTextView.text = text
-                binding.text.textSize = binding.autoSizingTextView.textSize/3
+                binding.text.textSize = binding.autoSizingTextView.textSize / 3
             },
             afterTextChanged = { vm.currentReminder.value?.text = it.toString() })
 
@@ -99,9 +99,12 @@ class ReminderFragment : Fragment() {
                 }
                 else -> {
                     voiceRecorder.stopRecording()
+
                     vm.createReminder()
                     vm.saveReminderToDb()
                     vm.setAlerts()
+
+
                     Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
                     (requireActivity() as MainActivity).refreshFragment()
                 }

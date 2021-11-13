@@ -73,7 +73,8 @@ class ReminderRepo {
 
     suspend fun setAsDismissed(reminder: Reminder) {
         reminder.isDismissed = true
-        db.update(reminder)
+        val id = db.update(reminder)
+        Log.d(TAG, "reminder was updated: $id")
     }
 
 
