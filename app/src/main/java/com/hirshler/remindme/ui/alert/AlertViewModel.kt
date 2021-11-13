@@ -8,6 +8,7 @@ import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class AlertViewModel : ViewModel() {
@@ -41,21 +42,34 @@ class AlertViewModel : ViewModel() {
     }
 
     fun saveReminderToDb() {
-        viewModelScope.launch {
-            ReminderRepo().update(currentReminder.value!!)
-            //reminderRepo.getAll().forEach { Log.d("ReminderFragment", Gson().toJson(it)) }
+        currentReminder.value = runBlocking {
+            ReminderRepo().let {
+                val reminderId = it.update(currentReminder.value!!)
+                it.findById(reminderId)
+            }
+
         }
     }
 
-    fun setAlerts() {
-        currentReminder.value!!.alerts?.forEach {
-            AlertsManager.setAlert(currentReminder.value!!, it)
-        }
+
+    fun setNextAlert() {
+        currentReminder.value?.let { AlertsManager.setNextAlert(it) }
     }
+
+
+//    fun setAlert() {
+//        Log.d("alertviewmodel", "setAlert")
+//
+//        currentReminder.value?.apply {
+//            if (hasNextAlert()) {
+//                AlertsManager.setAlert(this)
+//            } else
+//                AlertsManager.cancelAlert(this)
+//        }
+//    }
 
     fun dismissReminder() {
         viewModelScope.launch {
-            //origReminder.value?.let { ReminderRepo().setAsDismissed(it) }
             currentReminder.value?.let { ReminderRepo().setAsDismissed(it) }
         }
     }
@@ -65,6 +79,7 @@ class AlertViewModel : ViewModel() {
             currentReminder.value = ReminderRepo().findById(id)
         }
     }
+
 
 
 }

@@ -80,7 +80,6 @@ class AlertActivity : AppCompatActivity() {
             val datePicker = DatePickerDialog(
                 this, { _, year, monthOfYear, dayOfMonth ->
                     vm.setDate(year, monthOfYear, dayOfMonth)
-                    //binding.daysButton.setDate(year, monthOfYear, dayOfMonth)
                     updateReminder()
                     finish()
                 },
@@ -93,13 +92,20 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.dismissButton.setOnClickListener {
-            AlertsManager.cancelAlert(
-                vm.currentReminder.value!!,
-                vm.currentReminder.value?.alerts?.get(0)!!
-            )
-            vm.dismissReminder()
+            vm.currentReminder.value?.apply {
+
+                if (repeat) {
+                    vm.setNextAlert()
+
+                } else {
+                    vm.dismissReminder()
+                    AlertsManager.cancelAlert(this)
+                }
+            }
+
             finish()
         }
+
 
         binding.muteButton.setOnToggleCallback { playbackOn ->
             if (playbackOn) ringManager.play() else ringManager.pause()
@@ -111,7 +117,7 @@ class AlertActivity : AppCompatActivity() {
     private fun updateReminder() {
         vm.updateReminder()
         vm.saveReminderToDb()
-        vm.setAlerts()
+        vm.setNextAlert()
     }
 
     override fun onDestroy() {

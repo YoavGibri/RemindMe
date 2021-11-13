@@ -56,24 +56,13 @@ class ReminderViewModel : ViewModel() {
         Log.d("viewmodel after upsert", Gson().toJson(currentReminder.value!!))
     }
 
-    fun setAlerts() {
+    fun setAlert() {
         Log.d("viewmodel", "setAlerts")
         val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
 
-//        currentReminder.value!!.alerts?.forEach {
-//            AlertsManager.setAlert(currentReminder.value!!, it, tempTime)
-//        }
-        currentReminder.value?.initNextAlert()
-        AlertsManager.setAlert(currentReminder.value!!, tempTime)
+        AlertsManager.setNextAlert(currentReminder.value!!, tempTime)
     }
 
-//    fun saveAndSetAlerts() {
-//        viewModelScope.launch {
-//            saveReminderToDb()
-//            setAlerts()
-//            saveReminderToDb()
-//        }
-//    }
 
 
 }

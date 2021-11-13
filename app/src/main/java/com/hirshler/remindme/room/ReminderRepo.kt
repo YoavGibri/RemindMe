@@ -24,14 +24,14 @@ class ReminderRepo {
         val reminders = db.getAll()
 
         if (reminders.isNotEmpty())
-            reminders.add(Reminder(text = "Active", nextAlarmTime = 0))
+            reminders.add(Reminder(text = "Active"))
 
         if (reminders.any { reminder -> reminder.isDismissed }) {
-            reminders.add(Reminder(text = "Dismissed", isDismissed = true, nextAlarmTime = 0))
+            reminders.add(Reminder(text = "Dismissed", isDismissed = true))
         }
 
         if (reminders.any { reminder -> reminder.repeat }) {
-            reminders.add(Reminder(text = "Repeat", repeat = true, nextAlarmTime = 0))
+            reminders.add(Reminder(text = "Repeat", repeat = true))
         }
 
 
@@ -62,8 +62,8 @@ class ReminderRepo {
     }
 
     // update reminder
-    suspend fun update(reminder: Reminder) {
-        db.update(reminder)
+    suspend fun update(reminder: Reminder): Long {
+        return db.update(reminder).toLong()
     }
 
     // Delete reminder

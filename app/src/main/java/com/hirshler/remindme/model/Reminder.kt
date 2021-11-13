@@ -10,7 +10,6 @@ import java.util.*
 data class Reminder(
     @PrimaryKey(autoGenerate = true) var id: Long? = null,
     var text: String? = null,
-    var nextAlarmTime: Long = 0,
     var alerts: List<Alert>? = null,
     var delayInMinutes: Int? = null,
     var alertRingtonePath: String? = null,
@@ -19,14 +18,28 @@ data class Reminder(
     var weekly: Boolean = false,
     var isDismissed: Boolean = false,
 ) {
+
+    val nextAlarmTime: Long
+        get() = findNextAlert()
+
     companion object {
         const val KEY_REMINDER_ID = "reminderId"
     }
 
-    fun initNextAlert() {
+    //    fun initNextAlert() {
+//        val now = Calendar.getInstance().timeInMillis
+//        nextAlarmTime = alerts
+//            ?.sortedBy { a -> a.time }
+//            ?.find { alert -> alert.time > now }?.time ?: 0
+//    }
+
+    private fun findNextAlert(): Long {
         val now = Calendar.getInstance().timeInMillis
-        nextAlarmTime = alerts
+        return alerts
             ?.sortedBy { a -> a.time }
             ?.find { alert -> alert.time > now }?.time ?: 0
     }
+
+
+    fun hasNextAlert(): Boolean = nextAlarmTime != 0L
 }

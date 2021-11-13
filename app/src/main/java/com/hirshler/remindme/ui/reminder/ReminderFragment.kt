@@ -102,7 +102,7 @@ class ReminderFragment : Fragment() {
 
                     vm.createReminder()
                     vm.saveReminderToDb()
-                    vm.setAlerts()
+                    vm.setAlert()
 
 
                     Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
