@@ -17,7 +17,7 @@ interface ReminderDao {
     suspend fun getAll(): MutableList<Reminder>
 
     @Update
-    suspend fun update(reminder: Reminder) : Int
+    suspend fun update(reminder: Reminder)
 
     @Delete
     suspend fun delete(reminder: Reminder)

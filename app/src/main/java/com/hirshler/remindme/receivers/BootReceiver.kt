@@ -3,11 +3,30 @@ package com.hirshler.remindme.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.room.ReminderRepo
+import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        // TODO: 09/10/21 add receiver to manifest
-        // TODO: 09/10/21 re-set all alarms
-//        https://developer.android.com/training/scheduling/alarms#boot
+
+        Log.i("onReceive", "start")
+
+        if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
+            Log.i("onReceive", "inside action")
+
+            val now = Calendar.getInstance().timeInMillis
+            runBlocking {
+                ReminderRepo()
+                    .getAll()
+                    .filter { reminder -> reminder.nextAlarmTime > now }
+                    .forEach {
+                        AlertsManager.setNextAlert(it)
+                    }
+            }
+        }
+
     }
 }

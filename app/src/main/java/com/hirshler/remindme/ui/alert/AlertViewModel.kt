@@ -44,8 +44,8 @@ class AlertViewModel : ViewModel() {
     fun saveReminderToDb() {
         currentReminder.value = runBlocking {
             ReminderRepo().let {
-                val reminderId = it.update(currentReminder.value!!)
-                it.findById(reminderId)
+                it.update(currentReminder.value!!)
+                it.findById(currentReminder.value!!.id!!)
             }
 
         }
@@ -79,7 +79,6 @@ class AlertViewModel : ViewModel() {
             currentReminder.value = ReminderRepo().findById(id)
         }
     }
-
 
 
 }

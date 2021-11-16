@@ -7,21 +7,38 @@ import android.media.RingtoneManager
 import android.net.Uri
 
 
-class RingManager(val context: Context, path: String?) {
+class RingManager private constructor(val context: Context, path: String?) {
+
     private var mp: MediaPlayer = MediaPlayer()
 
     init {
         tryWithCatch {
-            val ringPath = if (path.isNullOrEmpty())  getDefault() else Uri.parse(path) //SP.getDefaultRingtonePath()
+            val ringPath = if (path.isNullOrEmpty()) getDefault() else Uri.parse(path) //SP.getDefaultRingtonePath()
             mp.isLooping = true
             mp.setDataSource(context, ringPath)
             mp.prepare()
         }
     }
 
+    companion object {
+        private var instance: RingManager? = null
+
+        fun getInstance(context: Context, path: String?): RingManager {
+            if (instance == null) {
+                instance = RingManager(context, path)
+            }
+            return instance!!
+        }
+
+
+    }
+
 
     fun play() {
-        tryWithCatch { mp.start() }
+        tryWithCatch {
+            if (!mp.isPlaying)
+                mp.start()
+        }
     }
 
     fun pause() {

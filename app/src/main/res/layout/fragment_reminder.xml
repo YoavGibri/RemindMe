@@ -78,6 +78,10 @@
                 android:src="@drawable/ic_round_mic_24"
                 app:tint="?attr/colorSecondary" />
 
+<!--            <com.hirshler.remindme.view.VoiceRecordView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="match_parent"/>-->
+
         </LinearLayout>
 
 

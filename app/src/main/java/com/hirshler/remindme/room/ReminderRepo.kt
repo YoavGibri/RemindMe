@@ -54,7 +54,8 @@ class ReminderRepo {
             Log.d(TAG, "new reminder was added")
 
         } else {
-            id = db.update(reminder).toLong()
+            db.update(reminder)
+            id = reminder.id!!
             Log.d(TAG, "reminder was updated")
         }
 
@@ -62,8 +63,8 @@ class ReminderRepo {
     }
 
     // update reminder
-    suspend fun update(reminder: Reminder): Long {
-        return db.update(reminder).toLong()
+    suspend fun update(reminder: Reminder) {
+        db.update(reminder)
     }
 
     // Delete reminder

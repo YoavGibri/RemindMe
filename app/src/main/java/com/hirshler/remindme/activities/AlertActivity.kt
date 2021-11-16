@@ -16,6 +16,7 @@ import kotlin.concurrent.timerTask
 
 class AlertActivity : AppCompatActivity() {
 
+    private var firstLoad: Boolean = true
     private lateinit var binding: ActivityAlertBinding
     private lateinit var vm: AlertViewModel
     private lateinit var ringManager: RingManager
@@ -38,11 +39,15 @@ class AlertActivity : AppCompatActivity() {
 //                    Calendar.getInstance().apply { add(Calendar.MINUTE, 5) }.timeInMillis
 //                AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!)
 
-                vm.setMinutes(5)
-                updateReminder()
+                //todo fix issue when reminder's time sometime present and sometime not
+                if (firstLoad) {
+                    vm.setMinutes(5)
+                    updateReminder()
+                    firstLoad = false
+                }
 
                 val ringtonePath = voiceNotePath ?: alertRingtonePath
-                ringManager = RingManager(this@AlertActivity, ringtonePath)
+                ringManager = RingManager.getInstance(this@AlertActivity, ringtonePath)
                 ringManager.play()
 
 
