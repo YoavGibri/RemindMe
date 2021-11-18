@@ -17,6 +17,7 @@ data class Reminder(
     var repeat: Boolean = false,
     var weekly: Boolean = false,
     var isDismissed: Boolean = false,
+
 ) {
 
     val nextAlarmTime: Long
@@ -26,12 +27,6 @@ data class Reminder(
         const val KEY_REMINDER_ID = "reminderId"
     }
 
-    //    fun initNextAlert() {
-//        val now = Calendar.getInstance().timeInMillis
-//        nextAlarmTime = alerts
-//            ?.sortedBy { a -> a.time }
-//            ?.find { alert -> alert.time > now }?.time ?: 0
-//    }
 
     private fun findNextAlert(): Long {
         val now = Calendar.getInstance().timeInMillis
