@@ -27,10 +27,7 @@ class AlertViewModel : ViewModel() {
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
         currentCalendar.value = TimeManager.setDate(
-            year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(
-                Calendar.MINUTE
-            )
-        )
+            year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(Calendar.HOUR_OF_DAY), currentCalendar.value!!.get(Calendar.MINUTE))
     }
 
 
@@ -70,7 +67,10 @@ class AlertViewModel : ViewModel() {
 
     fun dismissReminder() {
         viewModelScope.launch {
-            currentReminder.value?.let { ReminderRepo().setAsDismissed(it) }
+            currentReminder.value?.let {
+                it.alerts = null
+                ReminderRepo().setAsDismissed(it)
+            }
         }
     }
 

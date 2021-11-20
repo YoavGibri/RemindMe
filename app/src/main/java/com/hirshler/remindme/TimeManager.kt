@@ -11,15 +11,17 @@ class TimeManager {
             }
         }
 
-        fun setDays(days: Int, currentMinutes: Int): Calendar {
+        fun setDays(days: Int, currentHours: Int, currentMinutes: Int): Calendar {
             return Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, currentHours)
                 set(Calendar.MINUTE, currentMinutes)
                 add(Calendar.DAY_OF_YEAR, days)
             }
         }
 
-        fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int, currentMinutes: Int): Calendar {
+        fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int, currentHours: Int, currentMinutes: Int): Calendar {
             return Calendar.getInstance().apply {
+                set(Calendar.HOUR_OF_DAY, currentHours)
                 set(Calendar.MINUTE, currentMinutes)
                 set(year, monthOfYear, dayOfMonth)
             }

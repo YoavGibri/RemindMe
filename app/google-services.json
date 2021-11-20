@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "670602384823",
+    "project_id": "remind-me-2021",
+    "storage_bucket": "remind-me-2021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670602384823:android:e9dd4f3db4e91d3ac6c432",
+        "android_client_info": {
+          "package_name": "com.hirshler.remindme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670602384823-h83nd592jbl8k6u7h2fg294i6rmq0pcs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlfTatiU1Cia3XslAR_jXcNbAZ_ndocog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670602384823-h83nd592jbl8k6u7h2fg294i6rmq0pcs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

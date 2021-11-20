@@ -34,6 +34,9 @@ class SettingsFragment : Fragment() {
         settingsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
+
+        binding.button.setOnClickListener{throw RuntimeException("Test Crash")}
+
         return root
     }
 

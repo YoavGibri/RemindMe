@@ -21,7 +21,7 @@ class BootReceiver : BroadcastReceiver() {
             runBlocking {
                 ReminderRepo()
                     .getAll()
-                    .filter { reminder -> reminder.nextAlarmTime > now }
+                    .filter { reminder -> reminder.dismissed.not() }
                     .forEach {
                         AlertsManager.setNextAlert(it)
                     }

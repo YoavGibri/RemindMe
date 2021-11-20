@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
 import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.SP
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
@@ -17,7 +18,7 @@ class ReminderViewModel : ViewModel() {
 
     val currentReminder = MutableLiveData<Reminder>(Reminder())
 
-    val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance())
+    val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance().apply { add(Calendar.MINUTE, 5) })
     //var minutesDelay: Int = 0
 
     fun setMinutes(minutes: Int) {
@@ -26,11 +27,11 @@ class ReminderViewModel : ViewModel() {
     }
 
     fun setDays(days: Int) {
-        currentCalendar.value = TimeManager.setDays(days, currentCalendar.value!!.get(Calendar.MINUTE))
+        currentCalendar.value = TimeManager.setDays(days, currentCalendar.value!!.get(Calendar.HOUR_OF_DAY), currentCalendar.value!!.get(Calendar.MINUTE))
     }
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        currentCalendar.value = TimeManager.setDate(year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(Calendar.MINUTE))
+        currentCalendar.value = TimeManager.setDate(year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(Calendar.HOUR_OF_DAY), currentCalendar.value!!.get(Calendar.MINUTE))
     }
 
     fun setTime(hourOfDay: Int, minute: Int) {
@@ -58,11 +59,12 @@ class ReminderViewModel : ViewModel() {
 
     fun setAlert() {
         Log.d("viewmodel", "setAlerts")
-        val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
-
-        AlertsManager.setNextAlert(currentReminder.value!!, tempTime)
+        if (SP.getIsDebugMode()) {
+            val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
+            AlertsManager.setNextAlert(currentReminder.value!!, tempTime)
+        } else
+            AlertsManager.setNextAlert(currentReminder.value!!)
     }
-
 
 
 }

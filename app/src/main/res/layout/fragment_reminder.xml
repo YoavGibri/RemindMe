@@ -15,14 +15,37 @@
     tools:layout_marginBottom="60dp"
     tools:layout_marginTop="50dp">
 
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="15dp">
+
+
+        <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+            android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:text="@string/remind_me_to"
         android:textSize="30dp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:layout_width="wrap_content"
+            android:id="@+id/debugSwitch"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/ic_round_bug_report_24"
+            />
+
+
+    </LinearLayout>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:text="@string/remind_me_to"-->
+    <!--        android:textSize="30dp" />-->
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -47,8 +70,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:gravity="center_vertical"
-                    android:textSize="30dp"
                     android:maxLength="70"
+                    android:textSize="30dp"
                     android:visibility="invisible"
                     app:autoSizeTextType="uniform" />
 
@@ -56,9 +79,9 @@
                     android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
+                    android:gravity="center_vertical"
                     android:hint="@string/write_something"
                     android:inputType="textCapSentences|textMultiLine"
-                    android:gravity="center_vertical"
                     android:maxLength="70"
                     android:textSize="30dp"
                     tools:ignore="Autofill,UnusedAttribute"
@@ -78,9 +101,9 @@
                 android:src="@drawable/ic_round_mic_24"
                 app:tint="?attr/colorSecondary" />
 
-<!--            <com.hirshler.remindme.view.VoiceRecordView-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="match_parent"/>-->
+            <!--            <com.hirshler.remindme.view.VoiceRecordView-->
+            <!--                android:layout_width="100dp"-->
+            <!--                android:layout_height="match_parent"/>-->
 
         </LinearLayout>
 

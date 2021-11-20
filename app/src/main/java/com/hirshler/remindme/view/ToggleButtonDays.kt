@@ -44,7 +44,9 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
             if (date != null) {
                 val today = Calendar.getInstance()
                 val days = TimeUnit.DAYS.convert(date.time.time - today.time.time, TimeUnit.MILLISECONDS).toInt()
-                text = getDayDesByDays(days)
+                var dayDes = getDayDesByDays(days)
+                if(days > 6) dayDes += " ${SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)}"
+                text = dayDes
             }
 //                text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)
         })

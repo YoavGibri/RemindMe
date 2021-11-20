@@ -26,8 +26,8 @@ class ReminderRepo {
         if (reminders.isNotEmpty())
             reminders.add(Reminder(text = "Active"))
 
-        if (reminders.any { reminder -> reminder.isDismissed }) {
-            reminders.add(Reminder(text = "Dismissed", isDismissed = true))
+        if (reminders.any { reminder -> reminder.dismissed }) {
+            reminders.add(Reminder(text = "Dismissed", dismissed = true))
         }
 
         if (reminders.any { reminder -> reminder.repeat }) {
@@ -35,7 +35,7 @@ class ReminderRepo {
         }
 
 
-        reminders.sortWith(compareBy({ it.isDismissed }, { it.repeat }, { it.id }))
+        reminders.sortWith(compareBy({ it.dismissed }, { it.repeat }, { it.id }))
 
         return reminders
     }
@@ -73,7 +73,7 @@ class ReminderRepo {
     }
 
     suspend fun setAsDismissed(reminder: Reminder) {
-        reminder.isDismissed = true
+        reminder.dismissed = true
         val id = db.update(reminder)
         Log.d(TAG, "reminder was updated: $id")
     }

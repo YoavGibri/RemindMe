@@ -8,7 +8,7 @@ import com.hirshler.remindme.App
 import com.hirshler.remindme.model.Reminder
 
 
-@Database(entities = [Reminder::class], version = 2, exportSchema = false)
+@Database(entities = [Reminder::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

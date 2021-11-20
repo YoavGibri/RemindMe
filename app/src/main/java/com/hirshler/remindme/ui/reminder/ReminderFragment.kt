@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +24,7 @@ import java.util.*
 
 
 class ReminderFragment : Fragment() {
+
 
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
@@ -42,6 +45,8 @@ class ReminderFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        binding.debugSwitch.isChecked = SP.getIsDebugMode()
 
         vm.currentCalendar.observe(viewLifecycleOwner, { calendar ->
             binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
@@ -95,8 +100,12 @@ class ReminderFragment : Fragment() {
         binding.doneButton.setOnClickListener {
             when {
                 noTextAndNoViceRecording() -> {
-                    Snackbar.make(binding.rootLayout, getString(R.string.validation_error_no_text_or_voice), Snackbar.LENGTH_LONG).show()
+                    showErrorSnackBar(R.string.validation_error_no_text_or_voice)
                 }
+                alertIsInThePast() -> {
+                    showErrorSnackBar(R.string.error_past_time)
+                }
+
                 else -> {
                     voiceRecorder.stopRecording()
 
@@ -104,8 +113,7 @@ class ReminderFragment : Fragment() {
                     vm.saveReminderToDb()
                     vm.setAlert()
 
-
-                    Snackbar.make(binding.rootLayout, getAlertString(), Snackbar.LENGTH_LONG).show()
+                    showSuccessSnackBar(text = getAlertString())
                     (requireActivity() as MainActivity).refreshFragment()
                 }
             }
@@ -119,6 +127,8 @@ class ReminderFragment : Fragment() {
                 voiceRecorder.startRecording()
             }
         }
+
+        binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> SP.setIsDebugMode(isChecked) }
 
 
 
@@ -144,31 +154,35 @@ class ReminderFragment : Fragment() {
     private fun noTextAndNoViceRecording() =
         vm.currentReminder.value?.text.isNullOrEmpty() && (vm.currentReminder.value?.voiceNotePath.isNullOrEmpty() && !voiceRecorder.isRecording())
 
+    private fun alertIsInThePast(): Boolean = vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
+
 
     private fun showTimePicker() {
         val c = vm.currentCalendar.value!!
         val timePicker = TimePickerDialog(
             requireActivity(), AlertDialog.THEME_HOLO_LIGHT, { _, hourOfDay, minute ->
-                if (timeIsValidForToday(hourOfDay, minute)) {
-                    vm.setTime(hourOfDay, minute)
-                    binding.minutesButton.disable()
-                } else {
-                    toast.show("Please choose only future time")
-                    showTimePicker()
-                }
+                vm.setTime(hourOfDay, minute)
+                binding.minutesButton.disable()
             },
             c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
         )
         timePicker.show()
     }
 
-
-    private fun timeIsValidForToday(hourOfDay: Int, minute: Int): Boolean {
-        val cal = Calendar.getInstance()
-        val currHour = cal.get(Calendar.HOUR_OF_DAY)
-        val currMinutes = cal.get(Calendar.MINUTE)
-        return (hourOfDay * 60 + minute) > (currHour * 60 + currMinutes)
+    private fun showSuccessSnackBar(@StringRes resId: Int = 0, text: String = "") {
+        showSnackBar(resId, text, R.color.success)
     }
+
+    private fun showErrorSnackBar(@StringRes resId: Int = 0, text: String = "") {
+        showSnackBar(resId, text, R.color.design_default_color_error)
+    }
+
+    private fun showSnackBar(@StringRes resId: Int, text: String, @ColorRes color: Int) {
+        val displayText = if (resId != 0) App.applicationContext().getString(resId) else text
+        Snackbar.make(binding.rootLayout, displayText, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(App.applicationContext().getColor(color)).show()
+    }
+
 
     private fun getAlertString(): String {
         val date = SimpleDateFormat(
