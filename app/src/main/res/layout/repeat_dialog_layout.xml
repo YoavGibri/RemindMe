@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:flexWrap="nowrap"
+    app:justifyContent="space_around"
+    android:padding="10dp">
+
+    <ToggleButton
+        android:id="@+id/sunday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="S"
+        android:textOn="S" />
+
+    <ToggleButton
+        android:id="@+id/monday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="M"
+        android:textOn="M" />
+
+    <ToggleButton
+        android:id="@+id/tuesday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/wednesday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="W"
+        android:textOn="W" />
+
+    <ToggleButton
+        android:id="@+id/thursday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="T"
+        android:textOn="T" />
+
+    <ToggleButton
+        android:id="@+id/friday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="F"
+        android:textOn="F" />
+
+    <ToggleButton
+        android:id="@+id/saturday"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/style_toggle_button"
+        android:textOff="S"
+        android:textOn="S" />
+
+</com.google.android.flexbox.FlexboxLayout>

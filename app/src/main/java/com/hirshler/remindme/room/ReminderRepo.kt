@@ -48,6 +48,7 @@ class ReminderRepo {
     }
 
     suspend fun upsert(reminder: Reminder): Long {
+        Log.d(TAG, "insert: $reminder")
         var id = db.insert(reminder)
 
         if (id != -1L) {
@@ -63,8 +64,10 @@ class ReminderRepo {
     }
 
     // update reminder
-    suspend fun update(reminder: Reminder) {
+    suspend fun update(reminder: Reminder): Reminder {
+        Log.d(TAG, "update: $reminder")
         db.update(reminder)
+        return db.findById(reminder.id!!)
     }
 
     // Delete reminder
@@ -72,11 +75,11 @@ class ReminderRepo {
         db.delete(reminder)
     }
 
-    suspend fun setAsDismissed(reminder: Reminder) {
-        reminder.dismissed = true
-        val id = db.update(reminder)
-        Log.d(TAG, "reminder was updated: $id")
-    }
+//    suspend fun setAsDismissed(reminder: Reminder) {
+//        reminder.dismissed = true
+//        val id = db.update(reminder)
+//        Log.d(TAG, "reminder was updated: $id")
+//    }
 
 
 }

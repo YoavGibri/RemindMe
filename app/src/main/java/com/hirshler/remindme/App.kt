@@ -14,6 +14,12 @@ class App : Application() {
         instance = this
     }
 
+
+    override fun onCreate() {
+        super.onCreate()
+        NotificationsManager.createNotificationChannel()
+    }
+
     companion object {
         private var instance: Application? = null
 
@@ -28,6 +34,7 @@ class App : Application() {
                 .setPositiveButton("ok", null)
                 .show()
         }
+
     }
 
 }

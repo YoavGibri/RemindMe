@@ -48,7 +48,7 @@ class VoiceRecorderManager(val activity: Activity, val reminder: Reminder, val o
             release()
         }
         recorder = null
-        reminder.voiceNotePath = if (this::fileName.isInitialized) fileName else null
+        reminder.voiceNotePath = if (this::fileName.isInitialized) fileName else ""
         onStopCallback()
     }
 

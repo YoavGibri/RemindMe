@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/Users/Yoav/.gradle/caches/transforms-3/1f32e1a2627ee7417c8e63fffba2f220/transformed/appcompat-1.3.1/res/drawable/abc_btn_colored_material.xml" value="0.30427350427350425" />
         <entry key="..\:/Users/Yoav/.gradle/caches/transforms-3/1f32e1a2627ee7417c8e63fffba2f220/transformed/appcompat-1.3.1/res/drawable/abc_btn_default_mtrl_shape.xml" value="0.30427350427350425" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/offcirclebutton.xml" value="0.30427350427350425" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/oncirclebutton.xml" value="0.30427350427350425" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/style_toggle_button.xml" value="0.30427350427350425" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/activity_alert.xml" value="0.20384615384615384" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/activity_alret.xml" value="0.19230769230769232" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/activity_main.xml" value="0.29102564102564105" />
@@ -17,9 +20,11 @@
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_settings.xml" value="0.2794871794871795" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/reminders_overview_row_item.xml" value="0.19572649572649573" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/reminders_overview_row_title.xml" value="0.29102564102564105" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/repeat_dialog_layout.xml" value="0.29102564102564105" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/sample_my_view.xml" value="0.19230769230769232" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/voice_recorder_view.xml" value="0.29102564102564105" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3546875" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.30427350427350425" />
         <entry key="..\:/Users/Yoav/AppData/Local/Android/Sdk/platforms/android-30/data/res/drawable/btn_default_material.xml" value="0.30427350427350425" />
       </map>
     </option>

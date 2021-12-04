@@ -23,4 +23,10 @@
     <string name="time_set_title">Or exactly at</string>
     <string name="validation_error_no_text_or_voice">You must enter text or record a voice reminder!</string>
     <string name="error_past_time">Please choose only future time</string>
+    <string name="repeat_dialog_title">Repeat Reminder</string>
+    <string name="repeat_dialog_button_positive">Done</string>
+    <string name="repeat_dialog_button_negative">Clear</string>
+    <string name="repeat_dialog_button_neutral">cancel</string>
+    <string name="channel_name">Remind Me</string>
+    <string name="channel_description">Missed Alrets</string>
 </resources>

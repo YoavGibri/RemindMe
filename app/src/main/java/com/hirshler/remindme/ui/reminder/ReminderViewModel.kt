@@ -3,13 +3,12 @@ package com.hirshler.remindme.ui.reminder
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.gson.Gson
 import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.SP
 import com.hirshler.remindme.TimeManager
-import com.hirshler.remindme.model.Alert
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
+import com.hirshler.remindme.timeOfDayInMinutes
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -19,10 +18,9 @@ class ReminderViewModel : ViewModel() {
     val currentReminder = MutableLiveData<Reminder>(Reminder())
 
     val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance().apply { add(Calendar.MINUTE, 5) })
-    //var minutesDelay: Int = 0
 
     fun setMinutes(minutes: Int) {
-        currentReminder.value?.delayInMinutes = minutes
+        currentReminder.value?.snooze = minutes
         currentCalendar.value = TimeManager.setMinutes(minutes)
     }
 
@@ -31,7 +29,8 @@ class ReminderViewModel : ViewModel() {
     }
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
-        currentCalendar.value = TimeManager.setDate(year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(Calendar.HOUR_OF_DAY), currentCalendar.value!!.get(Calendar.MINUTE))
+        currentCalendar.value =
+            TimeManager.setDate(year, monthOfYear, dayOfMonth, currentCalendar.value!!.get(Calendar.HOUR_OF_DAY), currentCalendar.value!!.get(Calendar.MINUTE))
     }
 
     fun setTime(hourOfDay: Int, minute: Int) {
@@ -41,20 +40,23 @@ class ReminderViewModel : ViewModel() {
 
     fun createReminder() {
         currentReminder.value?.apply {
-            val time = currentCalendar.value!!.timeInMillis
-            alerts = listOf(Alert((time % 100000), time))
+            if (weekDays.values.any { it == true }) {
+                repeat = true
+                alarmTimeOfDay = currentCalendar.value!!.timeOfDayInMinutes()
+            } else
+                manualAlarm = currentCalendar.value!!.timeInMillis
         }
     }
 
     fun saveReminderToDb() {
         val reminderRepo = ReminderRepo()
-        Log.d("viewmodel upsert", Gson().toJson(currentReminder.value!!))
+        Log.d("viewmodel upsert", currentReminder.value!!.toString())
 
         val reminderId = runBlocking { reminderRepo.upsert(currentReminder.value!!) }
 
         currentReminder.value = currentReminder.value?.apply { id = reminderId }
 
-        Log.d("viewmodel after upsert", Gson().toJson(currentReminder.value!!))
+        Log.d("viewmodel after upsert", currentReminder.value!!.toString())
     }
 
     fun setAlert() {

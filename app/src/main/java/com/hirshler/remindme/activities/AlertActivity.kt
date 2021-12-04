@@ -7,6 +7,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.NotificationsManager
 import com.hirshler.remindme.RingManager
 import com.hirshler.remindme.databinding.ActivityAlertBinding
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
@@ -21,7 +22,10 @@ class AlertActivity : AppCompatActivity() {
     private lateinit var vm: AlertViewModel
     private lateinit var ringManager: RingManager
 
-    private var timer: Timer? = null
+    private var minutesButtonTimer: Timer? = null
+    private lateinit var notificationTimer: Timer
+
+    private val SECONDS_TO_NOTIFICATION: Long = 50
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,26 +38,23 @@ class AlertActivity : AppCompatActivity() {
         vm.currentReminder.observe(this, { reminder ->
             reminder?.apply {
 
-//                // set snooze reminder
-//                reminder.alerts?.get(0)?.time =
-//                    Calendar.getInstance().apply { add(Calendar.MINUTE, 5) }.timeInMillis
-//                AlertsManager.setAlert(reminder, reminder.alerts?.get(0)!!)
 
-                //todo fix issue when reminder's time sometime present and sometime not
-                if (firstLoad) {
-                    vm.setMinutes(5)
+                if (firstLoad && reminder.snoozeCount < 5) {
+                    vm.setCalendarByReminder()
+                    vm.updateSnooze(5)
+                    reminder.snoozeCount++
                     updateReminder()
                     firstLoad = false
                 }
 
-                val ringtonePath = voiceNotePath ?: alertRingtonePath
+                val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
                 ringManager = RingManager.getInstance(this@AlertActivity, ringtonePath)
                 ringManager.play()
 
 
                 binding.reminderText.text = text
 
-                if (voiceNotePath == null || (voiceNotePath != null && text != null)) {
+                if (voiceNotePath.isEmpty() || text.isNotEmpty()) {
                     binding.voiceNoteImage.visibility = View.GONE
                 }
             }
@@ -66,11 +67,12 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.minutesButton.setOnToggleCallback { minutes ->
-            vm.setMinutes(minutes)
+//            vm.setMinutes(minutes)
+            vm.updateSnooze(minutes)
 
-            timer?.cancel()
+            minutesButtonTimer?.cancel()
 
-            timer = Timer().apply {
+            minutesButtonTimer = Timer().apply {
                 schedule(timerTask {
                     runOnUiThread {
                         updateReminder()
@@ -100,6 +102,8 @@ class AlertActivity : AppCompatActivity() {
             vm.currentReminder.value?.apply {
 
                 if (repeat) {
+                    snooze = 0
+                    vm.saveReminderToDb()
                     vm.setNextAlert()
 
                 } else {
@@ -116,11 +120,19 @@ class AlertActivity : AppCompatActivity() {
             if (playbackOn) ringManager.play() else ringManager.pause()
         }
 
+        notificationTimer = Timer().apply {
+            schedule(timerTask {
+                runOnUiThread {
+                    NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+                    finish()
+                }
+            }, SECONDS_TO_NOTIFICATION * 1000)
+        }
 
     }
 
     private fun updateReminder() {
-        vm.updateReminder()
+        vm.updateCurrentReminder()
         vm.saveReminderToDb()
         vm.setNextAlert()
     }

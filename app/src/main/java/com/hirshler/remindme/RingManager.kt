@@ -3,7 +3,6 @@ package com.hirshler.remindme
 
 import android.content.Context
 import android.media.MediaPlayer
-import android.media.RingtoneManager
 import android.net.Uri
 
 
@@ -56,7 +55,8 @@ class RingManager private constructor(val context: Context, path: String?) {
     }
 
     private fun getDefault(): Uri {
-        val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+//        val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+        val alarmTone: Uri = Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm)
         return alarmTone;
     }
 

@@ -12,10 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RemindersOverviewAdapter(
-    private val clickListener: ReminderClickListener,
-    private val reminders: MutableList<Reminder>
-) :
+class RemindersOverviewAdapter(private val clickListener: ReminderClickListener, private val reminders: MutableList<Reminder>) :
     RecyclerView.Adapter<RemindersOverviewAdapter.ReminderViewHolder>() {
 
 
@@ -46,8 +43,8 @@ class RemindersOverviewAdapter(
             holder.binding.text.text = reminder.text
             holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmTime)
 
-            holder.binding.imgText.visibility = if (reminder.text?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
-            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
+            holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE
 
             holder.binding.imgEdit.setOnClickListener { clickListener.onEditClick(reminder) }
             holder.binding.imgDelete.setOnClickListener { clickListener.onDeleteClick(reminder) }

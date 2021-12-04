@@ -197,7 +197,7 @@
                 android:gravity="center">
 
                 <ImageButton
-                    android:id="@+id/recurringAlarmButton"
+                    android:id="@+id/repeatAlarmDialogButton"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
                     android:layout_height="60dp"

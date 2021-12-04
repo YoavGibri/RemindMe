@@ -73,6 +73,11 @@ class OverviewFragment : Fragment() {
         vm.getReminders()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.reminderList.adapter?.notifyDataSetChanged()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

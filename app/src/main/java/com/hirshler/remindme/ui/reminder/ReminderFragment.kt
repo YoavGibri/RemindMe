@@ -19,6 +19,7 @@ import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentReminderBinding
 import com.hirshler.remindme.model.Reminder
+import com.hirshler.remindme.view.RepeatDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,11 +34,7 @@ class ReminderFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         vm = ViewModelProvider(this).get(ReminderViewModel::class.java)
         _binding = FragmentReminderBinding.inflate(inflater, container, false)
         return binding.root
@@ -128,6 +125,10 @@ class ReminderFragment : Fragment() {
             }
         }
 
+        binding.repeatAlarmDialogButton.setOnClickListener {
+            RepeatDialog(requireActivity(), vm.currentReminder.value!!.weekDays).show()
+        }
+
         binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> SP.setIsDebugMode(isChecked) }
 
 
@@ -146,7 +147,7 @@ class ReminderFragment : Fragment() {
 
     private fun setViewsFromReminder(reminder: Reminder) {
         reminder.apply {
-            text?.let { binding.text.setText(it) }
+            text.let { binding.text.setText(it) }
             vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarmTime }
         }
     }

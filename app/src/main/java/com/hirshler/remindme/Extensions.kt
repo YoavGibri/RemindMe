@@ -5,6 +5,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.Toast
 import androidx.annotation.StringRes
+import java.util.*
 
 
 fun View.flash(duration: Long) {
@@ -26,4 +27,9 @@ fun Toast?.showInDebug(text: String = "", @StringRes resId: Int = 0, duration: I
 fun Toast?.show(text: String = "", @StringRes resId: Int = 0, duration: Int = Toast.LENGTH_LONG) {
     val toastText = if (resId != 0) App.applicationContext().getString(resId) else text
     Toast.makeText(App.applicationContext(), toastText, duration).show()
+}
+
+
+fun Calendar.timeOfDayInMinutes(): Int {
+    return (this.get(Calendar.HOUR_OF_DAY) * 60) + this.get(Calendar.MINUTE)
 }
