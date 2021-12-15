@@ -17,6 +17,7 @@ import kotlin.concurrent.timerTask
 
 class AlertActivity : AppCompatActivity() {
 
+    private var playbackOn: Boolean = false
     private var firstLoad: Boolean = true
     private lateinit var binding: ActivityAlertBinding
     private lateinit var vm: AlertViewModel
@@ -41,7 +42,7 @@ class AlertActivity : AppCompatActivity() {
 
                 if (firstLoad && reminder.snoozeCount < 5) {
                     vm.setCalendarByReminder()
-                    vm.updateSnooze(5)
+                    vm.appendToSnooze(5)
                     reminder.snoozeCount++
                     updateReminder()
                     firstLoad = false
@@ -50,12 +51,14 @@ class AlertActivity : AppCompatActivity() {
                 val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
                 ringManager = RingManager.getInstance(this@AlertActivity, ringtonePath)
                 ringManager.play()
+                playbackOn = true
 
 
-                binding.reminderText.text = text
-
-                if (voiceNotePath.isEmpty() || text.isNotEmpty()) {
-                    binding.voiceNoteImage.visibility = View.GONE
+                if (text.isNotEmpty()) {
+                    binding.reminderText.visibility = View.VISIBLE
+                    binding.reminderText.text = text
+                } else {
+                    binding.voiceNoteImage.visibility = View.VISIBLE
                 }
             }
 
@@ -68,7 +71,7 @@ class AlertActivity : AppCompatActivity() {
 
         binding.minutesButton.setOnToggleCallback { minutes ->
 //            vm.setMinutes(minutes)
-            vm.updateSnooze(minutes)
+            vm.appendToSnooze(minutes)
 
             minutesButtonTimer?.cancel()
 
@@ -118,6 +121,7 @@ class AlertActivity : AppCompatActivity() {
 
         binding.muteButton.setOnToggleCallback { playbackOn ->
             if (playbackOn) ringManager.play() else ringManager.pause()
+            this.playbackOn = playbackOn
         }
 
         notificationTimer = Timer().apply {
@@ -137,10 +141,24 @@ class AlertActivity : AppCompatActivity() {
         vm.setNextAlert()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onPause() {
+        super.onPause()
         ringManager.pause()
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (playbackOn) ringManager.play()
+    }
+
+    override fun onDestroy() {
+        notificationTimer.cancel()
+        NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+        super.onDestroy()
+    }
+
+
 
     override fun onAttachedToWindow() {
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)

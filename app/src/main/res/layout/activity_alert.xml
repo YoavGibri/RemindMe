@@ -19,6 +19,8 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="test"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:textSize="40dp" />
 
         <ImageView
@@ -26,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="50dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:src="@drawable/ic_baseline_record_voice_over_24" />
     </FrameLayout>
 

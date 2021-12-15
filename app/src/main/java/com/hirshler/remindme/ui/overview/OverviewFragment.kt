@@ -16,6 +16,7 @@ import com.hirshler.remindme.RemindersOverviewAdapter.ReminderClickListener
 import com.hirshler.remindme.databinding.FragmentOverviewBinding
 import com.hirshler.remindme.model.Reminder
 
+@SuppressLint("NotifyDataSetChanged")
 class OverviewFragment : Fragment() {
 
     private val reminders: MutableList<Reminder> = mutableListOf()
@@ -59,7 +60,7 @@ class OverviewFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         vm.reminders.observe(viewLifecycleOwner, {
             reminders.apply {
@@ -70,7 +71,7 @@ class OverviewFragment : Fragment() {
 
         })
 
-        vm.getReminders()
+        //vm.getReminders()
     }
 
     override fun onResume() {

@@ -1,5 +1,6 @@
 package com.hirshler.remindme.room
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.hirshler.remindme.model.Reminder
 
@@ -8,13 +9,16 @@ import com.hirshler.remindme.model.Reminder
 interface ReminderDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(reminder: Reminder) : Long
+    suspend fun insert(reminder: Reminder): Long
 
     @Query("select * from Reminder where id = :id")
-    suspend fun findById(id: Long): Reminder
+    suspend fun findById(id: Long): Reminder?
 
     @Query("select * from Reminder")
     suspend fun getAll(): MutableList<Reminder>
+
+    @Query("select * from Reminder")
+    fun getAllLD(): LiveData<MutableList<Reminder>>
 
     @Update
     suspend fun update(reminder: Reminder)

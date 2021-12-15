@@ -1,6 +1,7 @@
 package com.hirshler.remindme.room
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.hirshler.remindme.model.Reminder
 
 
@@ -11,7 +12,7 @@ class ReminderRepo {
 
 
     //Fetch Reminder by id
-    suspend fun findById(id: Long): Reminder {
+    suspend fun findById(id: Long): Reminder? {
         return db.findById(id)
     }
 
@@ -20,10 +21,15 @@ class ReminderRepo {
         return db.getAll()
     }
 
+    //Fetch All the Reminders
+    fun getAllLD(): LiveData<MutableList<Reminder>> {
+        return db.getAllLD()
+    }
+
     suspend fun getAllForList(): MutableList<Reminder> {
         val reminders = db.getAll()
 
-        if (reminders.isNotEmpty())
+        if (reminders.any { reminder -> !reminder.dismissed && !reminder.repeat })
             reminders.add(Reminder(text = "Active"))
 
         if (reminders.any { reminder -> reminder.dismissed }) {
@@ -67,7 +73,7 @@ class ReminderRepo {
     suspend fun update(reminder: Reminder): Reminder {
         Log.d(TAG, "update: $reminder")
         db.update(reminder)
-        return db.findById(reminder.id!!)
+        return db.findById(reminder.id!!)!!
     }
 
     // Delete reminder

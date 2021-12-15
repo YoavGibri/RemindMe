@@ -3,16 +3,15 @@
   <component name="deploymentTargetDropDown">
     <targetSelectedWithDropDown>
       <Target>
-        <type value="BOOT_WITH_SNAPSHOT_TARGET" />
+        <type value="QUICK_BOOT_TARGET" />
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Yoav\.android\avd\Nexus_5X_API_27_-_2.avd" />
+            <value value="C:\Users\Yoav\.android\avd\Pixel_5_API_31.avd" />
           </Key>
         </deviceKey>
-        <snapshotKey value="C:\Users\Yoav\.android\avd\Nexus_5X_API_27_-_2.avd\snapshots\snap_2020-05-27_22-31-27" />
       </Target>
     </targetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2021-11-16T18:35:11.359395Z" />
+    <timeTargetWasSelectedWithDropDown value="2021-12-15T17:34:17.222202Z" />
   </component>
 </project>

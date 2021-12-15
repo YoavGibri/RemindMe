@@ -76,7 +76,7 @@ class AlertViewModel : ViewModel() {
 
     fun initCurrentReminderById(id: Long) {
         viewModelScope.launch {
-            ReminderRepo().findById(id).let {
+            ReminderRepo().findById(id)?.let {
                 origSnooze = it.snooze
                 currentReminder.value = it
             }
@@ -84,7 +84,7 @@ class AlertViewModel : ViewModel() {
         }
     }
 
-    fun updateSnooze(minutes: Int) {
+    fun appendToSnooze(minutes: Int) {
         Log.d(TAG, "updateSnooze: ${currentReminder.value!!}")
         currentSnooze += minutes
     }
