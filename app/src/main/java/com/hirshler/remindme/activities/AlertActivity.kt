@@ -53,10 +53,8 @@ class AlertActivity : AppCompatActivity() {
 
                     audioManager = App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
                     origAlarmVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM)
-                    val newAlarmVolume = AppSettings.getAlarmVolume()
-//                    val vibrateFlag = if (AppSettings.getVibrate()) FLAG_VIBRATE else 0
-                    val vibrateFlag = 0
-                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newAlarmVolume, vibrateFlag)
+                    val newAlarmVolume = if (voiceNotePath.isNotEmpty()) AppSettings.getVoiceVolume() else AppSettings.getAlarmVolume()
+                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newAlarmVolume, 0)
                     val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
                     ringManager.setRingPath(ringtonePath)
                 }
@@ -72,12 +70,12 @@ class AlertActivity : AppCompatActivity() {
                     binding.reminderText.apply {
                         visibility = View.VISIBLE
                         text = text
-                        flash(200)
+                        flash(400)
                     }
                 } else {
                     binding.voiceNoteImage.apply {
                         visibility = View.VISIBLE
-                        flash(200)
+                        flash(400)
                     }
                 }
             }

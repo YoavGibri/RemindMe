@@ -46,8 +46,9 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
             holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
             holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE
 
-            holder.binding.imgEdit.setOnClickListener { clickListener.onEditClick(reminder) }
             holder.binding.imgDelete.setOnClickListener { clickListener.onDeleteClick(reminder) }
+
+            holder.binding.root.setOnClickListener { clickListener.onEditClick(reminder) }
 
         } else if (holder.binding is RemindersRemindersListRowTitleBinding) {
             holder.binding.text.text = reminder.text

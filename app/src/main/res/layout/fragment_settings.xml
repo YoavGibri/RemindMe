@@ -115,8 +115,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="12dp"
+                android:padding="10dp"
                 android:gravity="center"
                 android:textSize="20dp"
+                android:background="#7EFFFFFF"
                 tools:text="No Alarm" />
 
             <LinearLayout

@@ -9,15 +9,10 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.BuildConfig
-import com.hirshler.remindme.R
+import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
-import com.hirshler.remindme.ui.settings.SettingsFragment
 import com.hirshler.remindme.ui.settings.SettingsFragment.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
 
 class MainActivity : AppCompatActivity() {
@@ -30,10 +25,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
+//        val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        navView.setupWithNavController(navController)
+//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//        navView.setupWithNavController(navController)
+
+        binding.viewPager.adapter = StateAdapter(this)
+        binding.dotsIndicator.setViewPager2(binding.viewPager)
+        binding.viewPager.offscreenPageLimit = 2
     }
 
     override fun onResume() {
@@ -55,14 +54,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun refreshFragment() {
-        findNavController(R.id.nav_host_fragment_activity_main).navigate(
-            R.id.navigation_reminder,
-            null,
-            NavOptions.Builder()
-                .setPopUpTo(R.id.navigation_reminder, true)
-                .build()
-        )
+    fun refreshReminderFragment() {
+//        findNavController(R.id.nav_host_fragment_activity_main).navigate(
+//            R.id.navigation_reminder,
+//            null,
+//            NavOptions.Builder()
+//                .setPopUpTo(R.id.navigation_reminder, true)
+//                .build()
+//        )
+//        (binding.viewPager.adapter as StateAdapter)?.notifyItemChanged(0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -70,11 +70,11 @@ class MainActivity : AppCompatActivity() {
             val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
             AppSettings.setGeneralAlarm(uri)
 
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)?.childFragmentManager?.fragments?.get(0)
-            if (currentFragment != null && currentFragment is SettingsFragment) {
-                currentFragment.setAlarmButtonTextFromSettings()
-            }
-
+//            val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)?.childFragmentManager?.fragments?.get(0)
+//            if (currentFragment != null && currentFragment is SettingsFragment) {
+//                currentFragment.setAlarmButtonTextFromSettings()
+//            }
+            (binding.viewPager.adapter as StateAdapter)?.settingsFragment.setAlarmTextFromSettings()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -86,5 +86,12 @@ class MainActivity : AppCompatActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
             window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
         }
+    }
+
+    override fun onBackPressed() {
+        if (binding.viewPager.currentItem != 0) {
+            binding.viewPager.setCurrentItem(0, true)
+        } else
+            super.onBackPressed()
     }
 }

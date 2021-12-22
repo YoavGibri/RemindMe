@@ -113,18 +113,29 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         vm = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
-        setAlarmButtonTextFromSettings()
+        setAlarmTextFromSettings()
+//        setAlarmButtonTextFromSettings()
     }
 
-    fun setAlarmButtonTextFromSettings() {
+    fun setAlarmTextFromSettings() {
         val alarmUri = AppSettings.getGeneralAlarm()
         val generalAlarmName =
             if (alarmUri != null) {
                 RingtoneManager.getRingtone(requireContext(), alarmUri).getTitle(requireContext())
             } else "NO ALARM"
 
-        binding.chooseAlarmSoundButton.text = generalAlarmName
+        binding.currentAlarmSound.text = generalAlarmName
     }
+
+//    fun setAlarmButtonTextFromSettings() {
+//        val alarmUri = AppSettings.getGeneralAlarm()
+//        val generalAlarmName =
+//            if (alarmUri != null) {
+//                RingtoneManager.getRingtone(requireContext(), alarmUri).getTitle(requireContext())
+//            } else "NO ALARM"
+//
+//        binding.chooseAlarmSoundButton.text = generalAlarmName
+//    }
 
 
 }

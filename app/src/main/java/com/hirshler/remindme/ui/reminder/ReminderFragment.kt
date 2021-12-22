@@ -3,6 +3,7 @@ package com.hirshler.remindme.ui.reminder
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +27,6 @@ import kotlin.concurrent.timerTask
 
 
 class ReminderFragment : Fragment() {
-
 
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
@@ -145,7 +145,9 @@ class ReminderFragment : Fragment() {
                             requireActivity().finish()
                         }, SECONDS_TO_AUTOCLOSE * 1000)
                     } else {
-                        (requireActivity() as MainActivity).refreshFragment()
+//                        (requireActivity() as MainActivity).refreshReminderFragment()
+                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        requireActivity().finish()
                     }
                 }
             }

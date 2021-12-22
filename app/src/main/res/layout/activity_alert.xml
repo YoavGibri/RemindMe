@@ -30,7 +30,7 @@
             android:paddingLeft="50dp"
             android:visibility="gone"
             tools:visibility="visible"
-            android:src="@drawable/ic_baseline_record_voice_over_24" />
+            android:src="@drawable/ic_baseline_volume_up_24" />
     </FrameLayout>
 
 
@@ -120,9 +120,10 @@
         android:id="@+id/muteButton"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_weight="0.5"
         android:padding="10dp"
+        android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_baseline_volume_off_24"
         app:tint="?attr/colorSecondary" />
