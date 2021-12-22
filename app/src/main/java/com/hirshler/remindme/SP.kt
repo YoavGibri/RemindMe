@@ -30,5 +30,9 @@ class SP {
             sp.edit { putBoolean(IS_DEBUG_MODE, isDebug) }
         }
 
+        fun set(): SharedPreferences.Editor = sp.edit()
+
+        fun get() = sp
+
     }
 }

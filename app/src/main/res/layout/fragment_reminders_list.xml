@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".ui.reminderlist.ReminderListFragment"
+    tools:layout_marginTop="50dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reminders"
+        android:textSize="30dp"
+        android:layout_marginTop="15dp"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reminderList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+    <TextView
+        android:id="@+id/noRemindersText"
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="There are no reminders yet..."
+        android:textSize="26dp"/>
+
+</LinearLayout>

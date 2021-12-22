@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/navigation_reminder"
@@ -8,9 +7,9 @@
         android:title="@string/title_reminder" />
 
     <item
-        android:id="@+id/navigation_overview"
+        android:id="@+id/navigation_reminders_list"
         android:icon="@drawable/ic_baseline_view_list_24"
-        android:title="@string/title_overview" />
+        android:title="@string/title_reminders_list" />
 
     <item
         android:id="@+id/navigation_settings"

@@ -1,22 +1,26 @@
 package com.hirshler.remindme.activities
 
 import android.app.DatePickerDialog
+import android.content.Context
+import android.media.AudioManager
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.hirshler.remindme.AlertsManager
-import com.hirshler.remindme.NotificationsManager
-import com.hirshler.remindme.RingManager
+import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
+import com.hirshler.remindme.receivers.AlertReceiver
 import com.hirshler.remindme.ui.alert.AlertViewModel
 import java.util.*
 import kotlin.concurrent.timerTask
 
+
 class AlertActivity : AppCompatActivity() {
 
+    private lateinit var audioManager: AudioManager
+    private var origAlarmVolume: Int = -1
     private var playbackOn: Boolean = false
     private var firstLoad: Boolean = true
     private lateinit var binding: ActivityAlertBinding
@@ -46,24 +50,41 @@ class AlertActivity : AppCompatActivity() {
                     reminder.snoozeCount++
                     updateReminder()
                     firstLoad = false
+
+                    audioManager = App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                    origAlarmVolume = audioManager.getStreamVolume(AudioManager.STREAM_ALARM)
+                    val newAlarmVolume = AppSettings.getAlarmVolume()
+//                    val vibrateFlag = if (AppSettings.getVibrate()) FLAG_VIBRATE else 0
+                    val vibrateFlag = 0
+                    audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newAlarmVolume, vibrateFlag)
+                    val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
+                    ringManager.setRingPath(ringtonePath)
                 }
 
-                val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
-                ringManager = RingManager.getInstance(this@AlertActivity, ringtonePath)
-                ringManager.play()
-                playbackOn = true
 
+
+                if (intent.getBooleanExtra(AlertReceiver.FROM_ALERT, true)) {
+                    ringManager.play()
+                    playbackOn = true
+                }
 
                 if (text.isNotEmpty()) {
-                    binding.reminderText.visibility = View.VISIBLE
-                    binding.reminderText.text = text
+                    binding.reminderText.apply {
+                        visibility = View.VISIBLE
+                        text = text
+                        flash(200)
+                    }
                 } else {
-                    binding.voiceNoteImage.visibility = View.VISIBLE
+                    binding.voiceNoteImage.apply {
+                        visibility = View.VISIBLE
+                        flash(200)
+                    }
                 }
             }
 
         })
 
+        ringManager = RingManager(this)
 
         val id = intent.getLongExtra(KEY_REMINDER_ID, -1)
         vm.initCurrentReminderById(id)
@@ -155,9 +176,11 @@ class AlertActivity : AppCompatActivity() {
     override fun onDestroy() {
         notificationTimer.cancel()
         NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+        if (origAlarmVolume != -1) {
+            audioManager.setStreamVolume(AudioManager.STREAM_ALARM, origAlarmVolume, 0)
+        }
         super.onDestroy()
     }
-
 
 
     override fun onAttachedToWindow() {

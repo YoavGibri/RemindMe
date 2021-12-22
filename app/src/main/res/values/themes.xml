@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.RemindMe" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/secondaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
@@ -24,6 +24,16 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
+
+
+    <style name="cardOverlay">
+        <item name="cardBackgroundColor">@color/cardview_background</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+
+    </style>
+
+
 
 
 </resources>

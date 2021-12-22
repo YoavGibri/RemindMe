@@ -18,6 +18,12 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         NotificationsManager.createNotificationChannel()
+
+        initVolumes()
+    }
+
+    private fun initVolumes() {
+
     }
 
     companion object {

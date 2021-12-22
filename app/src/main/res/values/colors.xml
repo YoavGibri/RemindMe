@@ -18,6 +18,16 @@
     <color name="black_overlay">#66000000</color>
     <color name="red">#F44336</color>
     <color name="success">#8BC34A</color>
+    <color name="cardview_background">#E3E3E3</color>
+
+
+    <color name="demo1">#555555</color>
+    <color name="demo2">#000000</color>
+    <color name="demo3">#1360DF</color>
+    <color name="demo4">#38B509</color>
+    <color name="demo5">#A81FDC</color>
+    <color name="demo6">#B51A27</color>
+    <color name="set_alarm_button">#D6D6D6</color>
 
 
 </resources>

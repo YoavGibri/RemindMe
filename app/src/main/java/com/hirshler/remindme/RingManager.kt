@@ -2,34 +2,35 @@ package com.hirshler.remindme
 
 
 import android.content.Context
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 
 
-class RingManager private constructor(val context: Context, path: String?) {
+class RingManager(private val context: Context) {
 
     private var mp: MediaPlayer = MediaPlayer()
+    private var vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    var pattern = longArrayOf(0, 500, 1000)
 
-    init {
+
+    fun setRingPath(path: String?) {
         tryWithCatch {
-            val ringPath = if (path.isNullOrEmpty()) getDefault() else Uri.parse(path) //SP.getDefaultRingtonePath()
-            mp.isLooping = true
-            mp.setDataSource(context, ringPath)
-            mp.prepare()
-        }
-    }
-
-    companion object {
-        private var instance: RingManager? = null
-
-        fun getInstance(context: Context, path: String?): RingManager {
-            if (instance == null) {
-                instance = RingManager(context, path)
+            val ringPath: Uri? = if (path.isNullOrEmpty()) AppSettings.getGeneralAlarm() else Uri.parse(path) //SP.getDefaultRingtonePath()
+            ringPath?.let {
+                val attr = AudioAttributes.Builder()
+                    .setLegacyStreamType(AudioManager.STREAM_ALARM)
+                    .build()
+                mp.setAudioAttributes(attr)
+                mp.isLooping = true
+                mp.setDataSource(context, ringPath)
+                mp.prepare()
             }
-            return instance!!
         }
-
-
     }
 
 
@@ -37,11 +38,25 @@ class RingManager private constructor(val context: Context, path: String?) {
         tryWithCatch {
             if (!mp.isPlaying)
                 mp.start()
+
+            if (AppSettings.getVibrate())
+                startVibrator()
+        }
+    }
+
+    private fun startVibrator() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0))
+        } else {
+            vibrator.vibrate(pattern, 0)
         }
     }
 
     fun pause() {
-        tryWithCatch { mp.pause() }
+        tryWithCatch {
+            mp.pause()
+            vibrator.cancel()
+        }
     }
 
 
@@ -54,7 +69,7 @@ class RingManager private constructor(val context: Context, path: String?) {
         }
     }
 
-    private fun getDefault(): Uri {
+    private fun getGeneralAlarm(): Uri {
 //        val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
         val alarmTone: Uri = Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm)
         return alarmTone;

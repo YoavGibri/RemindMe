@@ -22,48 +22,41 @@
 
 
         <TextView
-        android:id="@+id/textView"
-        android:layout_width="0dp"
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:text="@string/remind_me_to"
-        android:textSize="30dp" />
+            android:text="@string/remind_me_to"
+            android:textSize="30dp" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
-            android:layout_width="wrap_content"
             android:id="@+id/debugSwitch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:thumb="@drawable/ic_round_bug_report_24"
-            />
+            android:thumb="@drawable/ic_round_bug_report_24" />
 
 
     </LinearLayout>
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="15dp"-->
-    <!--        android:text="@string/remind_me_to"-->
-    <!--        android:textSize="30dp" />-->
-
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center_vertical">
 
-        tools:cardElevation="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_margin="10dp"
+            style="@style/cardOverlay">
 
             <FrameLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_weight="1">
+                android:layout_marginEnd="8dp">
 
                 <TextView
                     android:id="@+id/autoSizingTextView"
@@ -90,25 +83,24 @@
             </FrameLayout>
 
 
-            <ImageButton
-                android:id="@+id/recordButton"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginEnd="8dp"
-                android:padding="10dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_round_mic_24"
-                app:tint="?attr/colorSecondary" />
-
-            <!--            <com.hirshler.remindme.view.VoiceRecordView-->
-            <!--                android:layout_width="100dp"-->
-            <!--                android:layout_height="match_parent"/>-->
-
-        </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
 
-    </com.google.android.material.card.MaterialCardView>
+
+        <ImageButton
+            android:id="@+id/recordButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_round_mic_24"
+            app:tint="?attr/colorSecondary" />
+
+
+    </LinearLayout>
+
 
 
     <TextView
@@ -123,7 +115,7 @@
         android:layout_height="0dp"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        tools:cardElevation="4dp">
+        style="@style/cardOverlay">
 
         <LinearLayout
             android:layout_width="match_parent"

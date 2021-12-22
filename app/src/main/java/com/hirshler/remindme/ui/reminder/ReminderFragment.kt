@@ -22,11 +22,13 @@ import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.RepeatDialog
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.timerTask
 
 
 class ReminderFragment : Fragment() {
 
 
+    private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
     private lateinit var voiceRecorder: VoiceRecorderManager
@@ -94,27 +96,6 @@ class ReminderFragment : Fragment() {
             showTimePicker()
         }
 
-        binding.doneButton.setOnClickListener {
-            when {
-                noTextAndNoViceRecording() -> {
-                    showErrorSnackBar(R.string.validation_error_no_text_or_voice)
-                }
-                alertIsInThePast() -> {
-                    showErrorSnackBar(R.string.error_past_time)
-                }
-
-                else -> {
-                    voiceRecorder.stopRecording()
-
-                    vm.createReminder()
-                    vm.saveReminderToDb()
-                    vm.setAlert()
-
-                    showSuccessSnackBar(text = getAlertString())
-                    (requireActivity() as MainActivity).refreshFragment()
-                }
-            }
-        }
 
 
         binding.recordButton.setOnClickListener {
@@ -141,6 +122,34 @@ class ReminderFragment : Fragment() {
             onStopCallback = {
                 binding.recordButton.clearAnimation()
             })
+
+        binding.doneButton.setOnClickListener {
+            when {
+                noTextAndNoViceRecording() -> {
+                    showErrorSnackBar(R.string.validation_error_no_text_or_voice)
+                }
+                alertIsInThePast() -> {
+                    showErrorSnackBar(R.string.error_past_time)
+                }
+
+                else -> {
+                    voiceRecorder.stopRecording()
+
+                    vm.createReminder()
+                    vm.saveReminderToDb()
+                    vm.setAlert()
+
+                    showSuccessSnackBar(text = getAlertString())
+                    if (AppSettings.getCloseAppAfterReminderSet()) {
+                        Timer().schedule(timerTask {
+                            requireActivity().finish()
+                        }, SECONDS_TO_AUTOCLOSE * 1000)
+                    } else {
+                        (requireActivity() as MainActivity).refreshFragment()
+                    }
+                }
+            }
+        }
 
 
     }

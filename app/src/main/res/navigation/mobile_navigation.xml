@@ -12,12 +12,12 @@
         tools:layout="@layout/fragment_reminder" />
 
     <fragment
-        android:id="@+id/navigation_overview"
-        android:name="com.hirshler.remindme.ui.overview.OverviewFragment"
-        android:label="@string/title_overview"
-        tools:layout="@layout/fragment_overview">
+        android:id="@+id/navigation_reminders_list"
+        android:name="com.hirshler.remindme.ui.reminderlist.ReminderListFragment"
+        android:label="@string/title_reminders_list"
+        tools:layout="@layout/fragment_reminders_list">
         <action
-            android:id="@+id/action_navigation_overview_to_navigation_reminder"
+            android:id="@+id/action_navigation_reminders_list_to_navigation_reminder"
             app:destination="@id/navigation_reminder">
             <argument
                 android:name="reminderToEdit"

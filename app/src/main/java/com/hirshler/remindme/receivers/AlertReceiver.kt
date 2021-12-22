@@ -13,6 +13,10 @@ import kotlinx.coroutines.runBlocking
 class AlertReceiver : BroadcastReceiver() {
     private val toast: Toast? = null
 
+    companion object {
+        const val FROM_ALERT = "fromAlert"
+    }
+
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
 //        val reminderId = intent?.getLongExtra(KEY_REMINDER_ID, -1)
@@ -24,7 +28,7 @@ class AlertReceiver : BroadcastReceiver() {
             intent?.getLongExtra(Reminder.KEY_REMINDER_ID, -1)?.let { id ->
                 val reminder = runBlocking { AppDatabase.getInstance()?.reminderDao()!!.findById(id) }
                 if (reminder != null) {
-                    val alertIntent = Utils.getAlertIntent(id)
+                    val alertIntent = Utils.getAlertIntent(id).apply { putExtra(FROM_ALERT, true) }
                     context.startActivity(alertIntent)
                 }
             }
