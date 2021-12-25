@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -66,6 +67,7 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
                 binding.text.textSize = binding.autoSizingTextView.textSize / 3
             },
             afterTextChanged = { vm.currentReminder.value?.text = it.toString() })
+
 
         binding.text.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
 

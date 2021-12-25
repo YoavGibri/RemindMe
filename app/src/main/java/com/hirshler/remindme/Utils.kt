@@ -52,6 +52,16 @@ class Utils {
             }
         }
 
+        fun appendToFile(data: String) {
+            try {
+                val outputStreamWriter = OutputStreamWriter(App.applicationContext().openFileOutput("log.txt", Context.MODE_APPEND))
+                outputStreamWriter.write(data)
+                outputStreamWriter.close()
+            } catch (e: IOException) {
+                Log.e("Exception", "File write failed: " + e.toString());
+            }
+        }
+
         fun readFromFile(): String {
             var ret = ""
             try {

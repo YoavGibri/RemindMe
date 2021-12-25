@@ -83,7 +83,7 @@ class FlowLog {
             val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
             Log.d(tag, logText)
             //App.firebaseAnalytics.logEvent(tag, Bundle().apply { putString("text", logText) })
-            Utils.writeToFile("${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)} - $logText")
+            Utils.appendToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}\n$logText")
         }
 
 
