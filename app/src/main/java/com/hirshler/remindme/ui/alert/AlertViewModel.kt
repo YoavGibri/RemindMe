@@ -13,6 +13,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class AlertViewModel : ViewModel() {
+    var alertWasDismissed: Boolean = false
     val TAG = "AlertViewModel"
 
     val currentReminder = MutableLiveData<Reminder>(null)
@@ -21,12 +22,8 @@ class AlertViewModel : ViewModel() {
 
     //var minutesDelay = 0
     private var origSnooze = 0
-    private var currentSnooze = 0
+    var currentSnooze = 0
 
-//    fun setMinutes(minutes: Int) {
-//        minutesDelay = minutes
-//        currentCalendar.value = TimeManager.setMinutes(minutes)
-//    }
 
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
@@ -39,7 +36,7 @@ class AlertViewModel : ViewModel() {
     fun updateCurrentReminder() {
         currentReminder.value?.apply {
             snooze = origSnooze + currentSnooze
-            manualAlarm = currentCalendar.value!!.timeInMillis
+            manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
         }
     }
 
@@ -47,11 +44,6 @@ class AlertViewModel : ViewModel() {
         currentReminder.value = runBlocking {
             Log.d(TAG, "saveReminderToDb: ${currentReminder.value!!}")
             ReminderRepo().update(currentReminder.value!!)
-//            ReminderRepo().let {
-//                it.update(currentReminder.value!!)
-//                it.findById(currentReminder.value!!.id!!)
-//            }
-
         }
     }
 
@@ -66,8 +58,9 @@ class AlertViewModel : ViewModel() {
     fun dismissReminder() {
         viewModelScope.launch {
             currentReminder.value?.let {
-                it.manualAlarm = 0
+//                it.manualAlarm = 0
                 it.snooze = 0
+                it.snoozeCount = 0
                 it.dismissed = true
                 ReminderRepo().update(it)
             }
@@ -84,13 +77,18 @@ class AlertViewModel : ViewModel() {
         }
     }
 
-    fun appendToSnooze(minutes: Int) {
-        Log.d(TAG, "updateSnooze: ${currentReminder.value!!}")
-        currentSnooze += minutes
+//    fun setCurrentSnooze(minutes: Int) {
+////        currentSnooze += minutes
+//        currentSnooze = minutes
+//    }
+
+    fun resetSnooze(){
+        origSnooze = 0
+        currentSnooze = 0
     }
 
     fun setCalendarByReminder() {
-        currentCalendar.value = Calendar.getInstance().apply { timeInMillis = currentReminder.value!!.nextAlarmTime }
+        currentCalendar.value = Calendar.getInstance().apply { timeInMillis = currentReminder.value!!.nextAlarm() }
     }
 
 

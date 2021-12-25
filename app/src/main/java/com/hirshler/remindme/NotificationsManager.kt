@@ -17,6 +17,7 @@ class NotificationsManager {
 
     companion object {
 
+        val FROM_NOTIFICATION: String = "fromNotification"
         private val CHANNEL_ID: String = "remind_me"
 
 
@@ -27,7 +28,7 @@ class NotificationsManager {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val name = App.applicationContext().getString(R.string.channel_name)
                 val descriptionText = App.applicationContext().getString(R.string.channel_description)
-                val importance = NotificationManager.IMPORTANCE_LOW
+                val importance = NotificationManager.IMPORTANCE_HIGH
                 val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                     description = descriptionText
                 }
@@ -40,17 +41,19 @@ class NotificationsManager {
 
         //set new notification with action to go to the alert activity
         fun showMissedAlertNotification(activity: Activity, reminder: Reminder) {
-            val intent = Utils.getAlertIntent(reminder.id!!)
+            val intent = Utils.getAlertIntent(reminder.id!!).apply { putExtra(FROM_NOTIFICATION, true) }
             val pendingIntent: PendingIntent = PendingIntent.getActivity(App.applicationContext(), reminder.id!!.toInt(), intent, FLAG_UPDATE_CURRENT)
 
 
             val title = "You missed a reminder"
             val contentText = reminder.text.ifEmpty { "Voice reminder" }
-            val missedTime = Calendar.getInstance().time
-            val nextTime = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmTime }.time
+//            val missedTime = Calendar.getInstance().time
+            val missedTime = reminder.lastAlarm()
+            val nextTime = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmWithSnooze() }.time
 
             val formatter = SimpleDateFormat("kk:mm", Locale.getDefault())
-            val missedText = "Missed on ${formatter.format(missedTime)}, next alert on ${formatter.format(nextTime)}"
+            var missedText = "Missed on ${formatter.format(missedTime)}"
+            if (reminder.snoozeCount <= 5) missedText += ", next alert on ${formatter.format(nextTime)}"
 
             val notification = NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_icon)
@@ -66,6 +69,7 @@ class NotificationsManager {
                 ).build()
 
             NotificationManagerCompat.from(activity).notify(reminder.id!!.toInt(), notification)
+            FlowLog.notificationIsShowing(reminder, missedText)
         }
 
         //cancel the current notification(if exists) and create a new one

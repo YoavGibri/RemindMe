@@ -1,18 +1,16 @@
 package com.hirshler.remindme.ui.reminderlist
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
-import com.hirshler.remindme.R
 import com.hirshler.remindme.RemindersListAdapter
 import com.hirshler.remindme.RemindersListAdapter.ReminderClickListener
+import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentRemindersListBinding
 import com.hirshler.remindme.model.Reminder
 
@@ -33,13 +31,15 @@ class ReminderListFragment : Fragment() {
         binding.reminderList.adapter = RemindersListAdapter(object : ReminderClickListener {
             override fun onEditClick(reminder: Reminder) {
 
-                findNavController().navigate(
-                    R.id.action_navigation_reminders_list_to_navigation_reminder,
-                    Bundle().apply { putString("reminderToEdit", Gson().toJson(reminder)) },
-                    NavOptions.Builder()
-                        .setPopUpTo(R.id.navigation_reminder, true)
-                        .build()
-                )
+//                findNavController().navigate(
+//                    R.id.action_navigation_reminders_list_to_navigation_reminder,
+//                    Bundle().apply { putString("reminderToEdit", Gson().toJson(reminder)) },
+//                    NavOptions.Builder()
+//                        .setPopUpTo(R.id.navigation_reminder, true)
+//                        .build()
+//                )
+                startActivity(Intent(requireActivity(), MainActivity::class.java).apply { putExtra("reminderToEdit", reminder.toString()) })
+                requireActivity().finish()
             }
 
             override fun onDeleteClick(reminder: Reminder) {

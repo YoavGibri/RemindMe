@@ -11,14 +11,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
-import com.hirshler.remindme.receivers.AlertReceiver
 import com.hirshler.remindme.ui.alert.AlertViewModel
 import java.util.*
 import kotlin.concurrent.timerTask
 
+/*
+
+ */
 
 class AlertActivity : AppCompatActivity() {
 
+    private var finishByUser: Boolean = false
     private lateinit var audioManager: AudioManager
     private var origAlarmVolume: Int = -1
     private var playbackOn: Boolean = false
@@ -31,6 +34,7 @@ class AlertActivity : AppCompatActivity() {
     private lateinit var notificationTimer: Timer
 
     private val SECONDS_TO_NOTIFICATION: Long = 50
+    private val SNOOZE_BUTTON_DELAY_SECONDS: Long = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,13 +46,18 @@ class AlertActivity : AppCompatActivity() {
 
         vm.currentReminder.observe(this, { reminder ->
             reminder?.apply {
+                if (firstLoad) {
 
+                    FlowLog.alertIsAlerting(reminder)
 
-                if (firstLoad && reminder.snoozeCount < 5) {
                     vm.setCalendarByReminder()
-                    vm.appendToSnooze(5)
-                    reminder.snoozeCount++
-                    updateReminder()
+
+                    if (reminder.snoozeCount < 5) {
+                        vm.currentSnooze = 5
+                        reminder.snoozeCount++
+                        updateReminder()
+                    }
+
                     firstLoad = false
 
                     audioManager = App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -60,16 +69,16 @@ class AlertActivity : AppCompatActivity() {
                 }
 
 
-
-                if (intent.getBooleanExtra(AlertReceiver.FROM_ALERT, true)) {
+                val fromAlert = !intent.getBooleanExtra(NotificationsManager.FROM_NOTIFICATION, false)
+                if (fromAlert) {
                     ringManager.play()
                     playbackOn = true
                 }
 
-                if (text.isNotEmpty()) {
+                if (reminder.text.isNotEmpty()) {
                     binding.reminderText.apply {
                         visibility = View.VISIBLE
-                        text = text
+                        text = reminder.text
                         flash(400)
                     }
                 } else {
@@ -89,18 +98,22 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.minutesButton.setOnToggleCallback { minutes ->
-//            vm.setMinutes(minutes)
-            vm.appendToSnooze(minutes)
+            vm.currentSnooze = minutes
 
             minutesButtonTimer?.cancel()
 
             minutesButtonTimer = Timer().apply {
                 schedule(timerTask {
+
+
                     runOnUiThread {
                         updateReminder()
-                        finish()
+                        FlowLog.alertSnoozed(vm.currentReminder.value)
+
+                        finishByUser()
                     }
-                }, 2000)
+
+                }, SNOOZE_BUTTON_DELAY_SECONDS * 1000)
             }
         }
 
@@ -109,8 +122,9 @@ class AlertActivity : AppCompatActivity() {
             val datePicker = DatePickerDialog(
                 this, { _, year, monthOfYear, dayOfMonth ->
                     vm.setDate(year, monthOfYear, dayOfMonth)
+                    vm.resetSnooze()
                     updateReminder()
-                    finish()
+                    finishByUser()
                 },
                 c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
             )
@@ -133,8 +147,9 @@ class AlertActivity : AppCompatActivity() {
                     AlertsManager.cancelAlert(this)
                 }
             }
-
-            finish()
+            vm.alertWasDismissed = true
+            FlowLog.alertDismissed(vm.currentReminder.value)
+            finishByUser()
         }
 
 
@@ -146,7 +161,6 @@ class AlertActivity : AppCompatActivity() {
         notificationTimer = Timer().apply {
             schedule(timerTask {
                 runOnUiThread {
-                    NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
                     finish()
                 }
             }, SECONDS_TO_NOTIFICATION * 1000)
@@ -162,8 +176,8 @@ class AlertActivity : AppCompatActivity() {
 
 
     override fun onPause() {
-        super.onPause()
         ringManager.pause()
+        super.onPause()
     }
 
     override fun onResume() {
@@ -173,11 +187,20 @@ class AlertActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         notificationTimer.cancel()
-        NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+
+        if (!finishByUser)
+            NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+
         if (origAlarmVolume != -1) {
             audioManager.setStreamVolume(AudioManager.STREAM_ALARM, origAlarmVolume, 0)
         }
+
         super.onDestroy()
+    }
+
+    private fun finishByUser() {
+        finishByUser = true
+        finish()
     }
 
 

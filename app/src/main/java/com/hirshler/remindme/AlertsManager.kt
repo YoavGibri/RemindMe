@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.Toast
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
@@ -18,14 +17,14 @@ class AlertsManager {
         val TAG: String = "AlertsManager"
 
         fun setNextAlert(reminder: Reminder, time: Long = 0) {
-            val alertTime = if (time != 0L) time else reminder.nextAlarmTime
+            val alertTime = if (time != 0L) time else reminder.nextAlarmWithSnooze()
 
             val alarmManager = App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, createPendingIntent(reminder))
+            FlowLog.setAlert(reminder, alertTime)
 
             val now = Calendar.getInstance().timeInMillis
             toast.showInDebug("alarm ${reminder.id} set to ${(alertTime - now) / 1000} seconds from now")
-            Log.i(TAG, "alarm ${reminder.id} set to ${(alertTime - now) / 1000} seconds from now")
         }
 
         fun cancelAlert(reminder: Reminder) {
@@ -35,6 +34,7 @@ class AlertsManager {
 
             alarmManager.cancel(pendingIntent);
 
+            FlowLog.alertCancel(reminder)
             toast.showInDebug("alarm ${reminder.id} canceled")
         }
 

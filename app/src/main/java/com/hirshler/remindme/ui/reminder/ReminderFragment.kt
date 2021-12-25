@@ -11,11 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentReminderBinding
@@ -26,7 +24,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 
-class ReminderFragment : Fragment() {
+class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
 
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
@@ -52,15 +50,15 @@ class ReminderFragment : Fragment() {
         })
 
 
-        arguments?.getString("reminderToEdit")?.let { it ->
+        // arguments?.getString("reminderToEdit")?.let { it ->
 
-            Gson().fromJson(it, Reminder::class.java)?.let { reminderToEdit ->
-
-                vm.currentReminder.value = reminderToEdit
-                setViewsFromReminder(reminderToEdit)
-
-            }
+//            Gson().fromJson(it, Reminder::class.java)?.let { reminderToEdit ->
+        reminderToEdit?.let {
+            vm.currentReminder.value = reminderToEdit
+            setViewsFromReminder(reminderToEdit)
+            FlowLog.reminderEditStart(reminderToEdit)
         }
+        // }
 
         binding.text.addTextChangedListener(
             onTextChanged = { text, _, _, _ ->
@@ -145,7 +143,6 @@ class ReminderFragment : Fragment() {
                             requireActivity().finish()
                         }, SECONDS_TO_AUTOCLOSE * 1000)
                     } else {
-//                        (requireActivity() as MainActivity).refreshReminderFragment()
                         startActivity(Intent(requireActivity(), MainActivity::class.java))
                         requireActivity().finish()
                     }
@@ -159,7 +156,7 @@ class ReminderFragment : Fragment() {
     private fun setViewsFromReminder(reminder: Reminder) {
         reminder.apply {
             text.let { binding.text.setText(it) }
-            vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarmTime }
+            vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarm() }
         }
     }
 

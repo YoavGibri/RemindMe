@@ -2,15 +2,13 @@ package com.hirshler.remindme.view
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import com.hirshler.remindme.R
 import com.hirshler.remindme.databinding.RepeatDialogLayoutBinding
 import java.util.*
 
 //, val callback: (MutableMap<Int, Boolean>) -> Unit
 
-class RepeatDialog(private val activity: Activity, private val origWeekDays: MutableMap<Int, Boolean>) : DialogInterface.OnClickListener {
+class RepeatDialog(private val activity: Activity, private val origWeekDays: MutableMap<Int, Boolean>) {
 
     private val dialogWeekDays = origWeekDays.toMutableMap()
 
@@ -18,17 +16,20 @@ class RepeatDialog(private val activity: Activity, private val origWeekDays: Mut
 
     private val dialog: AlertDialog = AlertDialog.Builder(activity)
         .setTitle(R.string.repeat_dialog_title)
-        .setPositiveButton(R.string.repeat_dialog_button_positive, this)
-        .setNegativeButton(R.string.repeat_dialog_button_negative, this)
-        .setNeutralButton(R.string.repeat_dialog_button_neutral, this)
+        .setPositiveButton(R.string.repeat_dialog_button_positive) { dialog, which ->
+            origWeekDays.clear()
+            origWeekDays.putAll(dialogWeekDays)
+        }
+        .setNegativeButton(R.string.repeat_dialog_button_negative, null)
+//        .setNeutralButton(R.string.repeat_dialog_button_neutral, this)
         .setView(binding.root)
         .create()
 
 
     fun show() {
         // set today as default:
-        val today = Calendar.getInstance()[Calendar.DAY_OF_WEEK]
-        dialogWeekDays[today] = true
+//        val today = Calendar.getInstance()[Calendar.DAY_OF_WEEK]
+//        dialogWeekDays[today] = true
 
         binding.sunday.isChecked = dialogWeekDays[1] == true
         binding.monday.isChecked = dialogWeekDays[2] == true
@@ -49,22 +50,22 @@ class RepeatDialog(private val activity: Activity, private val origWeekDays: Mut
         dialog.show()
     }
 
-    override fun onClick(dialog: DialogInterface?, which: Int) {
-        when (which) {
-
-            //Done
-            Dialog.BUTTON_POSITIVE -> {
-                origWeekDays.clear()
-                origWeekDays.putAll(dialogWeekDays)
-            }
-
-            //Reset
-            Dialog.BUTTON_NEGATIVE -> {
-                origWeekDays.forEach { (it as MutableMap.MutableEntry).setValue(false) }
-            }
-
-        }
-
-    }
+//    override fun onClick(dialog: DialogInterface?, which: Int) {
+//        when (which) {
+//
+//            //Done
+//            Dialog.BUTTON_POSITIVE -> {
+//                origWeekDays.clear()
+//                origWeekDays.putAll(dialogWeekDays)
+//            }
+//
+////            //Reset
+////            Dialog.BUTTON_NEGATIVE -> {
+////                origWeekDays.forEach { (it as MutableMap.MutableEntry).setValue(false) }
+////            }
+//
+//        }
+//
+//    }
 
 }

@@ -41,10 +41,10 @@ class ReminderViewModel : ViewModel() {
     fun createReminder() {
         currentReminder.value?.apply {
             if (weekDays.values.any { it == true }) {
-                repeat = true
-                alarmTimeOfDay = currentCalendar.value!!.timeOfDayInMinutes()
+                //repeat = true
+                alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
             } else
-                manualAlarm = currentCalendar.value!!.timeInMillis
+                manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
         }
     }
 

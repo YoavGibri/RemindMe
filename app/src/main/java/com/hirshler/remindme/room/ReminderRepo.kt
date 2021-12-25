@@ -1,7 +1,7 @@
 package com.hirshler.remindme.room
 
-import android.util.Log
 import androidx.lifecycle.LiveData
+import com.hirshler.remindme.FlowLog
 import com.hirshler.remindme.model.Reminder
 
 
@@ -22,48 +22,21 @@ class ReminderRepo {
     }
 
     //Fetch All the Reminders
-    fun getAllLD(): LiveData<MutableList<Reminder>> {
+    fun getAllLiveData(): LiveData<MutableList<Reminder>> {
         return db.getAllLD()
     }
 
-    suspend fun getAllForList(): MutableList<Reminder> {
-        val reminders = db.getAll()
-
-        if (reminders.any { reminder -> !reminder.dismissed && !reminder.repeat })
-            reminders.add(Reminder(text = "Active"))
-
-        if (reminders.any { reminder -> reminder.dismissed }) {
-            reminders.add(Reminder(text = "Dismissed", dismissed = true))
-        }
-
-        if (reminders.any { reminder -> reminder.repeat }) {
-            reminders.add(Reminder(text = "Repeat", repeat = true))
-        }
-
-
-        reminders.sortWith(compareBy({ it.dismissed }, { it.repeat }, { it.id }))
-
-        return reminders
-    }
-
-    // Insert new reminder
-    suspend fun insert(reminder: Reminder): Long {
-        val id = db.insert(reminder)
-        Log.d(TAG, "new reminder was added")
-        return id
-    }
 
     suspend fun upsert(reminder: Reminder): Long {
-        Log.d(TAG, "insert: $reminder")
         var id = db.insert(reminder)
 
         if (id != -1L) {
-            Log.d(TAG, "new reminder was added")
+            FlowLog.newReminder(reminder.apply { reminder.id = id })
 
         } else {
             db.update(reminder)
+            FlowLog.reminderUpdate(reminder)
             id = reminder.id!!
-            Log.d(TAG, "reminder was updated")
         }
 
         return id
@@ -71,21 +44,16 @@ class ReminderRepo {
 
     // update reminder
     suspend fun update(reminder: Reminder): Reminder {
-        Log.d(TAG, "update: $reminder")
         db.update(reminder)
+        FlowLog.reminderUpdate(reminder)
         return db.findById(reminder.id!!)!!
     }
 
     // Delete reminder
     suspend fun delete(reminder: Reminder) {
         db.delete(reminder)
+        FlowLog.reminderDelete(reminder)
     }
-
-//    suspend fun setAsDismissed(reminder: Reminder) {
-//        reminder.dismissed = true
-//        val id = db.update(reminder)
-//        Log.d(TAG, "reminder was updated: $id")
-//    }
 
 
 }

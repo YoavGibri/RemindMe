@@ -5,17 +5,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import com.hirshler.remindme.FlowLog
 import com.hirshler.remindme.Utils
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.AppDatabase
 import kotlinx.coroutines.runBlocking
 
 class AlertReceiver : BroadcastReceiver() {
-    private val toast: Toast? = null
+        private val toast: Toast? = null
 
-    companion object {
-        const val FROM_ALERT = "fromAlert"
-    }
 
     @SuppressLint("WrongConstant")
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -24,11 +22,14 @@ class AlertReceiver : BroadcastReceiver() {
 
         // TODO: 15/12/21 maybe go here from notification click!
 
+        FlowLog.alertBroadcastIsCalled()
+
         context?.let {
             intent?.getLongExtra(Reminder.KEY_REMINDER_ID, -1)?.let { id ->
                 val reminder = runBlocking { AppDatabase.getInstance()?.reminderDao()!!.findById(id) }
+                FlowLog.alertBroadcastGotReminder(id, reminder)
                 if (reminder != null) {
-                    val alertIntent = Utils.getAlertIntent(id).apply { putExtra(FROM_ALERT, true) }
+                    val alertIntent = Utils.getAlertIntent(id)
                     context.startActivity(alertIntent)
                 }
             }

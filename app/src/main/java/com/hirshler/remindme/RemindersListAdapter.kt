@@ -41,7 +41,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         val reminder = reminders[position]
         if (holder.binding is RemindersRemindersListRowItemBinding) {
             holder.binding.text.text = reminder.text
-            holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmTime)
+            holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmWithSnooze())
 
             holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
             holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE

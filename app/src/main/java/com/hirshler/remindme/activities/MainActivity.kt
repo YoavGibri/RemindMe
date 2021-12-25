@@ -9,10 +9,12 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
+import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.ui.settings.SettingsFragment.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
 
 class MainActivity : AppCompatActivity() {
@@ -29,8 +31,9 @@ class MainActivity : AppCompatActivity() {
 
 //        val navController = findNavController(R.id.nav_host_fragment_activity_main)
 //        navView.setupWithNavController(navController)
+        val reminder = intent.getStringExtra("reminderToEdit")?.let { Gson().fromJson(it, Reminder::class.java) }
 
-        binding.viewPager.adapter = StateAdapter(this)
+        binding.viewPager.adapter = StateAdapter(this, reminder)
         binding.dotsIndicator.setViewPager2(binding.viewPager)
         binding.viewPager.offscreenPageLimit = 2
     }
