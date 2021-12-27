@@ -18,28 +18,27 @@ class RingManager(private val context: Context) {
     var pattern = longArrayOf(0, 500, 1000)
 
 
-    fun setRingPath(path: String?) {
+    fun setRingPath(uri: Uri?) {
         tryWithCatch {
-            val ringPath: Uri? = if (path.isNullOrEmpty()) AppSettings.getGeneralAlarm() else Uri.parse(path) //SP.getDefaultRingtonePath()
-            ringPath?.let {
-                val attr = AudioAttributes.Builder()
-                    .setLegacyStreamType(AudioManager.STREAM_ALARM)
-                    .build()
-                mp.setAudioAttributes(attr)
-                mp.isLooping = true
-                mp.setDataSource(context, ringPath)
-                mp.prepare()
-            }
+            val ringPath = uri ?: AppSettings.getGeneralAlarm().uri
+            val attr = AudioAttributes.Builder()
+                .setLegacyStreamType(AudioManager.STREAM_ALARM)
+                .build()
+            mp.setAudioAttributes(attr)
+            mp.isLooping = true
+            mp.setDataSource(context, ringPath)
+            mp.prepare()
+
         }
     }
 
 
-    fun play() {
+    fun play(vibrate: Boolean = true) {
         tryWithCatch {
             if (!mp.isPlaying)
                 mp.start()
 
-            if (AppSettings.getVibrate())
+            if (vibrate && AppSettings.getVibrate())
                 startVibrator()
         }
     }
@@ -69,10 +68,5 @@ class RingManager(private val context: Context) {
         }
     }
 
-    private fun getGeneralAlarm(): Uri {
-//        val alarmTone: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-        val alarmTone: Uri = Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm)
-        return alarmTone;
-    }
 
 }

@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.media.RingtoneManager
-import android.media.RingtoneManager.EXTRA_RINGTONE_TYPE
-import android.media.RingtoneManager.TYPE_ALARM
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
+import com.hirshler.remindme.view.SelectAlarmSoundDialog
 
 
 class SettingsFragment : Fragment() {
@@ -25,6 +24,7 @@ class SettingsFragment : Fragment() {
 
     }
 
+    private var alarmSoundDialog: SelectAlarmSoundDialog? = null
     private lateinit var vm: SettingsViewModel
     private lateinit var binding: FragmentSettingsBinding
 
@@ -99,9 +99,11 @@ class SettingsFragment : Fragment() {
         }
 
         binding.chooseAlarmSoundButton.setOnClickListener {
-            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
-            intent.putExtra(EXTRA_RINGTONE_TYPE, TYPE_ALARM)
-            requireActivity().startActivityForResult(intent, REQUEST_CODE_GENERAL_ALARM_SOUND)
+            alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()){
+                AppSettings.setGeneralAlarm(it)
+                setAlarmTextFromSettings()
+            }
+            alarmSoundDialog?.show()
         }
 
         return binding.root
@@ -114,28 +116,21 @@ class SettingsFragment : Fragment() {
         vm = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
         setAlarmTextFromSettings()
-//        setAlarmButtonTextFromSettings()
     }
 
-    fun setAlarmTextFromSettings() {
-        val alarmUri = AppSettings.getGeneralAlarm()
+    private fun setAlarmTextFromSettings() {
+        val alarmSound = AppSettings.getGeneralAlarm()
         val generalAlarmName =
-            if (alarmUri != null) {
-                RingtoneManager.getRingtone(requireContext(), alarmUri).getTitle(requireContext())
+            if (alarmSound != null) {
+                RingtoneManager.getRingtone(requireContext(), alarmSound.uri).getTitle(requireContext())
             } else "NO ALARM"
 
         binding.currentAlarmSound.text = generalAlarmName
     }
 
-//    fun setAlarmButtonTextFromSettings() {
-//        val alarmUri = AppSettings.getGeneralAlarm()
-//        val generalAlarmName =
-//            if (alarmUri != null) {
-//                RingtoneManager.getRingtone(requireContext(), alarmUri).getTitle(requireContext())
-//            } else "NO ALARM"
-//
-//        binding.chooseAlarmSoundButton.text = generalAlarmName
-//    }
+    fun refreshAlarmSoundsDialog() {
+        alarmSoundDialog?.refresh()
+    }
 
 
 }

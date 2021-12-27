@@ -41,10 +41,15 @@ class ReminderViewModel : ViewModel() {
     fun createReminder() {
         currentReminder.value?.apply {
             if (weekDays.values.any { it == true }) {
-                //repeat = true
                 alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
-            } else
-                manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
+            } else {
+                manualAlarm = (
+                        if (SP.getIsDebugMode()) {
+                            Calendar.getInstance().apply { add(Calendar.SECOND, 10) }
+                        } else
+                            currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }
+                        ).timeInMillis
+            }
         }
     }
 
@@ -61,11 +66,12 @@ class ReminderViewModel : ViewModel() {
 
     fun setAlert() {
         Log.d("viewmodel", "setAlerts")
-        if (SP.getIsDebugMode()) {
-            val tempTime = Calendar.getInstance().apply { add(Calendar.SECOND, 5) }.timeInMillis
-            AlertsManager.setNextAlert(currentReminder.value!!, tempTime)
-        } else
-            AlertsManager.setNextAlert(currentReminder.value!!)
+//        if (SP.getIsDebugMode()) {
+//                AlertsManager.setNextAlert(currentReminder.value!!.apply {
+//                    manualAlarm = Calendar.getInstance().apply { add(Calendar.SECOND, 10) }.timeInMillis
+//                })
+//        } else
+        AlertsManager.setNextAlert(currentReminder.value!!)
     }
 
 

@@ -1,6 +1,8 @@
 package com.hirshler.remindme.activities
 
+import android.app.AlarmManager
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI
 import android.net.Uri
@@ -10,10 +12,12 @@ import android.provider.Settings
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
+import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
+import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.ui.settings.SettingsFragment.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
 
@@ -55,6 +59,20 @@ class MainActivity : AppCompatActivity() {
                     .show()
             }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            if (!(App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()) {
+                AlertDialog.Builder(this)
+                    .setTitle("Allow Permission")
+                    .setMessage("You are using Android version 12 or grater.\nWithout \"Alarms & Reminders\" permission the reminders will not show")
+                    .setPositiveButton("grant permission") { _, _ ->
+                        val myIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        startActivity(myIntent)
+                    }
+                    .setNegativeButton("leave app") { _, _ -> finish() }
+                    .setCancelable(false)
+                    .show()
+            }
+
     }
 
     fun refreshReminderFragment() {
@@ -71,13 +89,11 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_GENERAL_ALARM_SOUND) {
             val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
-            AppSettings.setGeneralAlarm(uri)
+            uri?.let { AppSettings.addSoundToAlarmSounds(AlarmSound(uri)) }
 
-//            val currentFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main)?.childFragmentManager?.fragments?.get(0)
-//            if (currentFragment != null && currentFragment is SettingsFragment) {
-//                currentFragment.setAlarmButtonTextFromSettings()
-//            }
-            (binding.viewPager.adapter as StateAdapter)?.settingsFragment.setAlarmTextFromSettings()
+
+            //(binding.viewPager.adapter as StateAdapter)?.settingsFragment.setAlarmTextFromSettings()
+            (binding.viewPager.adapter as StateAdapter)?.settingsFragment.refreshAlarmSoundsDialog()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

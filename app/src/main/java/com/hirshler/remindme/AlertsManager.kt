@@ -16,11 +16,15 @@ class AlertsManager {
         private val toast: Toast? = null
         val TAG: String = "AlertsManager"
 
-        fun setNextAlert(reminder: Reminder, time: Long = 0) {
-            val alertTime = if (time != 0L) time else reminder.nextAlarmWithSnooze()
+        fun setNextAlert(reminder: Reminder) {
+//            val alertTime = if (time != 0L) time else reminder.nextAlarmWithSnooze()
+            val alertTime = reminder.nextAlarmWithSnooze()
 
             val alarmManager = App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, createPendingIntent(reminder))
+            //alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alertTime, createPendingIntent(reminder))
+            val pendingIntent = createPendingIntent(reminder)
+            val info = AlarmManager.AlarmClockInfo(alertTime, pendingIntent)
+            alarmManager.setAlarmClock(info, pendingIntent)
             FlowLog.setAlert(reminder, alertTime)
 
             val now = Calendar.getInstance().timeInMillis
@@ -32,7 +36,7 @@ class AlertsManager {
 
             val pendingIntent = createPendingIntent(reminder)
 
-            alarmManager.cancel(pendingIntent);
+            alarmManager.cancel(pendingIntent)
 
             FlowLog.alertCancel(reminder)
             toast.showInDebug("alarm ${reminder.id} canceled")
@@ -42,9 +46,10 @@ class AlertsManager {
             val context = App.applicationContext()
             val intent = Intent(context, AlertReceiver::class.java).apply {
                 putExtra(KEY_REMINDER_ID, reminder.id)
+                action = reminder.id.toString()
             }
 
-            return PendingIntent.getBroadcast(context, reminder.id?.toInt() ?: -1, intent, PendingIntent.FLAG_IMMUTABLE)
+            return PendingIntent.getBroadcast(context, reminder.id?.toInt() ?: -1, intent, PendingIntent.FLAG_CANCEL_CURRENT)
         }
 
 

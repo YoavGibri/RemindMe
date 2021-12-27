@@ -3,6 +3,8 @@ package com.hirshler.remindme
 import android.content.Context
 import android.media.AudioManager
 import android.net.Uri
+import com.google.gson.Gson
+import com.hirshler.remindme.model.AlarmSound
 
 class AppSettings {
 
@@ -50,15 +52,39 @@ class AppSettings {
         }
 
 
+// private const val SETTING_GENERAL_ALARM_SOUND: String = "general_alarm"
+//        fun getGeneralAlarm(): Uri? {
+//            val generalAlarm = SP.get().getString(SETTING_GENERAL_ALARM_SOUND, null);
+//            return generalAlarm?.let { Uri.parse(it) }
+//        }
+
+//        fun setGeneralAlarm(alarmUri: Uri?) {
+//            val alarm = alarmUri?.toString()
+//            SP.set().putString(SETTING_GENERAL_ALARM_SOUND, alarm).apply()
+//        }
+//
+
         private const val SETTING_GENERAL_ALARM_SOUND: String = "general_alarm"
-        fun getGeneralAlarm(): Uri? {
-            val generalAlarm = SP.get().getString(SETTING_GENERAL_ALARM_SOUND, null);
-            return generalAlarm?.let { Uri.parse(it) }
+        fun getGeneralAlarm(): AlarmSound {
+            val generalAlarm = SP.get().getString(SETTING_GENERAL_ALARM_SOUND, null)
+
+            return generalAlarm?.let { Gson().fromJson(generalAlarm, AlarmSound::class.java) }
+                ?: AlarmSound(Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm))
         }
 
-        fun setGeneralAlarm(alarmUri: Uri?) {
-            val alarm = alarmUri?.toString()
-            SP.set().putString(SETTING_GENERAL_ALARM_SOUND, alarm).apply()
+
+        fun setGeneralAlarm(sound: AlarmSound) {
+            SP.set().putString(SETTING_GENERAL_ALARM_SOUND, Gson().toJson(sound)).apply()
+        }
+
+        fun addSoundToAlarmSounds(sound: AlarmSound) {
+            val alarmsSounds = SP.getAlarmSoundsList()
+
+            alarmsSounds.add(sound)
+            if (alarmsSounds.size > 6)
+                alarmsSounds.removeAt(1)
+
+            SP.setAlarmSoundsList(alarmsSounds)
         }
 
 
