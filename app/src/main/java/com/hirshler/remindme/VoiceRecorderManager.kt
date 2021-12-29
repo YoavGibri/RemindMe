@@ -9,7 +9,8 @@ import com.nabinbhandari.android.permissions.Permissions
 import java.io.IOException
 import java.util.*
 
-class VoiceRecorderManager(val activity: Activity, val reminder: Reminder, val onRecordCallback: () -> Unit, val onStopCallback: () -> Unit) {
+class VoiceRecorderManager(private val activity: Activity, val reminder: Reminder, val onRecordCallback: () -> Unit, val onStopCallback: () -> Unit) {
+    private lateinit var ringManager: RingManager
     private lateinit var fileName: String
     private val LOG_TAG = "AudioRecord"
 
@@ -52,9 +53,21 @@ class VoiceRecorderManager(val activity: Activity, val reminder: Reminder, val o
         onStopCallback()
     }
 
+    fun playPreview() {
+        ringManager = RingManager(activity).apply {
+            setRingPath(fileName)
+            play(vibrate = false)
+        }
+    }
+
+    fun stopPreview() {
+        ringManager.pause()
+    }
+
+
     fun isRecording(): Boolean = recorder != null
 
-    fun onStop() {
+    fun onStopRecord() {
         recorder?.release()
         recorder = null
     }

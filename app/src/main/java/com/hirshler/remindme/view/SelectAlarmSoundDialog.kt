@@ -26,15 +26,18 @@ class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -
 
         dialog = AlertDialog.Builder(context)
             .setTitle(R.string.alarm_configuration)
-            .setSingleChoiceItems(ArrayAdapter(context, R.layout.alarm_sound_dialog_item, list), checkedItem)
+            .setSingleChoiceItems(ArrayAdapter(context, android.R.layout.select_dialog_singlechoice, list), checkedItem)
             { d, w ->
-                val selectedSound = (dialog as AlertDialog).listView.selectedItem as AlarmSound
-                rm.setRingPath(selectedSound.uri)
-                rm.play(vibrate = false)
+                val selectedSound = list[(d as AlertDialog).listView.checkedItemPosition]
+                rm.pause()
+                if (selectedSound.stringUri.isNotEmpty()) {
+                    rm.setRingPath(selectedSound.stringUri)
+                    rm.play(vibrate = false)
+                }
             }
             .setPositiveButton(R.string.ok) { dialog, which ->
                 rm.pause()
-                callback((dialog as AlertDialog).listView.selectedItem as AlarmSound)
+                callback(list[(dialog as AlertDialog).listView.checkedItemPosition])
             }
             .setNegativeButton(R.string.browse) { dialog, which ->
                 rm.pause()

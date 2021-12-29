@@ -3,7 +3,6 @@ package com.hirshler.remindme.activities
 import android.app.DatePickerDialog
 import android.content.Context
 import android.media.AudioManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
@@ -66,12 +65,12 @@ class AlertActivity : AppCompatActivity() {
                     val newAlarmVolume = if (voiceNotePath.isNotEmpty()) AppSettings.getVoiceVolume() else AppSettings.getAlarmVolume()
                     audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newAlarmVolume, 0)
                     val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
-                    ringManager.setRingPath(Uri.parse(ringtonePath))
+                    ringManager.setRingPath(ringtonePath.ifEmpty { AppSettings.getGeneralAlarm().stringUri })
                 }
 
 
                 val fromAlert = !intent.getBooleanExtra(NotificationsManager.FROM_NOTIFICATION, false)
-                if (fromAlert) {
+                if (fromAlert || voiceNotePath.isNotEmpty()) {
                     ringManager.play()
                     playbackOn = true
                 }

@@ -4,13 +4,13 @@ import android.media.RingtoneManager
 import android.net.Uri
 import com.hirshler.remindme.App
 
-//class AlarmSound<out CharSequence> {
-data class AlarmSound(var uri: Uri, var displayName: String = "") {
+//data class AlarmSound(var uri: Uri, var displayName: String = "") {
+data class AlarmSound(var stringUri: String, var displayName: String = "") {
 
 
     init {
         if (displayName.isEmpty())
-            displayName = RingtoneManager.getRingtone(App.applicationContext(), uri).getTitle(App.applicationContext())
+            displayName = RingtoneManager.getRingtone(App.applicationContext(), Uri.parse(stringUri)).getTitle(App.applicationContext())
     }
 
     override fun toString(): String {

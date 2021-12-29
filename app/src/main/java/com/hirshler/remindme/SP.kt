@@ -2,7 +2,6 @@ package com.hirshler.remindme
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -45,17 +44,10 @@ class SP {
                 if (listJson?.isNotEmpty() == true) {
                     Gson().fromJson(listJson, object : TypeToken<MutableList<AlarmSound>>() {}.type)
                 } else {
-                    mutableListOf()
+                    AppSettings.initNewAlarmSoundsList()
                 }
 
-            if (soundsList.isEmpty()) {
-                soundsList.add(
-                    AlarmSound(
-                        Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm),
-                        "Default Alarm"
-                    )
-                )
-            }
+
             return soundsList
         }
 

@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_GENERAL_ALARM_SOUND) {
             val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
-            uri?.let { AppSettings.addSoundToAlarmSounds(AlarmSound(uri)) }
+            uri?.let { AppSettings.addSoundToAlarmSounds(AlarmSound(uri.toString())) }
 
 
             //(binding.viewPager.adapter as StateAdapter)?.settingsFragment.setAlarmTextFromSettings()

@@ -27,7 +27,6 @@
             android:id="@+id/voiceNoteImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="50dp"
             android:visibility="gone"
             tools:visibility="visible"
             android:src="@drawable/ic_baseline_volume_up_24" />

@@ -101,9 +101,22 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
         binding.recordButton.setOnClickListener {
             if (voiceRecorder.isRecording()) {
                 voiceRecorder.stopRecording()
+                binding.playPreviewButton.visibility = View.VISIBLE
             } else {
                 voiceRecorder.startRecording()
             }
+        }
+
+        binding.playPreviewButton.setOnClickListener {
+            voiceRecorder.playPreview()
+            binding.playPreviewButton.visibility = View.GONE
+            binding.stopPreviewButton.visibility = View.VISIBLE
+        }
+
+        binding.stopPreviewButton.setOnClickListener {
+            voiceRecorder.stopPreview()
+            binding.playPreviewButton.visibility = View.VISIBLE
+            binding.stopPreviewButton.visibility = View.GONE
         }
 
         binding.repeatAlarmDialogButton.setOnClickListener {
@@ -209,7 +222,8 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        voiceRecorder.onStop()
+        voiceRecorder.onStopRecord()
+        voiceRecorder.stopPreview()
     }
 
 

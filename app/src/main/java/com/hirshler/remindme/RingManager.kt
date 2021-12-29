@@ -18,17 +18,15 @@ class RingManager(private val context: Context) {
     var pattern = longArrayOf(0, 500, 1000)
 
 
-    fun setRingPath(uri: Uri?) {
+    fun setRingPath(ringPath: String?) {
         tryWithCatch {
-            val ringPath = uri ?: AppSettings.getGeneralAlarm().uri
             val attr = AudioAttributes.Builder()
                 .setLegacyStreamType(AudioManager.STREAM_ALARM)
                 .build()
             mp.setAudioAttributes(attr)
             mp.isLooping = true
-            mp.setDataSource(context, ringPath)
+            mp.setDataSource(context, Uri.parse(ringPath))
             mp.prepare()
-
         }
     }
 
@@ -37,7 +35,8 @@ class RingManager(private val context: Context) {
         tryWithCatch {
             if (!mp.isPlaying)
                 mp.start()
-
+        }
+        tryWithCatch {
             if (vibrate && AppSettings.getVibrate())
                 startVibrator()
         }
@@ -54,6 +53,8 @@ class RingManager(private val context: Context) {
     fun pause() {
         tryWithCatch {
             mp.pause()
+        }
+        tryWithCatch {
             vibrator.cancel()
         }
     }
@@ -64,7 +65,7 @@ class RingManager(private val context: Context) {
             whatToDo.invoke()
         } catch (e: Exception) {
             e.printStackTrace()
-            App.showError(context, e.message ?: "whoops... something happened")
+//            App.showError(context, e.message ?: "whoops... something happened")
         }
     }
 

@@ -2,7 +2,6 @@ package com.hirshler.remindme
 
 import android.content.Context
 import android.media.AudioManager
-import android.net.Uri
 import com.google.gson.Gson
 import com.hirshler.remindme.model.AlarmSound
 
@@ -52,30 +51,21 @@ class AppSettings {
         }
 
 
-// private const val SETTING_GENERAL_ALARM_SOUND: String = "general_alarm"
-//        fun getGeneralAlarm(): Uri? {
-//            val generalAlarm = SP.get().getString(SETTING_GENERAL_ALARM_SOUND, null);
-//            return generalAlarm?.let { Uri.parse(it) }
-//        }
-
-//        fun setGeneralAlarm(alarmUri: Uri?) {
-//            val alarm = alarmUri?.toString()
-//            SP.set().putString(SETTING_GENERAL_ALARM_SOUND, alarm).apply()
-//        }
-//
-
         private const val SETTING_GENERAL_ALARM_SOUND: String = "general_alarm"
         fun getGeneralAlarm(): AlarmSound {
             val generalAlarm = SP.get().getString(SETTING_GENERAL_ALARM_SOUND, null)
 
             return generalAlarm?.let { Gson().fromJson(generalAlarm, AlarmSound::class.java) }
-                ?: AlarmSound(Uri.parse("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm))
+                ?: defaultAlarm()
         }
 
 
         fun setGeneralAlarm(sound: AlarmSound) {
             SP.set().putString(SETTING_GENERAL_ALARM_SOUND, Gson().toJson(sound)).apply()
         }
+
+        private fun defaultAlarm() = AlarmSound("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm, "Default Alarm")
+        private fun noAlarm() = AlarmSound("", "Silent")
 
         fun addSoundToAlarmSounds(sound: AlarmSound) {
             val alarmsSounds = SP.getAlarmSoundsList()
@@ -85,6 +75,10 @@ class AppSettings {
                 alarmsSounds.removeAt(1)
 
             SP.setAlarmSoundsList(alarmsSounds)
+        }
+
+        fun initNewAlarmSoundsList(): MutableList<AlarmSound> {
+            return mutableListOf(defaultAlarm(), noAlarm())
         }
 
 

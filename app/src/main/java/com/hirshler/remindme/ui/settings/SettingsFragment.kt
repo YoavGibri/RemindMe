@@ -3,7 +3,6 @@ package com.hirshler.remindme.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
-import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -120,12 +119,7 @@ class SettingsFragment : Fragment() {
 
     private fun setAlarmTextFromSettings() {
         val alarmSound = AppSettings.getGeneralAlarm()
-        val generalAlarmName =
-            if (alarmSound != null) {
-                RingtoneManager.getRingtone(requireContext(), alarmSound.uri).getTitle(requireContext())
-            } else "NO ALARM"
-
-        binding.currentAlarmSound.text = generalAlarmName
+        binding.currentAlarmSound.text = alarmSound.displayName
     }
 
     fun refreshAlarmSoundsDialog() {
