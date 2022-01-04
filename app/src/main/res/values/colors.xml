@@ -28,6 +28,7 @@
     <color name="demo5">#A81FDC</color>
     <color name="demo6">#B51A27</color>
     <color name="set_alarm_button">#D6D6D6</color>
+    <color name="error">#F44336</color>
 
 
 </resources>

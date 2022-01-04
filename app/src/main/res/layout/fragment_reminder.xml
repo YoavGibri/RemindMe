@@ -58,27 +58,41 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp">
 
-                <TextView
-                    android:id="@+id/autoSizingTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:hint="@string/write_something"
-                    android:maxLength="70"
-                    android:textSize="25dp"
-                    android:visibility="invisible"
-                    app:autoSizeTextType="uniform" />
+<!--                <TextView-->
+<!--                    android:id="@+id/autoSizingTextView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="60dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:hint="@string/write_something"-->
+<!--                    android:maxLength="70"-->
+<!--                    android:textSize="25dp"-->
+<!--                    android:visibility="invisible"-->
+<!--                    app:autoSizeTextType="uniform" />-->
 
-                <EditText
+<!--                <EditText-->
+<!--                    android:id="@+id/text"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:gravity="center_vertical"-->
+<!--                    android:hint="@string/write_something"-->
+<!--                    android:inputType="textCapSentences|textMultiLine"-->
+<!--                    android:maxLength="70"-->
+<!--                    android:textSize="25dp"-->
+<!--                    tools:ignore="Autofill,UnusedAttribute" /> -->
+                <com.hirshler.remindme.view.AutoResizeEditText
                     android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:gravity="center_vertical"
-                    android:hint="@string/write_something"
-                    android:inputType="textCapSentences|textMultiLine"
                     android:maxLength="70"
-                    android:textSize="25dp"
-                    tools:ignore="Autofill,UnusedAttribute" />
+                    android:textSize="30dp"
+                    android:maxLines="2"
+                    tools:ignore="Autofill,UnusedAttribute"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:isScrollContainer="false"
+                    android:hint="@string/write_something"
+                    android:inputType="textMultiLine|textNoSuggestions"/>
 
             </FrameLayout>
 

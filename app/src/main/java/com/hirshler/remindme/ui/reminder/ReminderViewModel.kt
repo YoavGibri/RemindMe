@@ -20,7 +20,6 @@ class ReminderViewModel : ViewModel() {
     val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance().apply { add(Calendar.MINUTE, 5) })
 
     fun setMinutes(minutes: Int) {
-        currentReminder.value?.snooze = minutes
         currentCalendar.value = TimeManager.setMinutes(minutes)
     }
 
@@ -45,7 +44,7 @@ class ReminderViewModel : ViewModel() {
             } else {
                 manualAlarm = (
                         if (SP.getIsDebugMode()) {
-                            Calendar.getInstance().apply { add(Calendar.SECOND, 10) }
+                            Calendar.getInstance().apply { add(Calendar.SECOND, 5) }
                         } else
                             currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }
                         ).timeInMillis

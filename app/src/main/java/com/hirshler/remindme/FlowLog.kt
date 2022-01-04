@@ -1,6 +1,8 @@
 package com.hirshler.remindme
 
+import android.os.Bundle
 import android.util.Log
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.hirshler.remindme.model.Reminder
 import java.util.*
@@ -82,8 +84,10 @@ class FlowLog {
 
             val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
             Log.d(tag, logText)
-            //App.firebaseAnalytics.logEvent(tag, Bundle().apply { putString("text", logText) })
             Utils.appendToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}\n$logText")
+
+            App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
+                .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
         }
 
 

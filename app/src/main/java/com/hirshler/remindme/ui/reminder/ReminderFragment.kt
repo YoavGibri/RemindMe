@@ -63,8 +63,8 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
 
         binding.text.addTextChangedListener(
             onTextChanged = { text, _, _, _ ->
-                binding.autoSizingTextView.text = text
-                binding.text.textSize = binding.autoSizingTextView.textSize / 3
+//                binding.autoSizingTextView.text = text
+//                binding.text.textSize = binding.autoSizingTextView.textSize / 3
             },
             afterTextChanged = { vm.currentReminder.value?.text = it.toString() })
 
@@ -73,6 +73,7 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
 
         binding.minutesButton.setOnToggleCallback { minutes ->
             vm.setMinutes(minutes)
+            Utils.hideKeyboard(binding.minutesButton)
         }
 
         binding.daysButton.setOnToggleCallback { days ->
@@ -153,14 +154,25 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
                     vm.setAlert()
 
                     showSuccessSnackBar(text = getAlertString())
-                    if (AppSettings.getCloseAppAfterReminderSet()) {
-                        Timer().schedule(timerTask {
-                            requireActivity().finish()
-                        }, SECONDS_TO_AUTOCLOSE * 1000)
-                    } else {
-                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+//                    if (AppSettings.getCloseAppAfterReminderSet()) {
+//                        Timer().schedule(timerTask {
+//                            requireActivity().finish()
+//                        }, SECONDS_TO_AUTOCLOSE * 1000)
+//                    } else {
+//                        startActivity(Intent(requireActivity(), MainActivity::class.java))
+//                        requireActivity().finish()
+//                    }
+
+                    Timer().schedule(timerTask {
+
+                        if (!AppSettings.getCloseAppAfterReminderSet()) {
+                            startActivity(Intent(requireActivity(), MainActivity::class.java))
+                        }
                         requireActivity().finish()
-                    }
+
+                    }, SECONDS_TO_AUTOCLOSE * 1000)
+
+
                 }
             }
         }
@@ -190,6 +202,7 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
             },
             c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
         )
+
         timePicker.show()
     }
 
@@ -198,7 +211,7 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
     }
 
     private fun showErrorSnackBar(@StringRes resId: Int = 0, text: String = "") {
-        showSnackBar(resId, text, R.color.design_default_color_error)
+        showSnackBar(resId, text, R.color.error)
     }
 
     private fun showSnackBar(@StringRes resId: Int, text: String, @ColorRes color: Int) {

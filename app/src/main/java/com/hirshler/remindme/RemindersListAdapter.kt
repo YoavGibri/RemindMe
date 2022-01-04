@@ -76,8 +76,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         return if (reminders[position].id == null) TITLE else ITEM
     }
 
-    class ReminderViewHolder(val binding: ViewBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class ReminderViewHolder(val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root)
 
 
     interface ReminderClickListener {

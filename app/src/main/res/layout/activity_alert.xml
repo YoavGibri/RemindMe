@@ -16,20 +16,22 @@
         <TextView
             android:id="@+id/reminderText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_height="wrap_content"
             android:text="test"
+            android:layout_gravity="center"
+            android:textSize="40dp"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:textSize="40dp" />
+            tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/voiceNoteImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:src="@drawable/speaker"
             android:visibility="gone"
-            tools:visibility="visible"
-            android:src="@drawable/ic_baseline_volume_up_24" />
+            tools:visibility="visible" />
     </FrameLayout>
 
 
@@ -37,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:gravity="bottom"
+        android:gravity="center"
         android:text="@string/remind_me_again"
         android:textSize="30dp" />
 
@@ -45,7 +47,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:gravity="center|top">
 
         <TextView
@@ -79,19 +81,21 @@
 
     </LinearLayout>
 
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end|center_vertical"
+        android:text="Or exactly at"
+        android:textSize="20dp" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="end|center_vertical"
-            android:text="Or exactly at"
-            android:textSize="20dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top">
 
         <ImageButton
             android:id="@+id/datePickerButton"
@@ -102,6 +106,15 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_baseline_calendar_today_24"
             app:tint="?attr/colorSecondary" />
+
+        <TextView
+            android:id="@+id/timePickerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="40dp"
+            android:textStyle="bold"
+            tools:text="17:30" />
 
 
     </LinearLayout>
@@ -121,8 +134,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.5"
-        android:padding="10dp"
         android:adjustViewBounds="true"
+        android:padding="10dp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_baseline_volume_off_24"
         app:tint="?attr/colorSecondary" />

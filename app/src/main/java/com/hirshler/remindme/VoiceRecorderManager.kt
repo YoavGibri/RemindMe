@@ -10,7 +10,7 @@ import java.io.IOException
 import java.util.*
 
 class VoiceRecorderManager(private val activity: Activity, val reminder: Reminder, val onRecordCallback: () -> Unit, val onStopCallback: () -> Unit) {
-    private lateinit var ringManager: RingManager
+    private var ringManager: RingManager? = null
     private lateinit var fileName: String
     private val LOG_TAG = "AudioRecord"
 
@@ -61,7 +61,7 @@ class VoiceRecorderManager(private val activity: Activity, val reminder: Reminde
     }
 
     fun stopPreview() {
-        ringManager.pause()
+        ringManager?.pause()
     }
 
 

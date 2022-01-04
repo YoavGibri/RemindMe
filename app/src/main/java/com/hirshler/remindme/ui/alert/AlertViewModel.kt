@@ -18,7 +18,7 @@ class AlertViewModel : ViewModel() {
 
     val currentReminder = MutableLiveData<Reminder>(null)
 
-    val currentCalendar = MutableLiveData<Calendar>(null)
+    val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance())
 
     //var minutesDelay = 0
     private var origSnooze = 0
@@ -32,6 +32,9 @@ class AlertViewModel : ViewModel() {
         )
     }
 
+    fun setTime(hourOfDay: Int, minute: Int) {
+        currentCalendar.value = TimeManager.setTime(hourOfDay, minute, currentCalendar.value!!.get(Calendar.DAY_OF_YEAR));
+    }
 
     fun updateCurrentReminder() {
         currentReminder.value?.apply {
@@ -58,7 +61,6 @@ class AlertViewModel : ViewModel() {
     fun dismissReminder() {
         viewModelScope.launch {
             currentReminder.value?.let {
-//                it.manualAlarm = 0
                 it.snooze = 0
                 it.snoozeCount = 0
                 it.dismissed = true
@@ -77,10 +79,6 @@ class AlertViewModel : ViewModel() {
         }
     }
 
-//    fun setCurrentSnooze(minutes: Int) {
-////        currentSnooze += minutes
-//        currentSnooze = minutes
-//    }
 
     fun resetSnooze(){
         origSnooze = 0

@@ -4,8 +4,6 @@ import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.analytics
-import com.google.firebase.ktx.Firebase
 import com.hirshler.remindme.room.AppDatabase
 import com.hirshler.remindme.room.ReminderRepo
 
@@ -22,7 +20,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         NotificationsManager.createNotificationChannel()
-        firebaseAnalytics = Firebase.analytics
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
     }
 
 

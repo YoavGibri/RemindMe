@@ -1,5 +1,6 @@
 package com.hirshler.remindme.activities
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.media.AudioManager
@@ -12,6 +13,8 @@ import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
 import com.hirshler.remindme.ui.alert.AlertViewModel
+import com.hirshler.remindme.view.TimePickerDialog
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -21,6 +24,8 @@ import kotlin.concurrent.timerTask
 
 class AlertActivity : AppCompatActivity() {
 
+    private var dateIsSet: Boolean = false
+    private var timeIsSet: Boolean = false
     private var finishByUser: Boolean = false
     private lateinit var audioManager: AudioManager
     private var origAlarmVolume: Int = -1
@@ -84,12 +89,18 @@ class AlertActivity : AppCompatActivity() {
                 } else {
                     binding.voiceNoteImage.apply {
                         visibility = View.VISIBLE
-                        flash(400)
+                        beat(400)
                     }
                 }
             }
 
         })
+
+        vm.currentCalendar.observe(this, { calendar ->
+            binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
+        })
+
+
 
         ringManager = RingManager(this)
 
@@ -118,18 +129,11 @@ class AlertActivity : AppCompatActivity() {
         }
 
         binding.datePickerButton.setOnClickListener {
-            val c = vm.currentCalendar.value!!
-            val datePicker = DatePickerDialog(
-                this, { _, year, monthOfYear, dayOfMonth ->
-                    vm.setDate(year, monthOfYear, dayOfMonth)
-                    vm.resetSnooze()
-                    updateReminder()
-                    finishByUser()
-                },
-                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis;
-            datePicker.show()
+            showDatePicker()
+        }
+
+        binding.timePickerButton.setOnClickListener {
+            showTimePicker()
         }
 
 
@@ -168,12 +172,52 @@ class AlertActivity : AppCompatActivity() {
 
     }
 
+    private fun showDatePicker() {
+        val c = vm.currentCalendar.value!!
+        val datePicker = DatePickerDialog(
+            this, { _, year, monthOfYear, dayOfMonth ->
+                vm.setDate(year, monthOfYear, dayOfMonth)
+                vm.resetSnooze()
+                dateIsSet = true
+                if (timeIsSet) {
+                    updateReminder()
+                    finishByUser()
+                } else {
+                    showTimePicker()
+                }
+            },
+            c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis;
+        datePicker.show()
+    }
+
+
+    private fun showTimePicker() {
+        val c = vm.currentCalendar.value!!
+        val timePicker = TimePickerDialog(
+            this, AlertDialog.THEME_HOLO_LIGHT, { _, hourOfDay, minute ->
+                vm.setTime(hourOfDay, minute)
+                vm.resetSnooze()
+                binding.minutesButton.disable()
+                timeIsSet = true
+                if (dateIsSet) {
+                    updateReminder()
+                    finishByUser()
+                } else {
+                    showDatePicker()
+                }
+            },
+            c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
+        )
+        timePicker.show()
+    }
+
     private fun updateReminder() {
         vm.updateCurrentReminder()
         vm.saveReminderToDb()
         vm.setNextAlert()
     }
-
 
     override fun onPause() {
         ringManager.pause()
