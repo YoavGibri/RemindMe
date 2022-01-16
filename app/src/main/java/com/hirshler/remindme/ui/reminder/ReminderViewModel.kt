@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.hirshler.remindme.AlertsManager
-import com.hirshler.remindme.SP
+import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
@@ -43,7 +43,7 @@ class ReminderViewModel : ViewModel() {
                 alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
             } else {
                 manualAlarm = (
-                        if (SP.getIsDebugMode()) {
+                        if (AppSettings.getIsDebugMode()) {
                             Calendar.getInstance().apply { add(Calendar.SECOND, 5) }
                         } else
                             currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }

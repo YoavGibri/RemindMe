@@ -28,14 +28,7 @@ class SP {
         }
 
 
-        private const val IS_DEBUG_MODE: String = "is_debug_mode"
-        fun getIsDebugMode(): Boolean {
-            return sp.getBoolean(IS_DEBUG_MODE, false)
-        }
 
-        fun setIsDebugMode(isDebug: Boolean) {
-            sp.edit { putBoolean(IS_DEBUG_MODE, isDebug) }
-        }
 
         private const val ALARM_SOUNDS: String = "alarm_sounds"
         fun getAlarmSoundsList(): MutableList<AlarmSound> {

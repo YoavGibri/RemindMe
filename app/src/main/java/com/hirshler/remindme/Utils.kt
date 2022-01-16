@@ -1,16 +1,21 @@
 package com.hirshler.remindme
 
-import android.content.Context
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
-import android.util.Log
+import android.net.Uri
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import com.hirshler.remindme.model.Reminder
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class Utils {
 
@@ -20,6 +25,7 @@ class Utils {
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
 
+        @SuppressLint("WrongConstant")
         fun getAlertIntent(reminderId: Long): Intent {
             return Intent().apply {
                 setClassName(App.applicationContext().packageName, App.applicationContext().packageName + ".activities.AlertActivity")
@@ -42,47 +48,58 @@ class Utils {
             return formatter.format(cal)
         }
 
-        fun writeToFile(data: String) {
+
+        val logFilePath = File(App.applicationContext().getExternalFilesDir("RemindMe"), "RemindMe21_log.txt")
+        fun writeToFile(data: String, append: Boolean) {
+
+            var fileOutputStream: FileOutputStream? = null
             try {
-                val outputStreamWriter = OutputStreamWriter(App.applicationContext().openFileOutput("log.txt", Context.MODE_PRIVATE))
-                outputStreamWriter.write(data)
-                outputStreamWriter.close()
-            } catch (e: IOException) {
-                Log.e("Exception", "File write failed: " + e.toString());
+                fileOutputStream = FileOutputStream(logFilePath, append)
+                fileOutputStream.write(data.toByteArray())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                if (fileOutputStream != null) {
+                    try {
+                        fileOutputStream.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
             }
         }
 
-        fun appendToFile(data: String) {
-            try {
-                val outputStreamWriter = OutputStreamWriter(App.applicationContext().openFileOutput("log.txt", Context.MODE_APPEND))
-                outputStreamWriter.write(data)
-                outputStreamWriter.close()
-            } catch (e: IOException) {
-                Log.e("Exception", "File write failed: " + e.toString());
-            }
-        }
 
         fun readFromFile(): String {
-            var ret = ""
+            var fileInputStream: FileInputStream? = null
             try {
-                val inputStream: InputStream? = App.applicationContext().openFileInput("log.txt")
-                if (inputStream != null) {
-                    val inputStreamReader = InputStreamReader(inputStream)
-                    val bufferedReader = BufferedReader(inputStreamReader)
-                    var receiveString: String? = ""
-                    val stringBuilder = StringBuilder()
-                    while (bufferedReader.readLine().also { receiveString = it } != null) {
-                        stringBuilder.append("\n").append(receiveString)
-                    }
-                    inputStream.close()
-                    ret = stringBuilder.toString()
+                fileInputStream = FileInputStream(logFilePath)
+                var i: Int
+                val buffer = StringBuffer()
+                while (fileInputStream.read().also { i = it } != -1) {
+                    buffer.append(i.toChar())
                 }
-            } catch (e: FileNotFoundException) {
-                Log.e("login activity", "File not found: " + e.toString())
-            } catch (e: IOException) {
-                Log.e("login activity", "Can not read file: $e")
+                return buffer.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                if (fileInputStream != null) {
+                    try {
+                        fileInputStream.close()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                    }
+                }
             }
-            return ret
+            return "no log"
+        }
+
+        fun sendEmail(context: Activity) {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            val uri = Uri.fromFile(logFilePath)
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            context.startActivity(Intent.createChooser(intent, "Send eMail.."))
         }
     }
 

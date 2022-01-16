@@ -75,5 +75,10 @@ class NotificationsManager {
         //cancel the current notification(if exists) and create a new one
 
 
+        fun cancelMissedAlertNotification(activity: Activity, reminder: Reminder) {
+            NotificationManagerCompat.from(activity).cancel(reminder.id!!.toInt())
+            FlowLog.notificationDismissed(reminder)
+        }
+
     }
 }

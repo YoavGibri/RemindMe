@@ -54,6 +54,7 @@ class AlertActivity : AppCompatActivity() {
                 if (firstLoad) {
 
                     FlowLog.alertIsAlerting(reminder)
+                    NotificationsManager.cancelMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
 
                     vm.setCalendarByReminder()
 
@@ -109,6 +110,7 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.minutesButton.setOnToggleCallback { minutes ->
+            notificationTimer.cancel()
             vm.currentSnooze = minutes
 
             minutesButtonTimer?.cancel()
@@ -129,16 +131,19 @@ class AlertActivity : AppCompatActivity() {
         }
 
         binding.datePickerButton.setOnClickListener {
+            notificationTimer.cancel()
             showDatePicker()
         }
 
         binding.timePickerButton.setOnClickListener {
+            notificationTimer.cancel()
             showTimePicker()
         }
 
 
 
         binding.dismissButton.setOnClickListener {
+            notificationTimer.cancel()
             vm.currentReminder.value?.apply {
 
                 if (repeat) {
@@ -158,6 +163,7 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.muteButton.setOnToggleCallback { playbackOn ->
+            notificationTimer.cancel()
             if (playbackOn) ringManager.play() else ringManager.pause()
             this.playbackOn = playbackOn
         }
@@ -229,6 +235,13 @@ class AlertActivity : AppCompatActivity() {
         if (playbackOn) ringManager.play()
     }
 
+
+    private fun finishByUser() {
+        finishByUser = true
+        finish()
+    }
+
+
     override fun onDestroy() {
         notificationTimer.cancel()
 
@@ -242,10 +255,7 @@ class AlertActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    private fun finishByUser() {
-        finishByUser = true
-        finish()
-    }
+
 
 
     override fun onAttachedToWindow() {

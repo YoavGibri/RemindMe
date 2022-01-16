@@ -9,6 +9,19 @@ class AppSettings {
 
 
     companion object {
+
+
+        private const val IS_DEBUG_MODE: String = "is_debug_mode"
+        fun getIsDebugMode(): Boolean {
+            return SP.get().getBoolean(IS_DEBUG_MODE, false)
+        }
+
+        fun setIsDebugMode(isDebug: Boolean) {
+            SP.set().putBoolean(IS_DEBUG_MODE, isDebug)
+        }
+
+
+
         private val initialVolume = (App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager)
             .getStreamMaxVolume(AudioManager.STREAM_ALARM) / 2
 

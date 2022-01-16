@@ -28,9 +28,15 @@ class LogFragment : Fragment() {
         }
 
         view.findViewById<Button>(R.id.deleteLog).setOnClickListener {
-            Utils.writeToFile("")
+            Utils.writeToFile("", false)
             readLog(view)
         }
+
+        view.findViewById<Button>(R.id.sendLog).setOnClickListener {
+            Utils.sendEmail(requireActivity())
+        }
+
+        view.findViewById<TextView>(R.id.path).text = Utils.logFilePath.toString()
 
     }
 

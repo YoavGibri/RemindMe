@@ -18,10 +18,6 @@ import com.hirshler.remindme.view.SelectAlarmSoundDialog
 
 
 class SettingsFragment : Fragment() {
-    companion object {
-        val REQUEST_CODE_GENERAL_ALARM_SOUND: Int = 2354
-
-    }
 
     private var alarmSoundDialog: SelectAlarmSoundDialog? = null
     private lateinit var vm: SettingsViewModel
@@ -102,7 +98,7 @@ class SettingsFragment : Fragment() {
                 AppSettings.setGeneralAlarm(it)
                 setAlarmTextFromSettings()
             }
-            alarmSoundDialog?.show()
+            alarmSoundDialog?.showGeneral()
         }
 
         return binding.root

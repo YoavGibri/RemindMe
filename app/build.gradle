@@ -15,7 +15,7 @@ android {
         minSdk 24
         targetSdk 30
         versionCode 1
-        versionName "1.8"
+        versionName "1.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -70,6 +70,8 @@ dependencies {
 //    implementation 'com.google.android.gms:play-services-ads:20.4.0'
 
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    implementation("com.squareup.okio:okio:3.0.0")
 
 
 

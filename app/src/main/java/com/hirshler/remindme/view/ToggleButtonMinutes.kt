@@ -1,15 +1,11 @@
 package com.hirshler.remindme.view
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
-import android.widget.Button
 import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.hirshler.remindme.R
 
 @SuppressLint("AppCompatCustomView")
@@ -53,6 +49,8 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
             else
                 callback?.invoke(minutes)
         })
+
+
         setOnClickListener {
             val currentIndex = if (disabled) {
                 disabled = !disabled
@@ -62,6 +60,10 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
             val nextIndex = if (currentIndex + 1 == minutes.size) 0 else currentIndex + 1
             currMinutes.value = minutes[nextIndex]
         }
+    }
+
+    fun reset(){
+        currMinutes.value = minutes[0]
     }
 
 

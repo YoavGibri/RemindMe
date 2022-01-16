@@ -20,6 +20,7 @@ class RingManager(private val context: Context) {
 
     fun setRingPath(ringPath: String?) {
         tryWithCatch {
+            mp.reset()
             val attr = AudioAttributes.Builder()
                 .setLegacyStreamType(AudioManager.STREAM_ALARM)
                 .build()
@@ -53,6 +54,15 @@ class RingManager(private val context: Context) {
     fun pause() {
         tryWithCatch {
             mp.pause()
+        }
+        tryWithCatch {
+            vibrator.cancel()
+        }
+    }
+
+    fun stop() {
+        tryWithCatch {
+            mp.stop()
         }
         tryWithCatch {
             vibrator.cancel()

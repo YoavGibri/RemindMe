@@ -75,6 +75,10 @@ class FlowLog {
             logDebug(reminder, "Notification is showing: \n$missedText")
         }
 
+        fun notificationDismissed(reminder: Reminder) {
+            logDebug(reminder, "Notification dismissed")
+        }
+
 
         private fun logDebug(reminder: Reminder?, message: String) {
             var reminderDetails = ""
@@ -84,11 +88,13 @@ class FlowLog {
 
             val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
             Log.d(tag, logText)
-            Utils.appendToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}\n$logText")
+            Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}\n$logText", true)
 
             App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
                 .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
         }
+
+
 
 
     }

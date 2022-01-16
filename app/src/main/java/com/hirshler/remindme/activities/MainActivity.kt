@@ -19,11 +19,15 @@ import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
 import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.model.Reminder
-import com.hirshler.remindme.ui.settings.SettingsFragment.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
+import com.hirshler.remindme.view.SelectAlarmSoundDialog.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    companion object {
+        const val ON_ACTIVITY_START_GO_TO_REMINDERS_LIST: String = "onActivityStartGoToRemindersList"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +35,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        val navView: BottomNavigationView = binding.navView
-
-//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-//        navView.setupWithNavController(navController)
         val reminder = intent.getStringExtra("reminderToEdit")?.let { Gson().fromJson(it, Reminder::class.java) }
 
         binding.viewPager.adapter = StateAdapter(this, reminder)
         binding.dotsIndicator.setViewPager2(binding.viewPager)
         binding.viewPager.offscreenPageLimit = 2
+        val goToList = intent.getBooleanExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, false)
+        if (goToList) {
+            goToRemindersList()
+        }
+    }
+
+    fun goToRemindersList() {
+        binding.viewPager.setCurrentItem(1, true)
     }
 
     override fun onResume() {
@@ -75,24 +83,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun refreshReminderFragment() {
-//        findNavController(R.id.nav_host_fragment_activity_main).navigate(
-//            R.id.navigation_reminder,
-//            null,
-//            NavOptions.Builder()
-//                .setPopUpTo(R.id.navigation_reminder, true)
-//                .build()
-//        )
-//        (binding.viewPager.adapter as StateAdapter)?.notifyItemChanged(0)
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_GENERAL_ALARM_SOUND) {
             val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
-            uri?.let { AppSettings.addSoundToAlarmSounds(AlarmSound(uri.toString())) }
+            uri?.let {
+                val newSound = AlarmSound(uri.toString())
+                AppSettings.addSoundToAlarmSounds(newSound)
+                AppSettings.setGeneralAlarm(newSound)
+            }
 
-
-            //(binding.viewPager.adapter as StateAdapter)?.settingsFragment.setAlarmTextFromSettings()
             (binding.viewPager.adapter as StateAdapter)?.settingsFragment.refreshAlarmSoundsDialog()
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -113,4 +113,6 @@ class MainActivity : AppCompatActivity() {
         } else
             super.onBackPressed()
     }
+
+
 }

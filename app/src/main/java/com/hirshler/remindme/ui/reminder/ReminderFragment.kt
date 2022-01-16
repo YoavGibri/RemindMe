@@ -17,15 +17,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity
+import com.hirshler.remindme.activities.MainActivity.Companion.ON_ACTIVITY_START_GO_TO_REMINDERS_LIST
 import com.hirshler.remindme.databinding.FragmentReminderBinding
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.RepeatDialog
+import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
 
 
-class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
+class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
+
 
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
@@ -44,29 +47,24 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.debugSwitch.isChecked = SP.getIsDebugMode()
+        binding.debugSwitch.isChecked = AppSettings.getIsDebugMode()
 
         vm.currentCalendar.observe(viewLifecycleOwner, { calendar ->
             binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
         })
 
 
-        // arguments?.getString("reminderToEdit")?.let { it ->
 
-//            Gson().fromJson(it, Reminder::class.java)?.let { reminderToEdit ->
         reminderToEdit?.let {
             vm.currentReminder.value = reminderToEdit
             setViewsFromReminder(reminderToEdit)
             FlowLog.reminderEditStart(reminderToEdit)
         }
-        // }
+
 
         binding.text.addTextChangedListener(
-            onTextChanged = { text, _, _, _ ->
-//                binding.autoSizingTextView.text = text
-//                binding.text.textSize = binding.autoSizingTextView.textSize / 3
-            },
-            afterTextChanged = { vm.currentReminder.value?.text = it.toString() })
+            afterTextChanged = { vm.currentReminder.value?.text = it.toString() }
+        )
 
 
         binding.text.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
@@ -120,11 +118,18 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
             binding.stopPreviewButton.visibility = View.GONE
         }
 
+        binding.chooseAlarmSoundButton.setOnClickListener {
+            val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()){
+                vm.currentReminder.value?.alertRingtonePath = it.stringUri
+            }
+            alarmSoundDialog.showSpecific()
+        }
+
         binding.repeatAlarmDialogButton.setOnClickListener {
             RepeatDialog(requireActivity(), vm.currentReminder.value!!.weekDays).show()
         }
 
-        binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> SP.setIsDebugMode(isChecked) }
+        binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> AppSettings.setIsDebugMode(isChecked) }
 
 
 
@@ -165,10 +170,18 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
 
                     Timer().schedule(timerTask {
 
-                        if (!AppSettings.getCloseAppAfterReminderSet()) {
-                            startActivity(Intent(requireActivity(), MainActivity::class.java))
+
+                        if (reminderToEdit != null) {
+                            startActivity(Intent(requireActivity(), MainActivity::class.java)
+                                .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
+                        } else {
+                            if (!AppSettings.getCloseAppAfterReminderSet()) {
+                                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                            }
                         }
+
                         requireActivity().finish()
+
 
                     }, SECONDS_TO_AUTOCLOSE * 1000)
 
@@ -237,6 +250,12 @@ class ReminderFragment(val reminderToEdit: Reminder?) : Fragment() {
         _binding = null
         voiceRecorder.onStopRecord()
         voiceRecorder.stopPreview()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        vm.currentCalendar.value = Calendar.getInstance()
+        binding.minutesButton.reset()
     }
 
 

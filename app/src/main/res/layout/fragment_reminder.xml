@@ -12,8 +12,7 @@
     android:padding="8dp"
     tools:context=".ui.reminder.ReminderFragment"
     tools:ignore="SpUsage,ContentDescription"
-    tools:layout_marginBottom="60dp"
-    tools:layout_marginTop="50dp">
+    tools:layout_marginBottom="60dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,41 +57,41 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp">
 
-<!--                <TextView-->
-<!--                    android:id="@+id/autoSizingTextView"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="60dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:hint="@string/write_something"-->
-<!--                    android:maxLength="70"-->
-<!--                    android:textSize="25dp"-->
-<!--                    android:visibility="invisible"-->
-<!--                    app:autoSizeTextType="uniform" />-->
+                <!--                <TextView-->
+                <!--                    android:id="@+id/autoSizingTextView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="60dp"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:hint="@string/write_something"-->
+                <!--                    android:maxLength="70"-->
+                <!--                    android:textSize="25dp"-->
+                <!--                    android:visibility="invisible"-->
+                <!--                    app:autoSizeTextType="uniform" />-->
 
-<!--                <EditText-->
-<!--                    android:id="@+id/text"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="70dp"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:hint="@string/write_something"-->
-<!--                    android:inputType="textCapSentences|textMultiLine"-->
-<!--                    android:maxLength="70"-->
-<!--                    android:textSize="25dp"-->
-<!--                    tools:ignore="Autofill,UnusedAttribute" /> -->
+                <!--                <EditText-->
+                <!--                    android:id="@+id/text"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:hint="@string/write_something"-->
+                <!--                    android:inputType="textCapSentences|textMultiLine"-->
+                <!--                    android:maxLength="70"-->
+                <!--                    android:textSize="25dp"-->
+                <!--                    tools:ignore="Autofill,UnusedAttribute" /> -->
                 <com.hirshler.remindme.view.AutoResizeEditText
                     android:id="@+id/text"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:gravity="center_vertical"
-                    android:maxLength="70"
-                    android:textSize="30dp"
-                    android:maxLines="2"
-                    tools:ignore="Autofill,UnusedAttribute"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:isScrollContainer="false"
+                    android:gravity="center_vertical"
                     android:hint="@string/write_something"
-                    android:inputType="textMultiLine|textNoSuggestions"/>
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:isScrollContainer="false"
+                    android:maxLength="70"
+                    android:maxLines="2"
+                    android:textSize="30dp"
+                    tools:ignore="Autofill,UnusedAttribute" />
 
             </FrameLayout>
 
@@ -121,39 +120,59 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/chooseAlarmSoundButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_music_note_24"
+            app:tint="?attr/colorSecondary"
+            tools:ignore="NestedWeights" />
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
+            android:gravity="center"
             android:text="@string/when"
             android:textSize="30dp" />
 
-        <ImageButton
-            android:id="@+id/playPreviewButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="18dp"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_round_play_arrow_24"
-            android:visibility="gone"
-            app:tint="?attr/colorSecondary"
-            tools:visibility="visible" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="end"
+            android:paddingEnd="20dp">
 
-        <ImageButton
-            android:id="@+id/stopPreviewButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="18dp"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_stop_24"
-            android:visibility="gone"
-            app:tint="?attr/colorSecondary"
-            tools:visibility="visible" />
+            <ImageButton
+                android:id="@+id/playPreviewButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_round_play_arrow_24"
+                android:visibility="gone"
+                app:tint="?attr/colorSecondary"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/stopPreviewButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_stop_24"
+                android:visibility="gone"
+                app:tint="?attr/colorSecondary"
+                tools:visibility="visible" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
