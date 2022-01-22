@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
@@ -27,6 +28,12 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val ON_ACTIVITY_START_GO_TO_REMINDERS_LIST: String = "onActivityStartGoToRemindersList"
+    }
+
+
+    override fun setTheme(resId: Int) {
+        Log.d("TAG", "MainActivity: theme: $resId")
+        super.setTheme(resId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

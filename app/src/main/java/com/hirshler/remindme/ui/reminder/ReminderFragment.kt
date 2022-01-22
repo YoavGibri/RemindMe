@@ -2,7 +2,6 @@ package com.hirshler.remindme.ui.reminder
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +21,7 @@ import com.hirshler.remindme.databinding.FragmentReminderBinding
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.RepeatDialog
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
+import com.hirshler.remindme.view.TimePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
