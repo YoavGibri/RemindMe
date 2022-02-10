@@ -15,6 +15,7 @@ import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
+import com.hirshler.remindme.view.UserNameDialog
 
 
 class SettingsFragment : Fragment() {
@@ -100,6 +101,8 @@ class SettingsFragment : Fragment() {
             }
             alarmSoundDialog?.showGeneral()
         }
+
+        binding.userNameDialog.setOnClickListener { UserNameDialog.showUserNameDialog(requireActivity()) }
 
         return binding.root
     }

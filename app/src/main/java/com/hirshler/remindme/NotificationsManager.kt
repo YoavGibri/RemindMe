@@ -53,7 +53,7 @@ class NotificationsManager {
 
             val formatter = SimpleDateFormat("kk:mm", Locale.getDefault())
             var missedText = "Missed on ${formatter.format(missedTime)}"
-            if (reminder.snoozeCount <= 5) missedText += ", next alert on ${formatter.format(nextTime)}"
+            if (reminder.snoozeCount < 5) missedText += ", next alert on ${formatter.format(nextTime)}"
 
             val notification = NotificationCompat.Builder(activity, CHANNEL_ID)
                 .setSmallIcon(R.drawable.app_icon)

@@ -117,6 +117,13 @@ class AlertActivity : AppCompatActivity() {
             notificationTimer.cancel()
             vm.currentSnooze = minutes
 
+            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis }}
+
+            binding.timePickerButton.text =
+                SimpleDateFormat("kk:mm", Locale.getDefault()).format(
+                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time)
+
+
             minutesButtonTimer?.cancel()
 
             minutesButtonTimer = Timer().apply {
@@ -169,7 +176,7 @@ class AlertActivity : AppCompatActivity() {
 
 
         binding.muteButton.setOnToggleCallback { playbackOn ->
-            notificationTimer.cancel()
+//            notificationTimer.cancel()
             if (playbackOn) ringManager.play() else ringManager.pause()
             this.playbackOn = playbackOn
         }

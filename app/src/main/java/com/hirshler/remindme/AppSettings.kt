@@ -11,6 +11,7 @@ class AppSettings {
     companion object {
 
 
+        private const val KEY_USER_NAME: String = "username"
         private const val IS_DEBUG_MODE: String = "is_debug_mode"
         fun getIsDebugMode(): Boolean {
             return SP.get().getBoolean(IS_DEBUG_MODE, false)
@@ -19,7 +20,6 @@ class AppSettings {
         fun setIsDebugMode(isDebug: Boolean) {
             SP.set().putBoolean(IS_DEBUG_MODE, isDebug)
         }
-
 
 
         private val initialVolume = (App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager)
@@ -92,6 +92,14 @@ class AppSettings {
 
         fun initNewAlarmSoundsList(): MutableList<AlarmSound> {
             return mutableListOf(defaultAlarm(), noAlarm())
+        }
+
+        fun setUserName(userName: String) {
+            SP.set().putString(KEY_USER_NAME, userName).apply()
+        }
+
+        fun getUserName(): String {
+            return SP.get().getString(KEY_USER_NAME, "")!!
         }
 
 

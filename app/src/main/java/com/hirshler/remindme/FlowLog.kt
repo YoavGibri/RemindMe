@@ -1,10 +1,11 @@
 package com.hirshler.remindme
 
-import android.os.Bundle
 import android.util.Log
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 import com.hirshler.remindme.model.Reminder
+import java.text.SimpleDateFormat
 import java.util.*
 
 class FlowLog {
@@ -88,13 +89,25 @@ class FlowLog {
 
             val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
             Log.d(tag, logText)
-            Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}\n$logText", true)
 
-            App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
-                .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
+         //   Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}:$logText", true)
+
+//            App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
+//                .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
+
+
+
+            val database = Firebase.database("https://remind-me-2021-default-rtdb.europe-west1.firebasedatabase.app/")
+            val myRef = database.getReference(AppSettings.getUserName())
+            myRef.child(getDatabaseChildRef()).setValue(logText)
+
         }
 
-
+        fun getDatabaseChildRef(): String {
+            val formatter = SimpleDateFormat("yyyy/MM/dd/ kk:mm:ss:S", Locale.getDefault())
+            val cal = Calendar.getInstance().time
+            return formatter.format(cal)
+        }
 
 
     }

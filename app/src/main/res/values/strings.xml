@@ -34,4 +34,7 @@
     <string name="ok">OK</string>
     <string name="cancel">CANCEL</string>
     <string name="browse">Browse</string>
+    <string name="username_dialog_title">הכנס שם משתמש</string>
+    <string name="button_ok">OK</string>
+    <string name="username_dialog_username_empty_message">User name is empty. Please enter user name</string>
 </resources>

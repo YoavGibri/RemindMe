@@ -29,7 +29,6 @@ import kotlin.concurrent.timerTask
 
 class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
 
-
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null

@@ -21,6 +21,7 @@ import com.hirshler.remindme.databinding.ActivityMainBinding
 import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.SelectAlarmSoundDialog.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
+import com.hirshler.remindme.view.UserNameDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,9 +52,18 @@ class MainActivity : AppCompatActivity() {
         if (goToList) {
             goToRemindersList()
         }
+
+
+
+        if (AppSettings.getUserName() == "") {
+            UserNameDialog.showUserNameDialog(this)
+        }
+
     }
 
-    fun goToRemindersList() {
+
+
+    private fun goToRemindersList() {
         binding.viewPager.setCurrentItem(1, true)
     }
 
