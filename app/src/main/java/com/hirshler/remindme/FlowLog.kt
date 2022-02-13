@@ -58,8 +58,8 @@ class FlowLog {
         }
 
         //alert is showing
-        fun alertIsAlerting(reminder: Reminder) {
-            logDebug(reminder, "Alert is alerting")
+        fun alertIsAlerting(reminder: Reminder, fromAlertManager: Boolean) {
+            logDebug(reminder, "Alert is alerting ${if (fromAlertManager) "from alert manager" else "from notification click"}")
         }
 
         //alert dismissed
@@ -77,24 +77,46 @@ class FlowLog {
         }
 
         fun notificationDismissed(reminder: Reminder) {
-            logDebug(reminder, "Notification dismissed")
+            logDebug(reminder, "Notification canceled by AlertActivity")
+        }
+
+        fun bootReceiverCalled() {
+            logDebug(null, "BootReceiver called")
+        }
+
+        fun reminderSetToNewDateTime(reminder: Reminder?, newDateTime: Calendar?) {
+            logDebug(reminder, "Reminder set to new date time by DateTimeDialog: ${newDateTime?.let { Utils.fullDateByMilliseconds(it.timeInMillis) }}")
+        }
+
+        fun alertBroadcastReminderOutOfRange(reminder: Reminder) {
+            logDebug(reminder, "Reminder is late more than an hour")
         }
 
 
         private fun logDebug(reminder: Reminder?, message: String) {
-            var reminderDetails = ""
+//            var reminderDetails = ""
+//            reminder?.let {
+//                reminderDetails = "id: ${it.id}, time: ${Utils.fullDateByMilliseconds(it.nextAlarmWithSnooze())}, text: ${it.text}"
+//            }
+//
+//            val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
+//            Log.d(tag, logText)
+
+            var id = ""
+            var time = ""
+            var text = ""
             reminder?.let {
-                reminderDetails = "id: ${it.id}, time: ${Utils.fullDateByMilliseconds(it.nextAlarmWithSnooze())}, text: ${it.text}"
+                id = "id: ${it.id},"
+                time = "time: ${Utils.fullDateByMilliseconds(it.nextAlarmWithSnooze())},"
+                text = "text: ${it.text}"
             }
 
-            val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
+            val logText = "$id $message \n$text $time \n${reminder?.let { Gson().toJson(it) }}"
             Log.d(tag, logText)
-
-         //   Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}:$logText", true)
+            //   Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}:$logText", true)
 
 //            App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
 //                .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
-
 
 
             val database = Firebase.database("https://remind-me-2021-default-rtdb.europe-west1.firebasedatabase.app/")
@@ -103,11 +125,12 @@ class FlowLog {
 
         }
 
-        fun getDatabaseChildRef(): String {
+        private fun getDatabaseChildRef(): String {
             val formatter = SimpleDateFormat("yyyy/MM/dd/ kk:mm:ss:S", Locale.getDefault())
             val cal = Calendar.getInstance().time
             return formatter.format(cal)
         }
+
 
 
     }

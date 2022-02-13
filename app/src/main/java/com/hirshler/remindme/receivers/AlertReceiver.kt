@@ -10,9 +10,10 @@ import com.hirshler.remindme.Utils
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.AppDatabase
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class AlertReceiver : BroadcastReceiver() {
-        private val toast: Toast? = null
+    private val toast: Toast? = null
 
 
     @SuppressLint("WrongConstant")
@@ -28,9 +29,15 @@ class AlertReceiver : BroadcastReceiver() {
             intent?.getLongExtra(Reminder.KEY_REMINDER_ID, -1)?.let { id ->
                 val reminder = runBlocking { AppDatabase.getInstance()?.reminderDao()!!.findById(id) }
                 FlowLog.alertBroadcastGotReminder(id, reminder)
+
                 if (reminder != null) {
-                    val alertIntent = Utils.getAlertIntent(id)
-                    context.startActivity(alertIntent)
+                    if (Calendar.getInstance().timeInMillis - reminder.nextAlarmWithSnooze() < 3600000) { // 3600000 millisecond is one hour
+                        val alertIntent = Utils.getAlertIntent(id)
+                        context.startActivity(alertIntent)
+                    } else {
+                        FlowLog.alertBroadcastReminderOutOfRange(reminder)
+
+                    }
                 }
             }
 

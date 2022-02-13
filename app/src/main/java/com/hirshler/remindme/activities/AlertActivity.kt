@@ -56,8 +56,9 @@ class AlertActivity : AppCompatActivity() {
         vm.currentReminder.observe(this, { reminder ->
             reminder?.apply {
                 if (firstLoad) {
+                    val fromAlertManager = !intent.getBooleanExtra(NotificationsManager.FROM_NOTIFICATION, false)
 
-                    FlowLog.alertIsAlerting(reminder)
+                    FlowLog.alertIsAlerting(reminder, fromAlertManager)
                     NotificationsManager.cancelMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
 
                     vm.setCalendarByReminder()
@@ -76,13 +77,13 @@ class AlertActivity : AppCompatActivity() {
                     audioManager.setStreamVolume(AudioManager.STREAM_ALARM, newAlarmVolume, 0)
                     val ringtonePath = voiceNotePath.ifEmpty { alertRingtonePath }
                     ringManager.setRingPath(ringtonePath.ifEmpty { AppSettings.getGeneralAlarm().stringUri })
-                }
+
+                    if (fromAlertManager || voiceNotePath.isNotEmpty()) {
+                        ringManager.play()
+                        playbackOn = true
+                    }
 
 
-                val fromAlert = !intent.getBooleanExtra(NotificationsManager.FROM_NOTIFICATION, false)
-                if (fromAlert || voiceNotePath.isNotEmpty()) {
-                    ringManager.play()
-                    playbackOn = true
                 }
 
                 if (reminder.text.isNotEmpty()) {
@@ -117,11 +118,12 @@ class AlertActivity : AppCompatActivity() {
             notificationTimer.cancel()
             vm.currentSnooze = minutes
 
-            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis }}
+            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis } }
 
             binding.timePickerButton.text =
                 SimpleDateFormat("kk:mm", Locale.getDefault()).format(
-                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time)
+                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time
+                )
 
 
             minutesButtonTimer?.cancel()
@@ -131,8 +133,8 @@ class AlertActivity : AppCompatActivity() {
 
 
                     runOnUiThread {
-                        updateReminder()
                         FlowLog.alertSnoozed(vm.currentReminder.value)
+                        updateReminder()
 
                         finishByUser()
                     }
@@ -198,6 +200,7 @@ class AlertActivity : AppCompatActivity() {
             vm.setDate(year, month, dayOfMonth)
             vm.setTime(hour, minute)
             vm.resetSnooze()
+            FlowLog.reminderSetToNewDateTime(vm.currentReminder.value, vm.currentCalendar.value)
             updateReminder()
             finishByUser()
         }

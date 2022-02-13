@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.FlowLog
 import com.hirshler.remindme.room.ReminderRepo
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -12,20 +13,21 @@ import java.util.*
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        Log.i("onReceive", "start")
+//        Log.i("onReceive", "start")
 
-        if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
-            Log.i("onReceive", "inside action")
+//        if (intent?.action == Intent.ACTION_BOOT_COMPLETED) {
+        Log.i("onReceive", "inside action")
+        FlowLog.bootReceiverCalled()
 
-            val now = Calendar.getInstance().timeInMillis
-            runBlocking {
-                ReminderRepo()
-                    .getAll()
-                    .filter { reminder -> reminder.dismissed.not() }
-                    .forEach {
-                        AlertsManager.setNextAlert(it)
-                    }
-            }
+        val now = Calendar.getInstance().timeInMillis
+        runBlocking {
+            ReminderRepo()
+                .getAll()
+                .filter { reminder -> reminder.dismissed.not() }
+                .forEach {
+                    AlertsManager.setNextAlert(it)
+                }
+//            }
         }
 
     }
