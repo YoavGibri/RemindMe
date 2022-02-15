@@ -1,6 +1,5 @@
 package com.hirshler.remindme.ui.reminder
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -118,7 +117,7 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
         }
 
         binding.chooseAlarmSoundButton.setOnClickListener {
-            val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()){
+            val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
                 vm.currentReminder.value?.alertRingtonePath = it.stringUri
             }
             alarmSoundDialog.showSpecific()
@@ -206,14 +205,10 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
 
 
     private fun showTimePicker() {
-        val c = vm.currentCalendar.value!!
-        val timePicker = TimePickerDialog(
-            requireActivity(), AlertDialog.THEME_HOLO_LIGHT, { _, hourOfDay, minute ->
-                vm.setTime(hourOfDay, minute)
-                binding.minutesButton.disable()
-            },
-            c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
-        )
+        val timePicker = TimePickerDialog(requireActivity(), vm.currentCalendar.value!!) { hourOfDay, minute ->
+            vm.setTime(hourOfDay, minute)
+            binding.minutesButton.disable()
+        }
 
         timePicker.show()
     }

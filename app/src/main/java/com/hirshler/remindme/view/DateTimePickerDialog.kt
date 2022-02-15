@@ -19,9 +19,6 @@ class DateTimePickerDialog(
     context
 ), DialogInterface.OnClickListener {
 
-    private var lastHour: Int = -1
-    private var lastMinute: Int = -1
-
     val binding = DateTimePickerDialogBinding.inflate(LayoutInflater.from(getContext()), null, false)
 
     init {
@@ -51,61 +48,6 @@ class DateTimePickerDialog(
         binding.timePicker.apply {
             hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
-//            val pickerLayout = ((getChildAt(0) as ViewGroup).getChildAt(0) as ViewGroup)
-//            val hourPicker = pickerLayout.getChildAt(0) as NumberPicker
-//            val hourPickerInput = hourPicker.getChildAt(0) as EditText
-//            val minutesPicker = pickerLayout.getChildAt(2) as NumberPicker
-//            val minutesPickerInput = minutesPicker.getChildAt(0) as EditText
-//
-//            hourPickerInput.apply {
-//                doOnTextChanged { text, start, before, count ->
-//                    text?.let {
-//                        if (it.length == 2 && count == 1) {
-//                            minutesPickerInput.requestFocus()
-////                        val inputMethodManager: InputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-////                        inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
-//                        }
-//                    }
-//                }
-//
-//                setOnFocusChangeListener { v, hasFocus ->
-//                    if (hasFocus) (v as EditText).selectAll()
-//                }
-//            }
-//
-//
-//            minutesPickerInput.apply {
-//                doOnTextChanged { text, start, before, count ->
-//                    text?.let {
-//                        if (it.length == 2 && count == 1) {
-//                            minutesPickerInput.onEditorAction(EditorInfo.IME_ACTION_DONE)
-//                        }
-//                    }
-//                }
-//            }
-//
-//
-//
-//
-//
-//
-//            setIs24HourView(true)
-//
-//            setOnTimeChangedListener { view, hourOfDay, minute ->
-//
-//                if (lastHour != -1 && this.hour != lastHour && this.minute != lastMinute) {
-//                    this.hour = lastHour
-//                } else {
-//                    view?.playSoundEffect(SoundEffectConstants.CLICK)
-//                    performHapticFeedback(
-//                        HapticFeedbackConstants.VIRTUAL_KEY,
-//                        HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING
-//                    )
-//                }
-//
-//                lastHour = this.hour
-//                lastMinute = this.minute
-//            }
 
 
         }

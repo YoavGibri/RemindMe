@@ -16,8 +16,7 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
     private var lastMinute: Int = -1
 
     init {
-//        hour = calendar.get(Calendar.HOUR_OF_DAY)
-//        minute = calendar.get(Calendar.MINUTE)
+
         val pickerLayout = ((getChildAt(0) as ViewGroup).getChildAt(0) as ViewGroup)
         val hourPicker = pickerLayout.getChildAt(0) as NumberPicker
         val hourPickerInput = hourPicker.getChildAt(0) as EditText
@@ -48,10 +47,6 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
                 }
             }
         }
-
-
-
-
 
 
         setIs24HourView(true)
