@@ -8,6 +8,7 @@ import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.TimeManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
+import com.hirshler.remindme.timeOfDayInMinutes
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -39,7 +40,11 @@ class AlertViewModel : ViewModel() {
     fun updateCurrentReminder() {
         currentReminder.value?.apply {
             snooze = origSnooze + currentSnooze
-            manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
+            if (weekDays.values.any { it == true }) {
+                alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
+            } else {
+                manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
+            }
         }
     }
 

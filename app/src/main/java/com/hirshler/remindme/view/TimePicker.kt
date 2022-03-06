@@ -33,7 +33,14 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
             }
 
             setOnFocusChangeListener { v, hasFocus ->
-                if (hasFocus) (v as EditText).selectAll()
+                if (hasFocus)
+                    (v as EditText).selectAll()
+                else {
+                    val newHour = hourPickerInput.text.toString()
+                    if (newHour != "") {
+                        hour = newHour.toInt()
+                    }
+                }
             }
         }
 
@@ -42,10 +49,20 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
             doOnTextChanged { text, start, before, count ->
                 text?.let {
                     if (it.length == 2 && count == 1) {
-                        minutesPickerInput.onEditorAction(EditorInfo.IME_ACTION_DONE)
+                        onEditorAction(EditorInfo.IME_ACTION_DONE)
                     }
                 }
             }
+
+//            setOnFocusChangeListener { v, hasFocus ->
+//                if (!hasFocus) {
+//                    val newMinute = text.toString()
+//                    if (newMinute != "") {
+//                        minute = newMinute.toInt()
+//                    }
+//
+//                }
+//            }
         }
 
 

@@ -18,7 +18,7 @@ class AppSettings {
         }
 
         fun setIsDebugMode(isDebug: Boolean) {
-            SP.set().putBoolean(IS_DEBUG_MODE, isDebug)
+            SP.set().putBoolean(IS_DEBUG_MODE, isDebug).apply()
         }
 
 

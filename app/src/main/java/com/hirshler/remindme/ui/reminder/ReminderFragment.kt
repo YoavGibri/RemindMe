@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
@@ -188,6 +189,17 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
             }
         }
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                //if starting new reminder and some text is written, clear the text
+                if (binding.text.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
+                    binding.text.setText("")
+                } else {
+                    isEnabled = false
+                    requireActivity().onBackPressed()
+                }
+            }
+        })
 
     }
 
@@ -195,13 +207,16 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
         reminder.apply {
             text.let { binding.text.setText(it) }
             vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarm() }
+            binding.playPreviewButton.visibility = if (voiceNotePath.isNotEmpty()) View.VISIBLE else View.GONE
         }
     }
 
     private fun noTextAndNoViceRecording() =
         vm.currentReminder.value?.text.isNullOrEmpty() && (vm.currentReminder.value?.voiceNotePath.isNullOrEmpty() && !voiceRecorder.isRecording())
 
-    private fun alertIsInThePast(): Boolean = vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
+    private fun alertIsInThePast(): Boolean =
+        vm.currentReminder.value?.repeat == false &&
+        vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
 
 
     private fun showTimePicker() {

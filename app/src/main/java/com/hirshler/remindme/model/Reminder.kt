@@ -21,7 +21,7 @@ data class Reminder(
     var manualAlarm: Long = 0,
     var snooze: Int = 0,
     var snoozeCount: Int = 0,
-    var isListTitle:Boolean = false
+    var isListTitle: Boolean = false
 ) {
     companion object {
         const val KEY_REMINDER_ID = "reminderId"
@@ -55,9 +55,14 @@ data class Reminder(
 
             val nextAlarm = Calendar.getInstance()
 
-            while (nextAlarm.get(DAY_OF_WEEK) != nextWeekDay) {
-                nextAlarm.add(DAY_OF_YEAR, 1)
-            }
+            if (nextAlarm.get(DAY_OF_WEEK) == nextWeekDay) {
+                if (alarmTimeOfDay + snooze <= nextAlarm.timeOfDayInMinutes()) {
+                    nextAlarm.add(WEEK_OF_YEAR, 1)
+                }
+            } else
+                while (nextAlarm.get(DAY_OF_WEEK) != nextWeekDay) {
+                    nextAlarm.add(DAY_OF_YEAR, 1)
+                }
 
             val hours = alarmTimeOfDay / 60
             val minutes = alarmTimeOfDay % 60

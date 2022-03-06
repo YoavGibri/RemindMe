@@ -8,6 +8,7 @@ class TimeManager {
         fun setMinutes(minutes: Int): Calendar {
             return Calendar.getInstance().apply {
                 add(Calendar.MINUTE, minutes)
+                set(Calendar.SECOND, 0)
             }
         }
 
@@ -15,6 +16,7 @@ class TimeManager {
             return Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, currentHours)
                 set(Calendar.MINUTE, currentMinutes)
+                set(Calendar.SECOND, 0)
                 add(Calendar.DAY_OF_YEAR, days)
             }
         }
@@ -23,6 +25,7 @@ class TimeManager {
             return Calendar.getInstance().apply {
                 set(Calendar.HOUR_OF_DAY, currentHours)
                 set(Calendar.MINUTE, currentMinutes)
+                set(Calendar.SECOND, 0)
                 set(year, monthOfYear, dayOfMonth)
             }
         }
@@ -32,6 +35,7 @@ class TimeManager {
                 set(Calendar.DAY_OF_YEAR, currentDay)
                 set(Calendar.HOUR_OF_DAY, hourOfDay)
                 set(Calendar.MINUTE, minute)
+                set(Calendar.SECOND, 0)
             }
         }
 

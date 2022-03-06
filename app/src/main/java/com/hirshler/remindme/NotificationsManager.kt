@@ -52,7 +52,7 @@ class NotificationsManager {
             val nextTime = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmWithSnooze() }.time
 
             val formatter = SimpleDateFormat("kk:mm", Locale.getDefault())
-            var missedText = "Missed on ${formatter.format(missedTime)}"
+            var missedText = "Was set to ${formatter.format(missedTime)}"
             if (reminder.snoozeCount < 5) missedText += ", next alert on ${formatter.format(nextTime)}"
 
             val notification = NotificationCompat.Builder(activity, CHANNEL_ID)

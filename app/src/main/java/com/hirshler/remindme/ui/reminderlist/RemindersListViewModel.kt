@@ -9,11 +9,7 @@ import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
 import kotlinx.coroutines.launch
 import java.util.*
-import kotlin.collections.MutableList
-import kotlin.collections.any
-import kotlin.collections.mutableListOf
 import kotlin.collections.set
-import kotlin.collections.sortWith
 
 class RemindersListViewModel : ViewModel() {
 
@@ -23,6 +19,8 @@ class RemindersListViewModel : ViewModel() {
     private val remindersLiveData = ReminderRepo().getAllLiveData()
     private val observer = Observer<MutableList<Reminder>> { list ->
         list.apply {
+
+            sortWith(compareByDescending { it.nextAlarmWithSnooze() })
 
             if (any { reminder -> !reminder.repeat && reminder.nextAlarmWithSnooze() >= Calendar.getInstance().timeInMillis })
                 add(Reminder(isListTitle = true, text = "Active", manualAlarm = Calendar.getInstance().apply { add(Calendar.MINUTE, 1) }.timeInMillis))
@@ -35,7 +33,8 @@ class RemindersListViewModel : ViewModel() {
                 add(Reminder(isListTitle = true, text = "Repeat").apply { weekDays[1] = true })
             }
 
-            sortWith(compareBy({ it.repeat }, { it.nextAlarmWithSnooze() < Calendar.getInstance().timeInMillis }, {!it.isListTitle}, { it.nextAlarmWithSnooze() }))
+
+            sortWith(compareBy({ it.nextAlarmWithSnooze() < Calendar.getInstance().timeInMillis }, { it.repeat }, { !it.isListTitle }))
         }
         reminders.value = list
     }
