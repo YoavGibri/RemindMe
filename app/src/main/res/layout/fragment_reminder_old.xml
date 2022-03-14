@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="8dp"
+    tools:context=".ui.reminder.ReminderFragment"
+    tools:ignore="SpUsage,ContentDescription"
+    tools:layout_marginBottom="60dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/remind_me_to"
+            android:textSize="30dp" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/debugSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:thumb="@drawable/ic_round_bug_report_24" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/cardOverlay"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp">
+
+                <!--                <TextView-->
+                <!--                    android:id="@+id/autoSizingTextView"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="60dp"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:hint="@string/write_something"-->
+                <!--                    android:maxLength="70"-->
+                <!--                    android:textSize="25dp"-->
+                <!--                    android:visibility="invisible"-->
+                <!--                    app:autoSizeTextType="uniform" />-->
+
+                <!--                <EditText-->
+                <!--                    android:id="@+id/text"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="70dp"-->
+                <!--                    android:gravity="center_vertical"-->
+                <!--                    android:hint="@string/write_something"-->
+                <!--                    android:inputType="textCapSentences|textMultiLine"-->
+                <!--                    android:maxLength="70"-->
+                <!--                    android:textSize="25dp"-->
+                <!--                    tools:ignore="Autofill,UnusedAttribute" /> -->
+                <com.hirshler.remindme.view.AutoResizeEditText
+                    android:id="@+id/text"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:gravity="center_vertical"
+                    android:hint="@string/write_something"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:isScrollContainer="false"
+                    android:maxLength="70"
+                    android:maxLines="2"
+                    android:textSize="30dp"
+                    tools:ignore="Autofill,UnusedAttribute" />
+
+            </FrameLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <ImageButton
+            android:id="@+id/recordButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="8dp"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_round_mic_24"
+            app:tint="?attr/colorSecondary" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/chooseAlarmSoundButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="2"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_baseline_music_note_24"
+            app:tint="?attr/colorSecondary"
+            tools:ignore="NestedWeights" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/when"
+            android:textSize="30dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="end"
+            android:paddingEnd="20dp">
+
+            <ImageButton
+                android:id="@+id/playPreviewButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_round_play_arrow_24"
+                android:visibility="gone"
+                app:tint="?attr/colorSecondary"
+                tools:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/stopPreviewButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_baseline_stop_24"
+                android:visibility="gone"
+                app:tint="?attr/colorSecondary"
+                tools:visibility="visible" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/cardOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="end"
+                    android:text="@string/minutes_delay_in"
+                    android:textSize="30dp" />
+
+                <com.hirshler.remindme.view.ToggleButtonMinutes
+                    android:id="@+id/minutes_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="3"
+                    android:textSize="25dp"
+                    app:withZero="false"
+                    tools:text="5" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:gravity="start"
+                    android:text="@string/minutes_delay_mins"
+                    android:textSize="30dp" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.6"
+                android:gravity="bottom"
+                android:text="@string/time_set_title"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/timePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                tools:text="17:30" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1.5"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/repeatAlarmDialogButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_round_repeat_24"
+                    app:tint="?attr/colorSecondary"
+                    tools:ignore="NestedWeights" />
+
+                <com.hirshler.remindme.view.ToggleButtonDays
+                    android:id="@+id/days_button"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:ems="8"
+                    android:textSize="20dp"
+                    tools:text="TOMORROW" />
+
+
+                <ImageButton
+                    android:id="@+id/datePickerButton"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_calendar_today_24"
+                    app:tint="?attr/colorSecondary" />
+
+
+            </LinearLayout>
+
+
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/dateDisplay"-->
+            <!--                            android:paddingBottom="10dp"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:textSize="25dp"-->
+            <!--                            android:gravity="center"-->
+            <!--                            tools:text="friday, 8/10/21 at 12:20"/>-->
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <ImageButton
+        android:id="@+id/doneButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_round_done_24"
+        app:tint="?attr/colorSecondary" />
+
+</LinearLayout>

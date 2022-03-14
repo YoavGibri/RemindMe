@@ -4,7 +4,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_2">
+    android:background="@drawable/bg_1">
 
 
 
@@ -40,10 +40,10 @@
         android:layout_marginTop="8dp"
         app:dotsColor="@color/white"
         app:dotsCornerRadius="8dp"
-        app:dotsSize="10dp"
+        app:dotsSize="16dp"
         app:dotsSpacing="4dp"
         app:dotsWidthFactor="2.5"
-        app:selectedDotColor="@color/light_blue_600"
+        app:selectedDotColor="@color/black"
         app:progressMode="false"
         app:layout_constraintBottom_toTopOf="@id/viewPager"
         app:layout_constraintLeft_toLeftOf="parent"

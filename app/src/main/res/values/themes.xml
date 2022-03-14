@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+
     <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
+        <item name="main_color">@color/app_black</item>
         <item name="colorPrimary">@color/secondaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
@@ -9,12 +11,15 @@
         <item name="colorSecondary">@color/secondaryColor</item>
         <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
-        <!--        <item name="android:textColor">@color/secondaryTextColor</item>-->
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/main_color</item>
         <!-- Customize your theme here. -->
-        <item name="android:windowBackground">@color/primaryColor</item>
+        <item name="android:windowBackground">?attr/main_color</item>
 
+    </style>
+
+    <style name="Theme.RemindMe.black">
+        <item name="main_color">@color/app_black</item>
     </style>
 
 
@@ -25,13 +30,6 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-
-    <style name="cardOverlay">
-        <item name="cardBackgroundColor">@color/cardview_background</item>
-        <item name="cardElevation">4dp</item>
-        <item name="cardUseCompatPadding">true</item>
-
-    </style>
 
 
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
@@ -21,7 +20,7 @@ import kotlin.concurrent.timerTask
 
  */
 
-class AlertActivity : AppCompatActivity() {
+class AlertActivity : BaseActivity() {
 
     private var dateIsSet: Boolean = false
     private var timeIsSet: Boolean = false

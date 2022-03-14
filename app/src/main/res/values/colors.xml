@@ -30,5 +30,7 @@
     <color name="set_alarm_button">#D6D6D6</color>
     <color name="error">#F44336</color>
 
+    <color name="app_black">#424242</color>
+
 
 </resources>

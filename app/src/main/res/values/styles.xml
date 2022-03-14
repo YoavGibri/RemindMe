@@ -8,4 +8,44 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+
+    <style name="cardOverlay">
+        <item name="cardBackgroundColor">@color/cardview_background</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="textureOverlayBg1">
+        <item name="android:background">@drawable/bg_1</item>
+    </style>
+
+    <style name="textureOverlayBg2">
+        <item name="android:background">@drawable/bg_2</item>
+    </style>
+
+    <style name="textureOverlayBg3">
+        <item name="android:background">@drawable/bg_3</item>
+    </style>
+
+    <style name="buttonOverlay">
+        <item name="android:layout_width">@dimen/button</item>
+        <item name="android:layout_height">@dimen/button</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+    <style name="buttonOverlay.black">
+        <item name="android:background">@drawable/button_black</item>
+    </style>
+
+    <style name="buttonOverlay.blue">
+        <item name="android:background">@drawable/button_blue</item>
+        <item name="tint">@color/red</item>
+    </style>
+
+
+
+
 </resources>

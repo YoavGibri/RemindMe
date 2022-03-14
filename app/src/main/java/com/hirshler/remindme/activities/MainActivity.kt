@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.WindowManager
-import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
@@ -23,7 +22,7 @@ import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.SelectAlarmSoundDialog.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
 import com.hirshler.remindme.view.UserNameDialog
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
