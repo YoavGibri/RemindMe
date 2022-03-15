@@ -34,16 +34,17 @@
         <item name="android:padding">15dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="tint">@color/white</item>
+        <item name="android:background">?attr/button_background</item>
     </style>
 
-    <style name="buttonOverlay.black">
-        <item name="android:background">@drawable/button_black</item>
-    </style>
+<!--    <style name="buttonOverlay.black">-->
+<!--        <item name="android:background">@drawable/button_black</item>-->
+<!--    </style>-->
 
-    <style name="buttonOverlay.blue">
-        <item name="android:background">@drawable/button_blue</item>
-        <item name="tint">@color/red</item>
-    </style>
+<!--    <style name="buttonOverlay.blue">-->
+<!--        <item name="android:background">@drawable/button_blue</item>-->
+<!--        <item name="tint">@color/red</item>-->
+<!--    </style>-->
 
 
 

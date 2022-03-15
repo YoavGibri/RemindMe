@@ -19,7 +19,7 @@
     <string name="remind_me_again">Remind Me Again</string>
     <string name="write_something">Write something…</string>
     <string name="minutes_delay_in">In</string>
-    <string name="minutes_delay_mins">Min.</string>
+    <string name="minutes_delay_mins">min</string>
     <string name="time_set_title">Or exactly at</string>
     <string name="validation_error_no_text_or_voice">You must enter text or record a voice reminder!</string>
     <string name="error_past_time">Please choose only future time</string>

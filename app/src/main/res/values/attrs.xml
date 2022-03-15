@@ -3,6 +3,9 @@
         <attr name="withZero" format="boolean" />
 
         <attr name="main_color" format="color" />
+        <attr name="button_background" format="reference" />
+        <attr name="ok_button" format="reference" />
+        <attr name="button_time" format="reference" />
 
     </declare-styleable>
 </resources>

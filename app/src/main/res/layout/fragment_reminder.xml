@@ -51,7 +51,7 @@
 
         <ImageButton
             android:id="@+id/chooseAlarmSoundButton"
-            style="@style/buttonOverlay.black"
+            style="@style/buttonOverlay"
             android:src="@drawable/icon_ringtone" />
 
 
@@ -76,7 +76,7 @@
 
         <ImageButton
             android:id="@+id/recordButton"
-            style="@style/buttonOverlay.black"
+            style="@style/buttonOverlay"
             android:src="@drawable/icon_record" />
 
 
@@ -90,9 +90,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:paddingTop="20dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
             <TextView
                 android:id="@+id/textView2"
@@ -125,7 +125,7 @@
                     android:id="@+id/minutes_button"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/button_time_black"
+                    android:background="?attr/button_time"
                     android:ems="3"
                     android:textColor="@color/white"
                     android:textSize="30dp"
@@ -158,6 +158,7 @@
                 android:textSize="30dp"
                 android:textStyle="bold"
                 android:typeface="sans"
+                android:textColor="?attr/main_color"
                 tools:text="17:30" />
 
             <LinearLayout
@@ -168,7 +169,7 @@
 
                 <ImageButton
                     android:id="@+id/repeatAlarmDialogButton"
-                    style="@style/buttonOverlay.black"
+                    style="@style/buttonOverlay"
                     android:src="@drawable/icon_repeat" />
 
                 <com.hirshler.remindme.view.ToggleButtonDays
@@ -180,12 +181,13 @@
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:typeface="sans"
+                    android:textColor="?attr/main_color"
                     tools:text="TOMORROW" />
 
 
                 <ImageButton
                     android:id="@+id/datePickerButton"
-                    style="@style/buttonOverlay.black"
+                    style="@style/buttonOverlay"
                     android:src="@drawable/icon_calendar" />
 
 
@@ -204,14 +206,14 @@
 
             <ImageButton
                 android:id="@+id/playPreviewButton"
-                style="@style/buttonOverlay.black"
+                style="@style/buttonOverlay"
                 android:src="@drawable/icon_play"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
             <ImageButton
                 android:id="@+id/stopPreviewButton"
-                style="@style/buttonOverlay.black"
+                style="@style/buttonOverlay"
                 android:src="@drawable/icon_pause"
                 android:visibility="gone"
                 tools:visibility="visible" />
@@ -229,8 +231,7 @@
         android:layout_gravity="center"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
-        android:elevation="3dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/okbutton_black" />
+        android:src="?attr/ok_button" />
 
 </LinearLayout>

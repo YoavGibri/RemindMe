@@ -1,7 +1,6 @@
 package com.hirshler.remindme
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
@@ -43,8 +42,15 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
             holder.binding.text.text = reminder.text
             holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmWithSnooze())
 
-            holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
-            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+//            holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+//            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE
+            holder.binding.imgTextAndVoice.setImageResource(
+                if (reminder.text.isNotEmpty() && reminder.voiceNotePath.isNotEmpty())
+                    R.drawable.icon_text_and_voice
+                else if (reminder.text.isNotEmpty())
+                    R.drawable.icon_text
+                else R.drawable.icon_voice
+            )
 
             holder.binding.imgDelete.setOnClickListener { clickListener.onDeleteClick(reminder) }
 
@@ -62,7 +68,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         val cal = Calendar.getInstance().apply { timeInMillis = nextAlarmTime }
         val date = SimpleDateFormat("dd/MM", Locale.getDefault()).format(cal.time)
         val time = SimpleDateFormat("kk:mm", Locale.getDefault()).format(cal.time)
-        return "$date\n$time"
+        return "$time $date"
     }
 
     override fun getItemCount(): Int {
