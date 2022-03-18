@@ -27,14 +27,24 @@
         <item name="android:background">@drawable/bg_3</item>
     </style>
 
-    <style name="buttonOverlay">
-        <item name="android:layout_width">@dimen/button</item>
-        <item name="android:layout_height">@dimen/button</item>
+    <style name="coloredButtonOverlay">
+        <item name="android:layout_width">@dimen/button_diameter</item>
+        <item name="android:layout_height">@dimen/button_diameter</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:padding">15dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="tint">@color/white</item>
         <item name="android:background">?attr/button_background</item>
+    </style>
+
+ <style name="whiteButtonOverlay">
+        <item name="android:layout_width">@dimen/button_diameter</item>
+        <item name="android:layout_height">@dimen/button_diameter</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="tint">?attr/main_color_dark</item>
+        <item name="android:background">@drawable/button_white</item>
     </style>
 
 <!--    <style name="buttonOverlay.black">-->

@@ -51,7 +51,7 @@
 
         <ImageButton
             android:id="@+id/chooseAlarmSoundButton"
-            style="@style/buttonOverlay"
+            style="@style/coloredButtonOverlay"
             android:src="@drawable/icon_ringtone" />
 
 
@@ -76,7 +76,7 @@
 
         <ImageButton
             android:id="@+id/recordButton"
-            style="@style/buttonOverlay"
+            style="@style/coloredButtonOverlay"
             android:src="@drawable/icon_record" />
 
 
@@ -169,7 +169,7 @@
 
                 <ImageButton
                     android:id="@+id/repeatAlarmDialogButton"
-                    style="@style/buttonOverlay"
+                    style="@style/coloredButtonOverlay"
                     android:src="@drawable/icon_repeat" />
 
                 <com.hirshler.remindme.view.ToggleButtonDays
@@ -187,7 +187,7 @@
 
                 <ImageButton
                     android:id="@+id/datePickerButton"
-                    style="@style/buttonOverlay"
+                    style="@style/coloredButtonOverlay"
                     android:src="@drawable/icon_calendar" />
 
 
@@ -206,14 +206,14 @@
 
             <ImageButton
                 android:id="@+id/playPreviewButton"
-                style="@style/buttonOverlay"
+                style="@style/coloredButtonOverlay"
                 android:src="@drawable/icon_play"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
             <ImageButton
                 android:id="@+id/stopPreviewButton"
-                style="@style/buttonOverlay"
+                style="@style/coloredButtonOverlay"
                 android:src="@drawable/icon_pause"
                 android:visibility="gone"
                 tools:visibility="visible" />
