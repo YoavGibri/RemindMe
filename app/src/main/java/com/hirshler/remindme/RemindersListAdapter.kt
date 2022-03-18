@@ -1,5 +1,6 @@
 package com.hirshler.remindme
 
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -17,21 +18,42 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReminderViewHolder {
 
-        val binding: ViewBinding = when (viewType) {
-            ITEM -> RemindersRemindersListRowItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+        val binding: ViewBinding =
+            if (viewType == TYPE.TITLE.ordinal) {
+                RemindersRemindersListRowTitleBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
 
-            //TITLE
-            else -> RemindersRemindersListRowTitleBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+            } else {
 
-        }
+                RemindersRemindersListRowItemBinding.inflate(
+                    LayoutInflater.from(parent.context), parent, false
+                )
+                    .apply {
+                        when (viewType) {
+                            TYPE.ITEM_REPEAT.ordinal -> {
+                                backgroundLayout.setBackgroundResource(R.drawable.list_item_text_background_colored)
+                                imgEdit.imageTintList = null
+                                imgDelete.imageTintList = null
+
+                                val outValue = TypedValue()
+                                parent.context.theme.resolveAttribute(R.attr.button_background, outValue, true)
+                                imgDelete.setBackgroundResource(outValue.resourceId)
+                                val res = parent.context.resources
+                                dateAndTime.setTextColor(res.getColor(R.color.white))
+                                text.setTextColor(res.getColor(R.color.white))
+                            }
+
+                            TYPE.ITEM_DISMISSED.ordinal->{
+                                root.alpha = 0.3f
+                            }
+
+                        }
+                    }
+
+            }
+
+
         return ReminderViewHolder(binding)
 
     }
@@ -42,8 +64,6 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
             holder.binding.text.text = reminder.text
             holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmWithSnooze())
 
-//            holder.binding.imgText.visibility = if (reminder.text.isNotEmpty()) View.VISIBLE else View.INVISIBLE
-//            holder.binding.imgVoiceNote.visibility = if (reminder.voiceNotePath.isNotEmpty()) View.VISIBLE else View.INVISIBLE
             holder.binding.imgTextAndVoice.setImageResource(
                 if (reminder.text.isNotEmpty() && reminder.voiceNotePath.isNotEmpty())
                     R.drawable.icon_text_and_voice
@@ -76,10 +96,17 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
     }
 
 
-    private val TITLE = 1
-    private val ITEM = 0
     override fun getItemViewType(position: Int): Int {
-        return if (reminders[position].id == null) TITLE else ITEM
+        return reminders[position].let {
+            when {
+                it.id == null -> TYPE.TITLE
+                it.nextAlarmWithSnooze() < Calendar.getInstance().timeInMillis -> TYPE.ITEM_DISMISSED
+                it.repeat -> TYPE.ITEM_REPEAT
+                else -> TYPE.ITEM_ACTIVE
+            }
+        }.ordinal
+
+
     }
 
     class ReminderViewHolder(val binding: ViewBinding) : RecyclerView.ViewHolder(binding.root)
@@ -90,4 +117,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         fun onDeleteClick(reminder: Reminder)
     }
 
+    enum class TYPE {
+        TITLE, ITEM_ACTIVE, ITEM_REPEAT, ITEM_DISMISSED
+    }
 }

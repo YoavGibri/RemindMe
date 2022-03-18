@@ -30,8 +30,11 @@
     <color name="set_alarm_button">#D6D6D6</color>
     <color name="error">#F44336</color>
 
-    <color name="app_black">#424242</color>
-    <color name="app_blue">#3E85FB</color>
+    <color name="light_black">#424242</color>
+    <color name="dark_black">#535353</color>
+<!--    <color name="app_blue">#3E85FB</color>-->
+    <color name="light_blue">#4088FF</color>
+    <color name="dark_blue">#0C439B</color>
 
 
 </resources>

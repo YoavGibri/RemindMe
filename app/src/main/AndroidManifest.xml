@@ -19,7 +19,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.RemindMe.blue"
+        android:theme="@style/Theme.RemindMe.black"
         tools:ignore="LockedOrientationActivity">
         <activity
             android:name=".activities.AlertActivity"

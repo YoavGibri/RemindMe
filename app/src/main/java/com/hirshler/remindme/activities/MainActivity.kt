@@ -123,6 +123,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+
     override fun onBackPressed() {
         if (binding.viewPager.currentItem != 0) {
             binding.viewPager.setCurrentItem(0, true)

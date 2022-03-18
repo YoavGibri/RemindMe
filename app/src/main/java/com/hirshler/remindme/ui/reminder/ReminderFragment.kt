@@ -194,6 +194,11 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
                 //if starting new reminder and some text is written, clear the text
                 if (binding.text.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
                     binding.text.setText("")
+
+                } else if (reminderToEdit != null) {
+                    startActivity(Intent(requireActivity(), MainActivity::class.java)
+                        .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
+
                 } else {
                     isEnabled = false
                     requireActivity().onBackPressed()
@@ -216,7 +221,7 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
 
     private fun alertIsInThePast(): Boolean =
         vm.currentReminder.value?.repeat == false &&
-        vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
+                vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
 
 
     private fun showTimePicker() {
