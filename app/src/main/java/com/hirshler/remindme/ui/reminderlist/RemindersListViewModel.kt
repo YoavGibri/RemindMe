@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hirshler.remindme.AlertsManager
+import com.hirshler.remindme.managers.AlertsManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
 import kotlinx.coroutines.launch

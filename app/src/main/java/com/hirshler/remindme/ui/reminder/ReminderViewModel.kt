@@ -3,9 +3,9 @@ package com.hirshler.remindme.ui.reminder
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.AppSettings
-import com.hirshler.remindme.TimeManager
+import com.hirshler.remindme.managers.AlertsManager
+import com.hirshler.remindme.managers.TimeManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.room.ReminderRepo
 import com.hirshler.remindme.timeOfDayInMinutes

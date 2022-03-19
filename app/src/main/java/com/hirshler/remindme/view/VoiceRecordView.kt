@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.hirshler.remindme.VoiceRecorderManager
+import com.hirshler.remindme.managers.VoiceRecorderManager
 
 class VoiceRecordView(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 

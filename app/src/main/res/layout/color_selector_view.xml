@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/blue"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_blue" />
+
+        <ImageButton
+            android:id="@+id/red"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_red" />
+
+        <ImageButton
+            android:id="@+id/green"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_green" />
+
+        <ImageButton
+            android:id="@+id/pink"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_pink" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/black"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_black" />
+
+        <ImageButton
+            android:id="@+id/grey"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_grey" />
+
+        <ImageButton
+            android:id="@+id/white"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_white" />
+
+        <ImageButton
+            android:id="@+id/puple"
+            style="@style/colorPicker"
+            android:background="@drawable/color_picker_purple" />
+    </LinearLayout>
+
+</LinearLayout>

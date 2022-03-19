@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.hirshler.remindme.AlertsManager
 import com.hirshler.remindme.FlowLog
+import com.hirshler.remindme.managers.AlertsManager
 import com.hirshler.remindme.room.ReminderRepo
 import kotlinx.coroutines.runBlocking
 import java.util.*

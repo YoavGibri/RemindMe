@@ -1,13 +1,16 @@
 package com.hirshler.remindme.activities
 
-import android.os.Bundle
-import android.os.PersistableBundle
+import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
-import com.hirshler.remindme.R
+import com.hirshler.remindme.managers.ThemeManager
+
 
 open class BaseActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-        setTheme(R.style.textureOverlayBg2)
+
+
+    override fun getTheme(): Resources.Theme {
+        val theme = super.getTheme()
+        ThemeManager.setAppTheme(theme)
+        return theme
     }
 }

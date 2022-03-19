@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:paddingTop="8dp"
+    android:paddingStart="30dp"
+    android:paddingEnd="30dp"
     tools:context=".ui.settings.SettingsFragment"
     tools:layout_marginTop="50dp">
 
     <TextView
+        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/title_settings"
-        android:textColor="@color/white"
+        android:textColor="?attr/main_color_natural"
         android:textSize="40dp"
         android:textStyle="bold"
         android:typeface="sans" />
@@ -40,167 +42,131 @@
 
     </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        style="@style/cardOverlay"
+    <com.hirshler.remindme.view.ColorSelectorView
+        android:id="@+id/colorSelector"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:contentPadding="8dp">
+        tools:layout_height="150dp" />
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/settingsText"
+            android:text="@string/alarm_configuration" />
+
+        <TextView
+            android:id="@+id/currentAlarmSound"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:gravity="end"
+            android:textColor="?attr/main_color_natural"
+            android:textSize="@dimen/settings_screen_titles"
+            tools:text="No Alarm" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Themes"
-                android:textSize="@dimen/settings_screen_titles" />
-
-            <include layout="@layout/colors_demo" />
-
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/chooseAlarmSoundButton"
+            style="@style/whiteButtonOverlay"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="8dp"
+            android:src="@drawable/icon_browse" />
 
 
-    </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
 
-    <com.google.android.material.card.MaterialCardView
-        style="@style/cardOverlay"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:contentPadding="8dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
+        <TextView
+            style="@style/settingsText"
+            android:ems="6"
+            android:text="Voice Volume" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <SeekBar
+            android:id="@+id/voiceVolumeSeekBar"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:max="7"
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:splitTrack="false"
+            android:thumb="?attr/icon_slider"
+            tools:progress="3" />
 
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/alarm_configuration"
-                    android:textSize="@dimen/settings_screen_titles" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/chooseAlarmSoundButton"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Browse" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/currentAlarmSound"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="12dp"
-                android:background="#7EFFFFFF"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textSize="20dp"
-                tools:text="No Alarm" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="6"
-                    android:text="Voice Volume"
-                    android:textSize="@dimen/settings_screen_titles" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_baseline_volume_up_24" />
-
-                <SeekBar
-                    android:id="@+id/voiceVolumeSeekBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="7" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="6"
-                    android:text="Alarm Volume"
-                    android:textSize="@dimen/settings_screen_titles" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@drawable/ic_baseline_volume_up_24" />
-
-                <SeekBar
-                    android:id="@+id/alarmVolumeSeekBar"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:max="7" />
-
-
-            </LinearLayout>
-
-            <CheckBox
-                android:id="@+id/vibrateCheckBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:text="Vibrate Mode"
-                android:textSize="@dimen/settings_screen_titles" />
-
-
-        </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/closeAppCheckBox"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
-        android:layout_marginEnd="23dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical">
+
+        <TextView
+            style="@style/settingsText"
+            android:ems="6"
+            android:text="Alarm Volume" />
+
+
+        <SeekBar
+            android:id="@+id/alarmVolumeSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="7"
+            android:progressDrawable="@drawable/custom_seekbar"
+            android:splitTrack="false"
+            android:thumb="?attr/icon_slider"
+            tools:progress="3" />
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/vibrateCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:checked="true"
         android:layoutDirection="rtl"
-        android:text="Close App After Reminder Set"
+        android:text="Vibrate Mode"
+        android:textColor="?attr/main_color_natural"
         android:textSize="@dimen/settings_screen_titles" />
 
+<!--        android:button="@drawable/icon_slider_pink_small"-->
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/closeAppCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layoutDirection="rtl"
+        tools:checked="true"
+        android:text="Close App After Reminder Set"
+        android:textColor="?attr/main_color_natural"
+        android:textSize="@dimen/settings_screen_titles" />
+
+<!--        android:button="@drawable/checkbox_selector"-->
     <TextView
         android:id="@+id/userNameDialog"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:clickable="true"
         android:focusable="true"
+        android:gravity="center_vertical"
         android:text="Set user name"
+        android:textColor="?attr/main_color_natural"
         android:textSize="@dimen/settings_screen_titles" />
 
     <View

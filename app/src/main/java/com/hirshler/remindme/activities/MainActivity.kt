@@ -28,6 +28,7 @@ class MainActivity : BaseActivity() {
 
     companion object {
         const val ON_ACTIVITY_START_GO_TO_REMINDERS_LIST: String = "onActivityStartGoToRemindersList"
+        const val ON_ACTIVITY_START_GO_TO_SETTINGS: String = "onActivityStartGoToSettings"
     }
 
 
@@ -47,9 +48,17 @@ class MainActivity : BaseActivity() {
         binding.viewPager.adapter = StateAdapter(this, reminder)
         binding.dotsIndicator.setViewPager2(binding.viewPager)
         binding.viewPager.offscreenPageLimit = 2
+
+
+
         val goToList = intent.getBooleanExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, false)
         if (goToList) {
-            goToRemindersList()
+            binding.viewPager.setCurrentItem(1, true)
+        }
+
+        val goToSettings = intent.getBooleanExtra(ON_ACTIVITY_START_GO_TO_SETTINGS, false)
+        if (goToSettings) {
+            binding.viewPager.setCurrentItem(2, false)
         }
 
 
@@ -61,10 +70,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
-    private fun goToRemindersList() {
-        binding.viewPager.setCurrentItem(1, true)
-    }
 
     override fun onResume() {
         super.onResume()

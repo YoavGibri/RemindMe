@@ -39,7 +39,7 @@ class ReminderListFragment : Fragment() {
 //                        .build()
 //                )
                 startActivity(Intent(requireActivity(), MainActivity::class.java).apply { putExtra("reminderToEdit", reminder.toString()) })
-                requireActivity().finish()
+               // requireActivity().finish()
             }
 
             override fun onDeleteClick(reminder: Reminder) {

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.hirshler.remindme.managers.NotificationsManager
 import com.hirshler.remindme.room.AppDatabase
 import com.hirshler.remindme.room.ReminderRepo
 

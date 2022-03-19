@@ -7,8 +7,8 @@ import android.media.RingtoneManager
 import android.widget.ArrayAdapter
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.R
-import com.hirshler.remindme.RingManager
 import com.hirshler.remindme.SP
+import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.AlarmSound
 
 class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -> Unit) {

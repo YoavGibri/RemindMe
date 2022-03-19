@@ -15,17 +15,7 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
-    <style name="textureOverlayBg1">
-        <item name="android:background">@drawable/bg_1</item>
-    </style>
 
-    <style name="textureOverlayBg2">
-        <item name="android:background">@drawable/bg_2</item>
-    </style>
-
-    <style name="textureOverlayBg3">
-        <item name="android:background">@drawable/bg_3</item>
-    </style>
 
     <style name="coloredButtonOverlay">
         <item name="android:layout_width">@dimen/button_diameter</item>
@@ -33,7 +23,7 @@
         <item name="android:layout_margin">10dp</item>
         <item name="android:padding">15dp</item>
         <item name="android:scaleType">fitCenter</item>
-        <item name="tint">@color/white</item>
+        <item name="tint">?attr/main_color_natural</item>
         <item name="android:background">?attr/button_background</item>
     </style>
 
@@ -47,7 +37,27 @@
         <item name="android:background">@drawable/button_white</item>
     </style>
 
-<!--    <style name="buttonOverlay.black">-->
+    <style name="colorPicker">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:src">@drawable/icon_transparent</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:adjustViewBounds">true</item>
+    </style>
+
+    <style name="settingsText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:textSize">@dimen/settings_screen_titles</item>
+        <item name="android:textColor">?attr/main_color_natural</item>
+    </style>
+
+
+    <!--    <style name="buttonOverlay.black">-->
 <!--        <item name="android:background">@drawable/button_black</item>-->
 <!--    </style>-->
 

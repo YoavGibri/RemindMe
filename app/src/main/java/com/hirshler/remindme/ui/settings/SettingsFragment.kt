@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
+import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import com.hirshler.remindme.view.UserNameDialog
@@ -95,7 +96,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.chooseAlarmSoundButton.setOnClickListener {
-            alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()){
+            alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
                 AppSettings.setGeneralAlarm(it)
                 setAlarmTextFromSettings()
             }
@@ -103,6 +104,11 @@ class SettingsFragment : Fragment() {
         }
 
         binding.userNameDialog.setOnClickListener { UserNameDialog.showUserNameDialog(requireActivity()) }
+
+        binding.colorSelector.setColorChangeListener {
+            startActivity(Intent(requireActivity(), MainActivity::class.java)
+                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true) })
+        }
 
         return binding.root
     }

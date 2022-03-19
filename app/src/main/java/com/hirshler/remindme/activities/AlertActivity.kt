@@ -9,6 +9,9 @@ import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
+import com.hirshler.remindme.managers.AlertsManager
+import com.hirshler.remindme.managers.NotificationsManager
+import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
 import com.hirshler.remindme.ui.alert.AlertViewModel
 import com.hirshler.remindme.view.DateTimePickerDialog

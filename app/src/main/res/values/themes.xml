@@ -1,36 +1,58 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
 
+<!--    <item name="colorPrimary">@color/secondaryColor</item>-->
+<!--    <item name="colorPrimaryVariant">@color/primaryDarkColor</item>-->
+<!--    <item name="colorOnPrimary">@color/primaryTextColor</item>-->
+<!--    <item name="colorSecondary">@color/secondaryColor</item>-->
+<!--    <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+<!--    <item name="colorOnSecondary">@color/secondaryTextColor</item>-->
+
     <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/secondaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="main_color">@color/white</item>
+        <item name="main_color_natural">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/main_color_dark</item>
         <item name="android:windowBackground">?attr/main_color</item>
-
     </style>
 
-    <style name="Theme.RemindMe.black">
+    <!--region theme overlay-->
+
+    <style name="Theme.RemindMe.blackOverlay">
         <item name="main_color">@color/dark_black</item>
         <item name="main_color_dark">@color/light_black</item>
         <item name="button_background">@drawable/button_black</item>
         <item name="ok_button">@drawable/okbutton_black</item>
         <item name="button_time">@drawable/button_time_black</item>
+        <item name="icon_slider">@drawable/icon_slider_black_small</item>
 
     </style>
 
-    <style name="Theme.RemindMe.blue">
+    <style name="Theme.RemindMe.blueOverlay">
         <item name="main_color">@color/light_blue</item>
         <item name="main_color_dark">@color/dark_blue</item>
         <item name="button_background">@drawable/button_blue</item>
         <item name="ok_button">@drawable/okbutton_blue</item>
         <item name="button_time">@drawable/button_time_blue</item>
-
+        <item name="icon_slider">@drawable/icon_slider_blue_small</item>
     </style>
 
+    <!--endregion-->
+
+    <!--region texture overlay-->
+
+    <style name="textureOverlayBamboo">
+        <item name="background_texture">@drawable/bg_1</item>
+    </style>
+
+    <style name="textureOverlayCoral">
+        <item name="background_texture">@drawable/bg_2</item>
+    </style>
+
+    <style name="textureOverlayForest">
+        <item name="background_texture">@drawable/bg_3</item>
+    </style>
+
+    <!--endregion-->
 
     <style name="Theme.RemindMe.FullScreen">
         <item name="android:windowNoTitle">true</item>

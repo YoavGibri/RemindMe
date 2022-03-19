@@ -18,6 +18,7 @@ import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.activities.MainActivity.Companion.ON_ACTIVITY_START_GO_TO_REMINDERS_LIST
 import com.hirshler.remindme.databinding.FragmentReminderBinding
+import com.hirshler.remindme.managers.VoiceRecorderManager
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.view.RepeatDialog
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
@@ -158,14 +159,7 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
                     vm.setAlert()
 
                     showSuccessSnackBar(text = getAlertString())
-//                    if (AppSettings.getCloseAppAfterReminderSet()) {
-//                        Timer().schedule(timerTask {
-//                            requireActivity().finish()
-//                        }, SECONDS_TO_AUTOCLOSE * 1000)
-//                    } else {
-//                        startActivity(Intent(requireActivity(), MainActivity::class.java))
-//                        requireActivity().finish()
-//                    }
+
 
                     Timer().schedule(timerTask {
 
@@ -174,13 +168,11 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
                             startActivity(Intent(requireActivity(), MainActivity::class.java)
                                 .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
                         } else {
-                            if (!AppSettings.getCloseAppAfterReminderSet()) {
+                            if (AppSettings.getCloseAppAfterReminderSet()) {
+                                requireActivity().finish()
+                            } else
                                 startActivity(Intent(requireActivity(), MainActivity::class.java))
-                            }
                         }
-
-                        requireActivity().finish()
-
 
                     }, SECONDS_TO_AUTOCLOSE * 1000)
 
