@@ -12,15 +12,16 @@ import com.hirshler.remindme.managers.ThemeManager
 
 class ColorSelectorView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), View.OnClickListener {
 
+
     private var onColorChanged: (() -> Unit)? = null
     private val pickers: MutableList<ImageButton>
     private val overlays: MutableList<Int>
 
     private var binding: ColorSelectorViewBinding =
-        ColorSelectorViewBinding.inflate(LayoutInflater.from(context), null, false)
+        ColorSelectorViewBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        addView(binding.root)
+//        addView(binding.root)
 
         pickers = mutableListOf(
             binding.black,
