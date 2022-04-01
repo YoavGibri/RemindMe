@@ -15,7 +15,9 @@ android {
         minSdk 24
         targetSdk 30
         versionCode 1
-        versionName "1.20"
+        versionName "1.21"
+
+        archivesBaseName = "RemindMe21-v$versionName"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
