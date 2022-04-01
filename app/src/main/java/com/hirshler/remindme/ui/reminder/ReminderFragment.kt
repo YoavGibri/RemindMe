@@ -55,12 +55,6 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
 
 
 
-        reminderToEdit?.let {
-            vm.currentReminder.value = reminderToEdit
-            setViewsFromReminder(reminderToEdit)
-            FlowLog.reminderEditStart(reminderToEdit)
-        }
-
 
         binding.text.addTextChangedListener(
             afterTextChanged = { vm.currentReminder.value?.text = it.toString() }
@@ -262,6 +256,12 @@ class ReminderFragment(private val reminderToEdit: Reminder?) : Fragment() {
         super.onResume()
         vm.currentCalendar.value = Calendar.getInstance()
         binding.minutesButton.reset()
+
+        reminderToEdit?.let {
+            vm.currentReminder.value = reminderToEdit
+            setViewsFromReminder(reminderToEdit)
+            FlowLog.reminderEditStart(reminderToEdit)
+        }
     }
 
 
