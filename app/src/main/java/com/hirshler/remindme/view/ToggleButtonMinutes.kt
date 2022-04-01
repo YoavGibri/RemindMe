@@ -44,8 +44,12 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
 
         currMinutes.observe(context as LifecycleOwner, { minutes ->
             text = minutes.toString()
-            if (firstInit)
+            if (firstInit) {
                 firstInit = false
+                if (withZero) {
+                    disable()
+                }
+            }
             else
                 callback?.invoke(minutes)
         })
