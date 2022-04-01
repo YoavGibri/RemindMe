@@ -4,16 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="8dp"
     android:paddingStart="30dp"
+    android:paddingTop="8dp"
     android:paddingEnd="30dp"
     tools:context=".ui.settings.SettingsFragment"
     tools:layout_marginTop="50dp">
 
     <TextView
-        android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/title_settings"
         android:textColor="?attr/main_color_natural"
@@ -45,7 +45,8 @@
     <com.hirshler.remindme.view.ColorSelectorView
         android:id="@+id/colorSelector"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="170dp"
+        android:layout_gravity="center"/>
 
 
     <LinearLayout
@@ -136,28 +137,28 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        tools:checked="false"
+        android:button="@drawable/checkbox_selector"
         android:layoutDirection="rtl"
         android:text="Vibrate Mode"
         android:textColor="?attr/main_color_natural"
-        android:button="@drawable/checkbox_selector"
-        android:textSize="@dimen/settings_screen_titles" />
+        android:textSize="@dimen/settings_screen_titles"
+        tools:checked="false" />
 
-<!--        android:button="@drawable/icon_slider_pink_small"-->
+    <!--        android:button="@drawable/icon_slider_pink_small"-->
 
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/closeAppCheckBox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layoutDirection="rtl"
-        tools:checked="true"
-        android:text="Close App After Reminder Set"
         android:button="@drawable/checkbox_selector"
+        android:layoutDirection="rtl"
+        android:text="Close App After Reminder Set"
         android:textColor="?attr/main_color_natural"
-        android:textSize="@dimen/settings_screen_titles" />
+        android:textSize="@dimen/settings_screen_titles"
+        tools:checked="true" />
 
-<!--        android:button="@drawable/checkbox_selector"-->
+    <!--        android:button="@drawable/checkbox_selector"-->
     <TextView
         android:id="@+id/userNameDialog"
         android:layout_width="match_parent"
