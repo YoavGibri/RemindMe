@@ -15,6 +15,7 @@ import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
 import com.hirshler.remindme.ui.alert.AlertViewModel
 import com.hirshler.remindme.view.DateTimePickerDialog
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -60,15 +61,16 @@ class AlertActivity : BaseActivity() {
                     val fromAlertManager = !intent.getBooleanExtra(NotificationsManager.FROM_NOTIFICATION, false)
 
                     FlowLog.alertIsAlerting(reminder, fromAlertManager)
-                    NotificationsManager.cancelMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+                    NotificationsManager.cancelMissedAlertNotification(this@AlertActivity, reminder)
 
-                    vm.setCalendarByReminder()
 
                     if (reminder.snoozeCount < 5) {
                         vm.currentSnooze = 5
                         reminder.snoozeCount++
                         updateReminder()
                     }
+
+                    vm.setCalendarByReminder()
 
                     firstLoad = false
 
@@ -83,7 +85,6 @@ class AlertActivity : BaseActivity() {
                         ringManager.play()
                         playbackOn = true
                     }
-
 
                 }
 
@@ -103,9 +104,9 @@ class AlertActivity : BaseActivity() {
 
         })
 
-//        vm.currentCalendar.observe(this, { calendar ->
-//            binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
-//        })
+        vm.currentCalendar.observe(this, { calendar ->
+            setDateTimeText(calendar, vm.currentSnooze)
+        })
 
 
         ringManager = RingManager(this)
@@ -118,29 +119,25 @@ class AlertActivity : BaseActivity() {
             notificationTimer.cancel()
             vm.currentSnooze = minutes
 
-//            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis } }
-//
-//            binding.timePickerButton.text =
-//                SimpleDateFormat("kk:mm", Locale.getDefault()).format(
-//                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time
-//                )
+            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { calendar -> this.timeInMillis = calendar.timeInMillis } }
+
+            setDateTimeText(currentTime.apply { add(Calendar.MINUTE, minutes) })
 
 
             minutesButtonTimer?.cancel()
 
-            minutesButtonTimer = Timer().apply {
-                schedule(timerTask {
-
-
-                    runOnUiThread {
-                        FlowLog.alertSnoozed(vm.currentReminder.value)
-                        updateReminder()
-
-                        finishByUser()
-                    }
-
-                }, SNOOZE_BUTTON_DELAY_SECONDS * 1000)
-            }
+//            minutesButtonTimer = Timer().apply {
+//                schedule(timerTask {
+//
+//                    runOnUiThread {
+//                        FlowLog.alertSnoozed(vm.currentReminder.value)
+//                        updateReminder()
+//
+//                        finishByUser()
+//                    }
+//
+//                }, SNOOZE_BUTTON_DELAY_SECONDS * 1000)
+//            }
         }
 
 //        binding.datePickerButton.setOnClickListener {
@@ -215,6 +212,14 @@ class AlertActivity : BaseActivity() {
         vm.updateCurrentReminder()
         vm.saveReminderToDb()
         vm.setNextAlert()
+    }
+
+    private fun setDateTimeText(cal: Calendar, minutesToAdd: Int = 0) {
+        var calendar = cal
+        if (minutesToAdd != 0) {
+            calendar = Calendar.getInstance().apply { timeInMillis = cal.timeInMillis }.apply { add(Calendar.MINUTE, minutesToAdd) }
+        }
+        binding.dateTimePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
     }
 
     override fun onPause() {

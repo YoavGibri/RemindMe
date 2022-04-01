@@ -116,22 +116,22 @@
 <!--                android:src="@drawable/ic_baseline_calendar_today_24"-->
 <!--                app:tint="?attr/colorSecondary" />-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/timePickerButton"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textColor="?attr/colorSecondary"-->
-<!--                android:textSize="40dp"-->
-<!--                android:textStyle="bold"-->
-<!--                tools:text="17:30" />-->
+            <TextView
+                android:id="@+id/dateTimePickerButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/main_color_dark"
+                android:textSize="40dp"
+                android:textStyle="bold"
+                tools:text="17:30" />
 <!--            -->
 <!--        </LinearLayout>-->
 
 
-        <ImageButton
-            android:id="@+id/dateTimePickerButton"
-            style="@style/coloredButtonOverlay"
-            android:src="@drawable/icon_calendar" />
+<!--        <ImageButton-->
+<!--            android:id="@+id/dateTimePickerButton"-->
+<!--            style="@style/coloredButtonOverlay"-->
+<!--            android:src="@drawable/icon_calendar" />-->
 
 
         <androidx.appcompat.widget.AppCompatButton
