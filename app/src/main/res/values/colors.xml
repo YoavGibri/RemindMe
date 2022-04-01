@@ -31,10 +31,31 @@
     <color name="error">#F44336</color>
 
     <color name="light_black">#424242</color>
-    <color name="dark_black">#535353</color>
-<!--    <color name="app_blue">#3E85FB</color>-->
+    <color name="dark_black">#262626</color>
+
     <color name="light_blue">#4088FF</color>
     <color name="dark_blue">#0C439B</color>
+
+    <color name="light_red">#FB4F4F</color>
+    <color name="dark_red">#AF2525</color>
+
+    <color name="light_green">#3EB388</color>
+    <color name="dark_green">#19694B</color>
+
+    <color name="light_pink">#E65C9C</color>
+    <color name="dark_pink">#9B2F61</color>
+
+    <color name="light_grey">#888888</color>
+    <color name="dark_grey">#535353</color>
+
+    <color name="light_purple">#9F3CAD</color>
+    <color name="dark_purple">#9F3CAD</color>
+
+    <color name="light_white">#FFFFFF</color>
+    <color name="dark_white">#AEAEAE</color>
+
+    <color name="natural_white">#FFFFFF</color>
+    <color name="natural_grey">#AEAEAE</color>
 
 
 </resources>

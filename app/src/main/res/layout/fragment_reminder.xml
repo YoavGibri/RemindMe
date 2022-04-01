@@ -50,10 +50,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/chooseAlarmSoundButton"
             style="@style/coloredButtonOverlay"
-            android:src="@drawable/icon_ringtone" />
+            android:src="@drawable/icon_ringtone"
+            android:elevation="6dp"/>
 
 
         <com.hirshler.remindme.view.AutoResizeEditText
@@ -75,10 +76,11 @@
             tools:ignore="Autofill,UnusedAttribute" />
 
 
-        <ImageButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/recordButton"
             style="@style/coloredButtonOverlay"
-            android:src="@drawable/icon_record" />
+            android:src="@drawable/icon_record"
+            app:elevation="6dp"/>
 
 
     </LinearLayout>
@@ -142,7 +144,7 @@
                     android:layout_marginStart="16dp"
                     android:gravity="start"
                     android:text="@string/minutes_delay_mins"
-                    android:textColor="@color/white"
+                    android:textColor="?attr/main_color_natural"
                     android:textSize="30dp"
                     android:typeface="sans" />
 

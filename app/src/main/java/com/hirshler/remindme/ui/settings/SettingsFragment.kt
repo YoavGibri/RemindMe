@@ -1,5 +1,6 @@
 package com.hirshler.remindme.ui.settings
 
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
@@ -27,7 +28,6 @@ class SettingsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-//        binding.button.setOnClickListener{throw RuntimeException("Test Crash")}
 
 
         binding.voiceVolumeSeekBar.apply {
@@ -107,7 +107,8 @@ class SettingsFragment : Fragment() {
 
         binding.colorSelector.setColorChangeListener {
             startActivity(Intent(requireActivity(), MainActivity::class.java)
-                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true) })
+                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true)},
+                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle() )
         }
 
         return binding.root

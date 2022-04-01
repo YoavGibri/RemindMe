@@ -4,141 +4,160 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
+    android:background="?attr/background_texture"
     tools:context=".activities.AlertActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="0.7"
+        android:padding="70dp">
 
         <TextView
             android:id="@+id/reminderText"
             android:layout_width="match_parent"
-            android:gravity="center"
             android:layout_height="wrap_content"
-            android:text="test"
             android:layout_gravity="center"
+            android:gravity="center"
+            android:text="test"
+            android:textColor="@color/white"
             android:textSize="40dp"
             android:visibility="gone"
             tools:visibility="visible" />
 
         <ImageView
             android:id="@+id/voiceNoteImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:src="@drawable/speaker"
-            android:visibility="gone"
+            android:src="@drawable/icon_voice"
+            android:visibility="invisible"
+            app:tint="@color/white"
             tools:visibility="visible" />
     </FrameLayout>
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:gravity="center"
-        android:text="@string/remind_me_again"
-        android:textSize="30dp" />
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:gravity="center|top">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:gravity="end"
-            android:text="In"
-            android:textSize="30dp" />
-
-        <com.hirshler.remindme.view.ToggleButtonMinutes
-            android:id="@+id/minutes_button"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="3"
-            android:text="0"
-            android:textSize="25dp"
-            app:withZero="true" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:gravity="start"
-            android:text="Min."
-            android:textSize="30dp" />
-
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
-        android:text="Or exactly at"
-        android:textSize="20dp" />
-
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal|top">
+        android:layout_height="360dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:gravity="center_horizontal"
+        android:background="@drawable/alert_activity_card_background"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/datePickerButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_baseline_calendar_today_24"
-            app:tint="?attr/colorSecondary" />
 
         <TextView
-            android:id="@+id/timePickerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="40dp"
-            android:textStyle="bold"
-            tools:text="17:30" />
+            android:gravity="center"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="15dp"
+            android:textColor="?attr/main_color_dark"
+            android:text="@string/remind_me_again"
+            android:textSize="30dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center|top">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="end"
+                android:text="in"
+                android:textColor="?attr/main_color_dark"
+                android:textSize="30dp" />
+
+            <com.hirshler.remindme.view.ToggleButtonMinutes
+                android:id="@+id/minutes_button"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="?attr/button_time"
+                android:ems="3"
+                android:textColor="?attr/main_color_natural"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:text="0"
+                app:withZero="true" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:gravity="start"
+                android:text="min"
+                android:textColor="?attr/main_color_dark"
+                android:textSize="30dp" />
+
+
+        </LinearLayout>
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center_horizontal|top">-->
+
+<!--            <ImageButton-->
+<!--                android:id="@+id/datePickerButton"-->
+<!--                style="@style/Widget.AppCompat.Button.Borderless"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="60dp"-->
+<!--                android:padding="10dp"-->
+<!--                android:scaleType="fitCenter"-->
+<!--                android:src="@drawable/ic_baseline_calendar_today_24"-->
+<!--                app:tint="?attr/colorSecondary" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/timePickerButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textColor="?attr/colorSecondary"-->
+<!--                android:textSize="40dp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:text="17:30" />-->
+<!--            -->
+<!--        </LinearLayout>-->
+
+
+        <ImageButton
+            android:id="@+id/dateTimePickerButton"
+            style="@style/coloredButtonOverlay"
+            android:src="@drawable/icon_calendar" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/dismissButton"
+            android:background="?attr/button_time"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="25dp"
+            android:textColor="?attr/main_color_natural"
+            android:text="dismiss" />
+
+
+        <com.hirshler.remindme.view.ToggleButtonMute
+            android:id="@+id/muteButton"
+            style="@style/coloredButtonOverlay"
+            android:src="@drawable/mute" />
 
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/dismissButton"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="dismiss" />
-
-
-    <com.hirshler.remindme.view.ToggleButtonMute
-        android:id="@+id/muteButton"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:adjustViewBounds="true"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_baseline_volume_off_24"
-        app:tint="?attr/colorSecondary" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"/>
 
 
 </LinearLayout>

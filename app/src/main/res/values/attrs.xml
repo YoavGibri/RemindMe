@@ -1,15 +1,19 @@
 <resources>
     <declare-styleable name="ToggleButtonMinutes">
         <attr name="withZero" format="boolean" />
-
-        <attr name="main_color" format="color" />
-        <attr name="main_color_dark" format="color" />
-        <attr name="main_color_natural" format="color" />
-        <attr name="button_background" format="reference" />
-        <attr name="ok_button" format="reference" />
-        <attr name="button_time" format="reference" />
-        <attr name="background_texture" format="reference" />
-        <attr name="icon_slider" format="reference" />
-
     </declare-styleable>
+
+    <attr name="main_color" format="color" />
+    <attr name="main_color_dark" format="color" />
+    <attr name="main_color_natural" format="color" />
+    <attr name="button_background" format="reference" />
+    <attr name="ok_button" format="reference" />
+    <attr name="button_time" format="reference" />
+    <attr name="background_texture" format="reference" />
+    <attr name="icon_slider" format="reference" />
+
+    <declare-styleable name="ColorView">
+        <attr name="color_picker_background" format="reference" />
+    </declare-styleable>
+
 </resources>

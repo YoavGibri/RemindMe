@@ -14,7 +14,6 @@ import android.view.WindowManager
 import com.google.gson.Gson
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
-import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
 import com.hirshler.remindme.model.AlarmSound
@@ -120,12 +119,12 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onAttachedToWindow() {
-        if (BuildConfig.DEBUG) {
+//        if (BuildConfig.) {
             window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
             window.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
-        }
+//        }
     }
 
 

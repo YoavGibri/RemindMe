@@ -45,7 +45,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
                             }
 
                             TYPE.ITEM_DISMISSED.ordinal->{
-                                root.alpha = 0.3f
+                                root.alpha = 0.5f
                             }
 
                         }

@@ -15,7 +15,6 @@ import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.Reminder.Companion.KEY_REMINDER_ID
 import com.hirshler.remindme.ui.alert.AlertViewModel
 import com.hirshler.remindme.view.DateTimePickerDialog
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -104,10 +103,9 @@ class AlertActivity : BaseActivity() {
 
         })
 
-        vm.currentCalendar.observe(this, { calendar ->
-            binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
-        })
-
+//        vm.currentCalendar.observe(this, { calendar ->
+//            binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
+//        })
 
 
         ringManager = RingManager(this)
@@ -120,12 +118,12 @@ class AlertActivity : BaseActivity() {
             notificationTimer.cancel()
             vm.currentSnooze = minutes
 
-            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis } }
-
-            binding.timePickerButton.text =
-                SimpleDateFormat("kk:mm", Locale.getDefault()).format(
-                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time
-                )
+//            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { that -> this.timeInMillis = that.timeInMillis } }
+//
+//            binding.timePickerButton.text =
+//                SimpleDateFormat("kk:mm", Locale.getDefault()).format(
+//                    currentTime.apply { add(Calendar.MINUTE, minutes) }.time
+//                )
 
 
             minutesButtonTimer?.cancel()
@@ -145,18 +143,22 @@ class AlertActivity : BaseActivity() {
             }
         }
 
-        binding.datePickerButton.setOnClickListener {
+//        binding.datePickerButton.setOnClickListener {
+//            notificationTimer.cancel()
+////            showDatePicker()
+//            showDateTimePicker()
+//        }
+//
+//        binding.timePickerButton.setOnClickListener {
+//            notificationTimer.cancel()
+////            showTimePicker()
+//            showDateTimePicker()
+//        }
+
+        binding.dateTimePickerButton.setOnClickListener {
             notificationTimer.cancel()
-//            showDatePicker()
             showDateTimePicker()
         }
-
-        binding.timePickerButton.setOnClickListener {
-            notificationTimer.cancel()
-//            showTimePicker()
-            showDateTimePicker()
-        }
-
 
 
         binding.dismissButton.setOnClickListener {
@@ -208,47 +210,6 @@ class AlertActivity : BaseActivity() {
         }
         dateTimePicker.show()
     }
-
-//    private fun showDatePicker() {
-//        val c = vm.currentCalendar.value!!
-//        val datePicker = DatePickerDialog(
-//            this, { _, year, monthOfYear, dayOfMonth ->
-//                vm.setDate(year, monthOfYear, dayOfMonth)
-//                vm.resetSnooze()
-//                dateIsSet = true
-//                if (timeIsSet) {
-//                    updateReminder()
-//                    finishByUser()
-//                } else {
-//                    showTimePicker()
-//                }
-//            },
-//            c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
-//        )
-//        datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis;
-//        datePicker.show()
-//    }
-//
-//
-//    private fun showTimePicker() {
-//        val c = vm.currentCalendar.value!!
-//        val timePicker = TimePickerDialog(
-//            this, AlertDialog.THEME_HOLO_LIGHT, { _, hourOfDay, minute ->
-//                vm.setTime(hourOfDay, minute)
-//                vm.resetSnooze()
-//                binding.minutesButton.disable()
-//                timeIsSet = true
-//                if (dateIsSet) {
-//                    updateReminder()
-//                    finishByUser()
-//                } else {
-//                    showDatePicker()
-//                }
-//            },
-//            c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), true
-//        )
-//        timePicker.show()
-//    }
 
     private fun updateReminder() {
         vm.updateCurrentReminder()

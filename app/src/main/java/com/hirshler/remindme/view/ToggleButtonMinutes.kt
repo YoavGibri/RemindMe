@@ -26,7 +26,7 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
     }
 
     private val minutes: MutableList<Int> =
-        mutableListOf(5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 180)
+        mutableListOf(5, 10, 15, 20, 25, 30, 45, 60, 90, 120, 150, 180)
     var currMinutes = MutableLiveData<Int>(minutes[0])
 
 
@@ -36,10 +36,10 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
         val withZero = attributes.getBoolean(R.styleable.ToggleButtonMinutes_withZero, false)
         attributes.recycle()
 
-        if (withZero) {
-            minutes.add(0, 0)
-            currMinutes.value = minutes[0]
-        }
+//        if (withZero) {
+//            minutes.add(0, 0)
+//            currMinutes.value = minutes[0]
+//        }
 
 
         currMinutes.observe(context as LifecycleOwner, { minutes ->

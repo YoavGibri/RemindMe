@@ -12,8 +12,8 @@ private const val DEFAULT_THEME_TEXTURE = R.style.textureOverlayBamboo
 class ThemeManager {
 
     companion object {
-        var color: Int? = null
-        var texture: Int? = null
+//        var color: Int? = null
+//        var texture: Int? = null
 
         //region public
 
@@ -36,16 +36,20 @@ class ThemeManager {
         }
 
 
-        private fun getThemeColor(): Int {
-            if (color == null)
-                color = SP.get().getInt(THEME_COLOR_KEY, DEFAULT_THEME_COLOR)
-            return color!!
+        fun getThemeColor(): Int {
+            return SP.get().getInt(THEME_COLOR_KEY, DEFAULT_THEME_COLOR)
         }
 
-        private fun getThemeTexture(): Int {
-            if (texture == null)
-                texture = SP.get().getInt(THEME_TEXTURE_KEY, DEFAULT_THEME_TEXTURE)
-            return texture!!
+        fun getThemeTexture(): Int {
+            return SP.get().getInt(THEME_TEXTURE_KEY, DEFAULT_THEME_TEXTURE)
+        }
+
+        fun setThemeColor(newColor: Int) {
+            SP.set().putInt(THEME_COLOR_KEY, newColor).apply()
+        }
+
+        fun setThemeTexture(newTexture: Int) {
+            SP.set().putInt(THEME_TEXTURE_KEY, newTexture).apply()
         }
 
         //endregion

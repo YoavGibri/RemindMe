@@ -1,27 +1,36 @@
 package com.hirshler.remindme.view
 
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
-import android.widget.LinearLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.hirshler.remindme.R
 import com.hirshler.remindme.databinding.ColorSelectorViewBinding
 import com.hirshler.remindme.managers.ThemeManager
 
-class ColorSelectorView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), View.OnClickListener {
-
+class ColorSelectorView : ConstraintLayout, View.OnClickListener {
 
     private var onColorChanged: (() -> Unit)? = null
-    private val pickers: MutableList<ImageButton>
-    private val overlays: MutableList<Int>
+    private lateinit var pickers: MutableList<ImageButton>
+    private lateinit var overlays: MutableList<Int>
 
-    private var binding: ColorSelectorViewBinding =
-        ColorSelectorViewBinding.inflate(LayoutInflater.from(context), this)
 
-    init {
-//        addView(binding.root)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initView()
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initView()
+    }
+
+    constructor(context: Context) : super(context) {
+        initView()
+    }
+
+    private fun initView() {
+        val binding = ColorSelectorViewBinding.inflate((context as Activity).layoutInflater, this)
 
         pickers = mutableListOf(
             binding.black,
@@ -36,25 +45,29 @@ class ColorSelectorView(context: Context?, attrs: AttributeSet?) : LinearLayout(
 
         pickers.forEach { it.setOnClickListener(this) }
 
+
         overlays = mutableListOf(
             R.style.Theme_RemindMe_blackOverlay,
             R.style.Theme_RemindMe_blueOverlay,
-//            R.style.greenOverlay,
-//            R.style.greyOverlay,
-//            R.style.pinkOverlay,
-//            R.style.redOverlay,
-//            R.style.whiteOverlay,
-//            R.style.purpleOverlay,
+            R.style.Theme_RemindMe_greenOverlay,
+            R.style.Theme_RemindMe_greyOverlay,
+            R.style.Theme_RemindMe_pinkOverlay,
+            R.style.Theme_RemindMe_redOverlay,
+            R.style.Theme_RemindMe_whiteOverlay,
+            R.style.Theme_RemindMe_purpleOverlay,
         )
 
-
-        pickers[overlays.indexOf(ThemeManager.color)].setImageResource(R.drawable.icon_v)
-
+        setSelectedColor()
     }
 
+    private fun setSelectedColor() {
+        pickers[overlays.indexOf(ThemeManager.getThemeColor())].setImageResource(R.drawable.icon_v)
+    }
+
+
     override fun onClick(v: View?) {
-        if (ThemeManager.color != overlays[pickers.indexOf(v)]) {
-            ThemeManager.color = overlays[pickers.indexOf(v)]
+        if (ThemeManager.getThemeColor() != overlays[pickers.indexOf(v)]) {
+            ThemeManager.setThemeColor(overlays[pickers.indexOf(v)])
             onColorChanged?.invoke()
         }
     }
