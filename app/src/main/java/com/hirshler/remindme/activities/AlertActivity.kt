@@ -36,8 +36,8 @@ class AlertActivity : BaseActivity() {
     private lateinit var vm: AlertViewModel
     private lateinit var ringManager: RingManager
 
-    private var minutesButtonTimer: Timer? = null
-    private lateinit var notificationTimer: Timer
+    private var snoozeButtonTimer: Timer? = null
+    private lateinit var missedAlertTimer: Timer
 
     private val SECONDS_TO_NOTIFICATION: Long = 50
     private val SNOOZE_BUTTON_DELAY_SECONDS: Long = 2
@@ -116,7 +116,7 @@ class AlertActivity : BaseActivity() {
 
 
         binding.minutesButton.setOnToggleCallback { minutes ->
-            notificationTimer.cancel()
+            cancelMissedAlertTimer()
             vm.currentSnooze = minutes
 
             val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { calendar -> this.timeInMillis = calendar.timeInMillis } }
@@ -124,42 +124,34 @@ class AlertActivity : BaseActivity() {
             setDateTimeText(currentTime.apply { add(Calendar.MINUTE, minutes) })
 
 
-            minutesButtonTimer?.cancel()
+            snoozeButtonTimer?.cancel()
 
-//            minutesButtonTimer = Timer().apply {
-//                schedule(timerTask {
-//
-//                    runOnUiThread {
-//                        FlowLog.alertSnoozed(vm.currentReminder.value)
-//                        updateReminder()
-//
-//                        finishByUser()
-//                    }
-//
-//                }, SNOOZE_BUTTON_DELAY_SECONDS * 1000)
-//            }
+            snoozeButtonTimer = Timer().apply {
+                schedule(timerTask {
+
+                    runOnUiThread {
+                        FlowLog.alertSnoozed(vm.currentReminder.value)
+                        updateReminder()
+
+                        finishByUser()
+                    }
+
+                }, SNOOZE_BUTTON_DELAY_SECONDS * 1000)
+            }
         }
 
-//        binding.datePickerButton.setOnClickListener {
-//            notificationTimer.cancel()
-////            showDatePicker()
-//            showDateTimePicker()
-//        }
-//
-//        binding.timePickerButton.setOnClickListener {
-//            notificationTimer.cancel()
-////            showTimePicker()
-//            showDateTimePicker()
-//        }
+
 
         binding.dateTimePickerButton.setOnClickListener {
-            notificationTimer.cancel()
+            cancelSnoozeButtonTimer()
+            cancelMissedAlertTimer()
             showDateTimePicker()
         }
 
 
         binding.dismissButton.setOnClickListener {
-            notificationTimer.cancel()
+            cancelSnoozeButtonTimer()
+            cancelMissedAlertTimer()
             vm.currentReminder.value?.apply {
 
                 if (repeat) {
@@ -179,12 +171,11 @@ class AlertActivity : BaseActivity() {
 
 
         binding.muteButton.setOnToggleCallback { playbackOn ->
-//            notificationTimer.cancel()
             if (playbackOn) ringManager.play() else ringManager.pause()
             this.playbackOn = playbackOn
         }
 
-        notificationTimer = Timer().apply {
+        missedAlertTimer = Timer().apply {
             schedule(timerTask {
                 runOnUiThread {
                     finish()
@@ -240,7 +231,7 @@ class AlertActivity : BaseActivity() {
 
 
     override fun onDestroy() {
-        notificationTimer.cancel()
+        cancelMissedAlertTimer()
 
         if (!finishByUser)
             NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
@@ -250,6 +241,13 @@ class AlertActivity : BaseActivity() {
         }
 
         super.onDestroy()
+    }
+
+    private fun cancelMissedAlertTimer() {
+        missedAlertTimer.cancel()
+    }
+    private fun cancelSnoozeButtonTimer(){
+        snoozeButtonTimer?.cancel()
     }
 
 
