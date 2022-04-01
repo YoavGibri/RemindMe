@@ -11,8 +11,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:padding="70dp">
+        android:layout_weight="0.7">
 
         <TextView
             android:id="@+id/reminderText"
@@ -20,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="test"
+            android:text="טקסטיל לילדים את תחושת הביטחון האישי של כל אחד מאיתנו יש את מאמרו שלו"
             android:textColor="@color/white"
             android:textSize="40dp"
             android:visibility="gone"
@@ -34,6 +33,7 @@
             android:src="@drawable/icon_voice"
             android:visibility="invisible"
             app:tint="@color/white"
+            android:layout_margin="70dp"
             tools:visibility="visible" />
     </FrameLayout>
 
