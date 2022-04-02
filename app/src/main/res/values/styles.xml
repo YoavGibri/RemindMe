@@ -15,44 +15,49 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
+    <style name="button_with_shadow">
+        <item name="android:elevation">@dimen/app_elevation</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:stateListAnimator">@null</item>
 
+    </style>
 
-    <style name="coloredButtonOverlay">
+    <style name="coloredButtonOverlay" parent="button_with_shadow">
         <item name="android:layout_width">@dimen/button_diameter</item>
         <item name="android:layout_height">@dimen/button_diameter</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:padding">15dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="tint">?attr/main_color_natural</item>
-        <item name="android:background">?attr/button_background</item>
+        <item name="android:background">@drawable/background_round_button_colored</item>
     </style>
 
- <style name="whiteButtonOverlay">
+    <style name="whiteButtonOverlay" parent="button_with_shadow">
         <item name="android:layout_width">@dimen/button_diameter</item>
         <item name="android:layout_height">@dimen/button_diameter</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:padding">15dp</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="tint">?attr/main_color_dark</item>
-        <item name="android:background">@drawable/button_white</item>
+        <item name="android:background">@drawable/background_round_button_white</item>
     </style>
 
-<!--    <style name="colorPicker">-->
-<!--        <item name="android:layout_width">0dp</item>-->
-<!--        <item name="android:layout_weight">1</item>-->
-<!--        <item name="android:layout_height">match_parent</item>-->
-<!--        <item name="android:layout_margin">5dp</item>-->
+    <!--    <style name="colorPicker">-->
+    <!--        <item name="android:layout_width">0dp</item>-->
+    <!--        <item name="android:layout_weight">1</item>-->
+    <!--        <item name="android:layout_height">match_parent</item>-->
+    <!--        <item name="android:layout_margin">5dp</item>-->
 
-<!--    </style>-->
-<style name="colorPicker">
-    <item name="android:layout_width">80dp</item>
-    <item name="android:layout_height">80dp</item>
-    <item name="android:layout_margin">5dp</item>
-    <item name="android:padding">20dp</item>
-    <item name="android:src">@drawable/icon_transparent</item>
-    <item name="android:scaleType">centerInside</item>
-    <item name="android:adjustViewBounds">true</item>
-    <item name="tint">?attr/main_color_natural</item>
+    <!--    </style>-->
+    <style name="colorPicker">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:src">@drawable/icon_transparent</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="tint">?attr/main_color_natural</item>
     </style>
 
     <style name="settingsText">
@@ -65,15 +70,13 @@
 
 
     <!--    <style name="buttonOverlay.black">-->
-<!--        <item name="android:background">@drawable/button_black</item>-->
-<!--    </style>-->
+    <!--        <item name="android:background">@drawable/button_black</item>-->
+    <!--    </style>-->
 
-<!--    <style name="buttonOverlay.blue">-->
-<!--        <item name="android:background">@drawable/button_blue</item>-->
-<!--        <item name="tint">@color/red</item>-->
-<!--    </style>-->
-
-
+    <!--    <style name="buttonOverlay.blue">-->
+    <!--        <item name="android:background">@drawable/button_blue</item>-->
+    <!--        <item name="tint">@color/red</item>-->
+    <!--    </style>-->
 
 
 </resources>

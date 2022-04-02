@@ -1,8 +1,8 @@
 package com.hirshler.remindme
 
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.setPadding
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.hirshler.remindme.databinding.RemindersRemindersListRowItemBinding
@@ -36,15 +36,18 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
                                 imgEdit.imageTintList = null
                                 imgDelete.imageTintList = null
 
-                                val outValue = TypedValue()
-                                parent.context.theme.resolveAttribute(R.attr.button_background, outValue, true)
-                                imgDelete.setBackgroundResource(outValue.resourceId)
+//                                val outValue = TypedValue()
+//                                parent.context.theme.resolveAttribute(R.attr.button_background, outValue, true)
+//                                imgDelete.setBackgroundResource(outValue.resourceId)
+//
+                                imgDelete.setBackgroundResource(R.drawable.background_round_button_colored)
+
                                 val res = parent.context.resources
                                 dateAndTime.setTextColor(res.getColor(R.color.white))
                                 text.setTextColor(res.getColor(R.color.white))
                             }
 
-                            TYPE.ITEM_DISMISSED.ordinal->{
+                            TYPE.ITEM_DISMISSED.ordinal -> {
                                 root.alpha = 0.5f
                             }
 
@@ -64,13 +67,28 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
             holder.binding.text.text = reminder.text
             holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmWithSnooze())
 
-            holder.binding.imgTextAndVoice.setImageResource(
-                if (reminder.text.isNotEmpty() && reminder.voiceNotePath.isNotEmpty())
-                    R.drawable.icon_text_and_voice
-                else if (reminder.text.isNotEmpty())
-                    R.drawable.icon_text
-                else R.drawable.icon_voice
-            )
+
+            holder.binding.imgTextAndVoice.apply {
+
+                when {
+                    reminder.text.isNotEmpty() && reminder.voiceNotePath.isNotEmpty() -> {
+                        setImageResource(R.drawable.icon_text_and_voice)
+                        setPadding(context.resources.getDimensionPixelSize(R.dimen.reminderlist_rowitem_textandvoice_padding))
+                    }
+
+                    reminder.text.isNotEmpty() -> {
+                        setImageResource(R.drawable.icon_text)
+                        setPadding(context.resources.getDimensionPixelSize(R.dimen.reminderlist_rowitem_text_padding))
+                    }
+
+                    else -> {
+                        setImageResource(R.drawable.icon_voice)
+                        setPadding(context.resources.getDimensionPixelSize(R.dimen.reminderlist_rowitem_text_padding))
+                    }
+                }
+            }
+
+
 
             holder.binding.imgDelete.setOnClickListener { clickListener.onDeleteClick(reminder) }
 

@@ -7,4 +7,7 @@
     <dimen name="button_diameter">50dp</dimen>
     <dimen name="checkbox_size">30dp</dimen>
     <dimen name="checkbox_v_size">15dp</dimen>
+    <dimen name="reminderlist_rowitem_textandvoice_padding">8dp</dimen>
+    <dimen name="reminderlist_rowitem_text_padding">15dp</dimen>
+    <dimen name="app_elevation">6dp</dimen>
 </resources>

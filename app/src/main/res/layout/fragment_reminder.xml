@@ -16,15 +16,14 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
 
         <TextView
-            android:layout_marginTop="15dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="@string/remind_me_to"
@@ -53,8 +52,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/chooseAlarmSoundButton"
             style="@style/coloredButtonOverlay"
-            android:src="@drawable/icon_ringtone"
-            android:elevation="6dp"/>
+            android:src="@drawable/icon_ringtone" />
 
 
         <com.hirshler.remindme.view.AutoResizeEditText
@@ -62,7 +60,8 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/text_background"
+            android:background="@drawable/background_reminder_text"
+            android:elevation="@dimen/app_elevation"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
@@ -79,8 +78,7 @@
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/recordButton"
             style="@style/coloredButtonOverlay"
-            android:src="@drawable/icon_record"
-            app:elevation="6dp"/>
+            android:src="@drawable/icon_record" />
 
 
     </LinearLayout>
@@ -124,11 +122,13 @@
                     android:textSize="30dp"
                     android:typeface="sans" />
 
+                <!--                    android:background="?attr/button_time"-->
                 <com.hirshler.remindme.view.ToggleButtonMinutes
                     android:id="@+id/minutes_button"
+                    style="@style/button_with_shadow"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
-                    android:background="?attr/button_time"
+                    android:background="@drawable/background_minutes_button"
                     android:ems="3"
                     android:textColor="?attr/main_color_natural"
                     android:textSize="30dp"
@@ -157,11 +157,12 @@
                 android:layout_width="150dp"
                 android:layout_height="60dp"
                 android:layout_marginBottom="25dp"
-                android:background="@drawable/round_background"
+                android:background="@drawable/background_ellipse"
+                style="@style/button_with_shadow"
+                android:textColor="?attr/main_color_dark"
                 android:textSize="30dp"
                 android:textStyle="bold"
                 android:typeface="sans"
-                android:textColor="?attr/main_color_dark"
                 tools:text="17:30" />
 
             <LinearLayout
@@ -179,12 +180,13 @@
                     android:id="@+id/days_button"
                     android:layout_width="150dp"
                     android:layout_height="60dp"
-                    android:background="@drawable/round_background"
+                    android:background="@drawable/background_ellipse"
                     android:ems="8"
+                    style="@style/button_with_shadow"
+                    android:textColor="?attr/main_color_dark"
                     android:textSize="20dp"
                     android:textStyle="bold"
                     android:typeface="sans"
-                    android:textColor="?attr/main_color_dark"
                     tools:text="TOMORROW" />
 
 
@@ -229,12 +231,13 @@
 
     <ImageButton
         android:id="@+id/doneButton"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:background="@android:color/transparent"
+        android:background="@drawable/background_round_button_colored"
+        style="@style/button_with_shadow"
+        android:padding="45dp"
         android:scaleType="fitCenter"
-        android:src="?attr/ok_button" />
+        android:src="@drawable/icon_v" />
 
 </LinearLayout>

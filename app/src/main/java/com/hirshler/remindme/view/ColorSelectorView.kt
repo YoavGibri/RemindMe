@@ -1,8 +1,8 @@
 package com.hirshler.remindme.view
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +30,7 @@ class ColorSelectorView : ConstraintLayout, View.OnClickListener {
     }
 
     private fun initView() {
-        val binding = ColorSelectorViewBinding.inflate((context as Activity).layoutInflater, this)
+        val binding = ColorSelectorViewBinding.inflate(LayoutInflater.from(context), this)
 
         pickers = mutableListOf(
             binding.black,
@@ -61,7 +61,9 @@ class ColorSelectorView : ConstraintLayout, View.OnClickListener {
     }
 
     private fun setSelectedColor() {
-        pickers[overlays.indexOf(ThemeManager.getThemeColor())].setImageResource(R.drawable.icon_v)
+        if(!isInEditMode) {
+            pickers[overlays.indexOf(ThemeManager.getThemeColor())].setImageResource(R.drawable.icon_v)
+        }
     }
 
 

@@ -13,6 +13,7 @@
         <item name="main_color_natural">@color/natural_white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/main_color_dark</item>
         <item name="android:windowBackground">?attr/main_color</item>
+        <item name="android:spotShadowAlpha">0.5</item>
     </style>
 
     <!--region theme overlay-->
