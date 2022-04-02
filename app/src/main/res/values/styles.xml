@@ -17,7 +17,7 @@
 
     <style name="button_with_shadow">
         <item name="android:elevation">@dimen/app_elevation</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_margin">10dp</item>
         <item name="android:stateListAnimator">@null</item>
 
     </style>
