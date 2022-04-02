@@ -2,11 +2,11 @@ package com.hirshler.remindme.view
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import com.hirshler.remindme.R
 import com.hirshler.remindme.databinding.RepeatDialogLayoutBinding
-import java.util.*
 
-//, val callback: (MutableMap<Int, Boolean>) -> Unit
 
 class RepeatDialog(private val activity: Activity, private val origWeekDays: MutableMap<Int, Boolean>) {
 
@@ -14,58 +14,47 @@ class RepeatDialog(private val activity: Activity, private val origWeekDays: Mut
 
     private val binding: RepeatDialogLayoutBinding = RepeatDialogLayoutBinding.inflate(activity.layoutInflater)
 
-    private val dialog: AlertDialog = AlertDialog.Builder(activity)
+    private val dialog = AlertDialog.Builder(activity)
         .setTitle(R.string.repeat_dialog_title)
-        .setPositiveButton(R.string.repeat_dialog_button_positive) { dialog, which ->
-            origWeekDays.clear()
-            origWeekDays.putAll(dialogWeekDays)
-        }
-        .setNegativeButton(R.string.repeat_dialog_button_negative, null)
-//        .setNeutralButton(R.string.repeat_dialog_button_neutral, this)
         .setView(binding.root)
         .create()
 
 
     fun show() {
-        // set today as default:
-//        val today = Calendar.getInstance()[Calendar.DAY_OF_WEEK]
-//        dialogWeekDays[today] = true
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.sunday.isChecked = dialogWeekDays[1] == true
-        binding.monday.isChecked = dialogWeekDays[2] == true
-        binding.tuesday.isChecked = dialogWeekDays[3] == true
-        binding.wednesday.isChecked = dialogWeekDays[4] == true
-        binding.thursday.isChecked = dialogWeekDays[5] == true
-        binding.friday.isChecked = dialogWeekDays[6] == true
-        binding.saturday.isChecked = dialogWeekDays[7] == true
+        binding.apply {
 
-        binding.sunday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[1] = isChecked }
-        binding.monday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[2] = isChecked }
-        binding.tuesday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[3] = isChecked }
-        binding.wednesday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[4] = isChecked }
-        binding.thursday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[5] = isChecked }
-        binding.friday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[6] = isChecked }
-        binding.saturday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[7] = isChecked }
+            done.setOnClickListener {
+                origWeekDays.clear()
+                origWeekDays.putAll(dialogWeekDays)
+                dialog.dismiss()
+            }
 
+            cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+
+
+            sunday.isChecked = dialogWeekDays[1] == true
+            monday.isChecked = dialogWeekDays[2] == true
+            tuesday.isChecked = dialogWeekDays[3] == true
+            wednesday.isChecked = dialogWeekDays[4] == true
+            thursday.isChecked = dialogWeekDays[5] == true
+            friday.isChecked = dialogWeekDays[6] == true
+            saturday.isChecked = dialogWeekDays[7] == true
+
+            sunday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[1] = isChecked }
+            monday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[2] = isChecked }
+            tuesday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[3] = isChecked }
+            wednesday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[4] = isChecked }
+            thursday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[5] = isChecked }
+            friday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[6] = isChecked }
+            saturday.setOnCheckedChangeListener { _, isChecked -> dialogWeekDays[7] = isChecked }
+
+        }
         dialog.show()
     }
 
-//    override fun onClick(dialog: DialogInterface?, which: Int) {
-//        when (which) {
-//
-//            //Done
-//            Dialog.BUTTON_POSITIVE -> {
-//                origWeekDays.clear()
-//                origWeekDays.putAll(dialogWeekDays)
-//            }
-//
-////            //Reset
-////            Dialog.BUTTON_NEGATIVE -> {
-////                origWeekDays.forEach { (it as MutableMap.MutableEntry).setValue(false) }
-////            }
-//
-//        }
-//
-//    }
 
 }

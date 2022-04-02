@@ -1,73 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
-    app:flexWrap="nowrap"
-    app:justifyContent="space_around">
+    app:cardCornerRadius="20dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <ToggleButton
-        android:id="@+id/sunday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Su"
-        android:textOn="Su" />
 
-    <ToggleButton
-        android:id="@+id/monday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Mo"
-        android:textOn="Mo" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-    <ToggleButton
-        android:id="@+id/tuesday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Tu"
-        android:textOn="Tu" />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Repeat Reminder"
+            android:gravity="center"
+            android:textColor="?attr/main_color_dark"
+            android:textSize="35dp" />
+        
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingHorizontal="15dp"
+            app:flexWrap="nowrap"
+            android:paddingVertical="10dp"
+            app:justifyContent="space_around">
 
-    <ToggleButton
-        android:id="@+id/wednesday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="We"
-        android:textOn="We" />
+            <ToggleButton
+                android:id="@+id/sunday"
+                style="@style/repeatDayToggle"
+                android:textOff="S"
+                android:textOn="S" />
 
-    <ToggleButton
-        android:id="@+id/thursday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Th"
-        android:textOn="Th" />
+            <ToggleButton
+                android:id="@+id/monday"
+                style="@style/repeatDayToggle"
+                android:textOff="M"
+                android:textOn="M" />
 
-    <ToggleButton
-        android:id="@+id/friday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Fr"
-        android:textOn="Fr" />
+            <ToggleButton
+                android:id="@+id/tuesday"
+                style="@style/repeatDayToggle"
+                android:textOff="T"
+                android:textOn="T" />
 
-    <ToggleButton
-        android:id="@+id/saturday"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@drawable/style_toggle_button"
-        android:textAllCaps="false"
-        android:textOff="Sa"
-        android:textOn="Sa" />
+            <ToggleButton
+                android:id="@+id/wednesday"
+                style="@style/repeatDayToggle"
+                android:textOff="W"
+                android:textOn="W" />
 
-</com.google.android.flexbox.FlexboxLayout>
+            <ToggleButton
+                android:id="@+id/thursday"
+                style="@style/repeatDayToggle"
+                android:textOff="T"
+                android:textOn="T" />
+
+            <ToggleButton
+                android:id="@+id/friday"
+                style="@style/repeatDayToggle"
+                android:textOff="F"
+                android:textOn="F" />
+
+            <ToggleButton
+                android:id="@+id/saturday"
+                style="@style/repeatDayToggle"
+                android:textOff="S"
+                android:textOn="S" />
+
+        </com.google.android.flexbox.FlexboxLayout>
+
+
+        <LinearLayout
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:paddingTop="20dp"
+            android:paddingStart="16dp"
+            android:paddingBottom="20dp"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/cancel"
+                android:text="Cancel"
+                android:textSize="20dp"
+                android:textColor="?attr/main_color_natural"
+                android:background="@drawable/background_minutes_button"
+                android:textAllCaps="false"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:id="@+id/done"
+                android:text="Done"
+                android:textSize="20dp"
+                android:textColor="?attr/main_color_dark"
+                android:background="@android:color/transparent"
+                android:textAllCaps="false"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+
