@@ -9,7 +9,8 @@
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
     tools:context=".ui.reminder.ReminderFragment"
     tools:ignore="SpUsage,ContentDescription"
     tools:layout_marginBottom="60dp">
@@ -93,8 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:paddingTop="20dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView2"
@@ -253,6 +253,7 @@
         style="@style/button_with_shadow"
         android:padding="45dp"
         android:scaleType="fitCenter"
+        android:tint="?attr/main_color_natural"
         android:src="@drawable/icon_v" />
 
 </LinearLayout>

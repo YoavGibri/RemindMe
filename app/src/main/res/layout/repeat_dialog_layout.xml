@@ -1,66 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.flexbox.FlexboxLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp"
     app:flexWrap="nowrap"
-    app:justifyContent="space_around"
-    android:padding="10dp">
+    app:justifyContent="space_around">
 
     <ToggleButton
         android:id="@+id/sunday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="S"
-        android:textOn="S" />
+        android:textAllCaps="false"
+        android:textOff="Su"
+        android:textOn="Su" />
 
     <ToggleButton
         android:id="@+id/monday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="M"
-        android:textOn="M" />
+        android:textAllCaps="false"
+        android:textOff="Mo"
+        android:textOn="Mo" />
 
     <ToggleButton
         android:id="@+id/tuesday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="T"
-        android:textOn="T" />
+        android:textAllCaps="false"
+        android:textOff="Tu"
+        android:textOn="Tu" />
 
     <ToggleButton
         android:id="@+id/wednesday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="W"
-        android:textOn="W" />
+        android:textAllCaps="false"
+        android:textOff="We"
+        android:textOn="We" />
 
     <ToggleButton
         android:id="@+id/thursday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="T"
-        android:textOn="T" />
+        android:textAllCaps="false"
+        android:textOff="Th"
+        android:textOn="Th" />
 
     <ToggleButton
         android:id="@+id/friday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="F"
-        android:textOn="F" />
+        android:textAllCaps="false"
+        android:textOff="Fr"
+        android:textOn="Fr" />
 
     <ToggleButton
         android:id="@+id/saturday"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/style_toggle_button"
-        android:textOff="S"
-        android:textOn="S" />
+        android:textAllCaps="false"
+        android:textOff="Sa"
+        android:textOn="Sa" />
 
 </com.google.android.flexbox.FlexboxLayout>

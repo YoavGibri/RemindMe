@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="טקסטיל לילדים את תחושת הביטחון האישי של כל אחד מאיתנו יש את מאמרו שלו"
+            android:text="@string/long_text"
             android:textColor="@color/white"
             android:textSize="40dp"
             android:visibility="gone"

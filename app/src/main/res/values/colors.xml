@@ -56,6 +56,7 @@
 
     <color name="natural_white">#FFFFFF</color>
     <color name="natural_grey">#AEAEAE</color>
+    <color name="natural_black">#262626</color>
 
 
 </resources>

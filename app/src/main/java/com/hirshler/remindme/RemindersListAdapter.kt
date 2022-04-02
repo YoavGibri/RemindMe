@@ -1,5 +1,7 @@
 package com.hirshler.remindme
 
+import android.content.res.ColorStateList
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.setPadding
@@ -36,15 +38,22 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
                                 imgEdit.imageTintList = null
                                 imgDelete.imageTintList = null
 
-//                                val outValue = TypedValue()
-//                                parent.context.theme.resolveAttribute(R.attr.button_background, outValue, true)
-//                                imgDelete.setBackgroundResource(outValue.resourceId)
-//
-                                imgDelete.setBackgroundResource(R.drawable.background_round_button_colored)
+                                parent.context.run {
 
-                                val res = parent.context.resources
-                                dateAndTime.setTextColor(res.getColor(R.color.white))
-                                text.setTextColor(res.getColor(R.color.white))
+                                    val outValue = TypedValue()
+                                    theme.resolveAttribute(R.attr.main_color_natural, outValue, true)
+                                    imgDelete.imageTintList = ColorStateList.valueOf(getColor(outValue.resourceId))
+
+                                    imgDelete.setBackgroundResource(R.drawable.background_round_button_colored)
+
+
+                                    theme.resolveAttribute(R.attr.main_color_natural_dark, outValue, true)
+
+                                    date.setTextColor(getColor(outValue.resourceId))
+                                    time.setTextColor(getColor(outValue.resourceId))
+                                    text.setTextColor(getColor(outValue.resourceId))
+
+                                }
                             }
 
                             TYPE.ITEM_DISMISSED.ordinal -> {
@@ -65,7 +74,9 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         val reminder = reminders[position]
         if (holder.binding is RemindersRemindersListRowItemBinding) {
             holder.binding.text.text = reminder.text
-            holder.binding.dateAndTime.text = generateDateText(reminder.nextAlarmWithSnooze())
+
+            holder.binding.date.text = generateDateText(reminder)
+            holder.binding.time.text = generateTimeText(reminder)
 
 
             holder.binding.imgTextAndVoice.apply {
@@ -99,14 +110,52 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         }
     }
 
+    private fun generateTimeText(reminder: Reminder): String {
+        Calendar.getInstance().apply {
 
-    private fun generateDateText(nextAlarmTime: Long): String {
-        if (nextAlarmTime == 0L) return ""
+            if (reminder.repeat) {
+                set(Calendar.MINUTE, reminder.alarmTimeOfDay)
 
-        val cal = Calendar.getInstance().apply { timeInMillis = nextAlarmTime }
-        val date = SimpleDateFormat("dd/MM", Locale.getDefault()).format(cal.time)
-        val time = SimpleDateFormat("kk:mm", Locale.getDefault()).format(cal.time)
-        return "$time $date"
+            } else {
+
+                if (reminder.nextAlarmWithSnooze() == 0L)
+                    return ""
+                timeInMillis = reminder.nextAlarmWithSnooze()
+            }
+
+            val time = SimpleDateFormat("kk:mm", Locale.getDefault()).format(time)
+            return time
+        }
+    }
+
+
+    private fun generateDateText(reminder: Reminder): String {
+        if (reminder.repeat) {
+
+            val days = reminder.weekDays
+                .filter { it.value == true }
+                .keys.joinToString(" ") { key ->
+                    when (key) {
+                        1 -> "Su"
+                        2 -> "Mo"
+                        3 -> "Tu"
+                        4 -> "We"
+                        5 -> "Th"
+                        6 -> "Fr"
+                        7 -> "Sa"
+                        else -> ""
+                    }
+                }
+            return days
+
+        } else {
+
+            if (reminder.nextAlarmWithSnooze() == 0L) return ""
+
+            val cal = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmWithSnooze() }
+            val date = SimpleDateFormat("dd/MM", Locale.getDefault()).format(cal.time)
+            return date
+        }
     }
 
     override fun getItemCount(): Int {

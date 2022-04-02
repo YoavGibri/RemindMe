@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="8dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
     tools:context=".ui.reminderlist.ReminderListFragment"
     tools:layout_marginTop="50dp">
 

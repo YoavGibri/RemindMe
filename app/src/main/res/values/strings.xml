@@ -37,4 +37,5 @@
     <string name="username_dialog_title">הכנס שם משתמש</string>
     <string name="button_ok">OK</string>
     <string name="username_dialog_username_empty_message">User name is empty. Please enter user name</string>
+    <string name="long_text">טקסטיל לילדים את תחושת הביטחון האישי של כל אחד מאיתנו יש את מאמרו שלו</string>
 </resources>

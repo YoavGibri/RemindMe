@@ -1,16 +1,17 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
 
-<!--    <item name="colorPrimary">@color/secondaryColor</item>-->
-<!--    <item name="colorPrimaryVariant">@color/primaryDarkColor</item>-->
-<!--    <item name="colorOnPrimary">@color/primaryTextColor</item>-->
-<!--    <item name="colorSecondary">@color/secondaryColor</item>-->
-<!--    <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
-<!--    <item name="colorOnSecondary">@color/secondaryTextColor</item>-->
+    <!--    <item name="colorPrimary">@color/secondaryColor</item>-->
+    <!--    <item name="colorPrimaryVariant">@color/primaryDarkColor</item>-->
+    <!--    <item name="colorSecondary">@color/secondaryColor</item>-->
+    <!--    <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
+    <!--    <item name="colorOnSecondary">@color/secondaryTextColor</item>-->
 
     <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="main_color">@color/white</item>
         <item name="main_color_natural">@color/natural_white</item>
+        <item name="main_color_natural_dark">@color/natural_white</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/main_color_dark</item>
         <item name="android:windowBackground">?attr/main_color</item>
         <item name="android:spotShadowAlpha">0.5</item>
@@ -37,7 +38,7 @@
         <item name="icon_slider">@drawable/icon_slider_blue_small</item>
     </style>
 
- <style name="Theme.RemindMe.redOverlay">
+    <style name="Theme.RemindMe.redOverlay">
         <item name="main_color">@color/light_red</item>
         <item name="main_color_dark">@color/dark_red</item>
         <item name="button_background">@drawable/button_red</item>
@@ -46,7 +47,7 @@
         <item name="icon_slider">@drawable/icon_slider_red_small</item>
     </style>
 
- <style name="Theme.RemindMe.greenOverlay">
+    <style name="Theme.RemindMe.greenOverlay">
         <item name="main_color">@color/light_green</item>
         <item name="main_color_dark">@color/dark_green</item>
         <item name="button_background">@drawable/button_green</item>
@@ -55,7 +56,7 @@
         <item name="icon_slider">@drawable/icon_slider_green_small</item>
     </style>
 
- <style name="Theme.RemindMe.pinkOverlay">
+    <style name="Theme.RemindMe.pinkOverlay">
         <item name="main_color">@color/light_pink</item>
         <item name="main_color_dark">@color/dark_pink</item>
         <item name="button_background">@drawable/button_pink</item>
@@ -64,7 +65,7 @@
         <item name="icon_slider">@drawable/icon_slider_pink_small</item>
     </style>
 
- <style name="Theme.RemindMe.greyOverlay">
+    <style name="Theme.RemindMe.greyOverlay">
         <item name="main_color">@color/light_grey</item>
         <item name="main_color_dark">@color/dark_grey</item>
         <item name="button_background">@drawable/button_grey</item>
@@ -73,7 +74,7 @@
         <item name="icon_slider">@drawable/icon_slider_grey_small</item>
     </style>
 
- <style name="Theme.RemindMe.purpleOverlay">
+    <style name="Theme.RemindMe.purpleOverlay">
         <item name="main_color">@color/light_purple</item>
         <item name="main_color_dark">@color/dark_purple</item>
         <item name="button_background">@drawable/button_purple</item>
@@ -82,10 +83,11 @@
         <item name="icon_slider">@drawable/icon_slider_purple_small</item>
     </style>
 
- <style name="Theme.RemindMe.whiteOverlay">
+    <style name="Theme.RemindMe.whiteOverlay">
         <item name="main_color">@color/light_white</item>
         <item name="main_color_dark">@color/dark_white</item>
         <item name="main_color_natural">@color/natural_grey</item>
+        <item name="main_color_natural_dark">@color/natural_black</item>
         <item name="button_background">@drawable/button_white</item>
         <item name="ok_button">@drawable/okbutton_white</item>
         <item name="button_time">@drawable/button_time_white</item>
