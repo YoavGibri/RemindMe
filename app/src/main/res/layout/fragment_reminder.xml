@@ -166,7 +166,7 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/timePickerButton"
                 android:layout_width="150dp"
-                android:layout_height="55dp"
+                android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="@drawable/background_ellipse"
                 style="@style/button_with_shadow"
@@ -191,7 +191,7 @@
                 <com.hirshler.remindme.view.ToggleButtonDays
                     android:id="@+id/days_button"
                     android:layout_width="150dp"
-                    android:layout_height="55dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/background_ellipse"
                     android:ems="8"
                     android:textAllCaps="false"

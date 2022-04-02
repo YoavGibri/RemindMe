@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.media.RingtoneManager
 import android.widget.ArrayAdapter
+import androidx.appcompat.content.res.AppCompatResources
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.R
 import com.hirshler.remindme.SP
@@ -59,6 +60,8 @@ class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -
             }
         }
         dialog = builder.create()
+
+        dialog?.window?.setBackgroundDrawable(AppCompatResources.getDrawable(context, R.drawable.round_corners_dialog_background))
 
         dialog?.show()
     }
