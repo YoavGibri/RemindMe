@@ -10,4 +10,5 @@
     <dimen name="reminderlist_rowitem_textandvoice_padding">8dp</dimen>
     <dimen name="reminderlist_rowitem_text_padding">15dp</dimen>
     <dimen name="app_elevation">6dp</dimen>
+    <dimen name="fragment_title_bottom_margin">10dp</dimen>
 </resources>

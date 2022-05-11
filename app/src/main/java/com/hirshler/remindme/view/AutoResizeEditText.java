@@ -14,9 +14,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseIntArray;
 import android.util.TypedValue;
-import android.widget.EditText;
 
-public class AutoResizeEditText extends EditText {
+public class AutoResizeEditText extends androidx.appcompat.widget.AppCompatEditText {
     private static final int NO_LINE_LIMIT = -1;
     private final RectF _availableSpaceRect = new RectF();
     private final SparseIntArray _textCachedSizes = new SparseIntArray();
@@ -58,6 +57,7 @@ public class AutoResizeEditText extends EditText {
                               final int defStyle) {
         super(context, attrs, defStyle);
         // using the minimal recommended font size
+
         _minTextSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 12, getResources().getDisplayMetrics());
         _maxTextSize = getTextSize();

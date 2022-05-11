@@ -14,7 +14,7 @@ import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class AlertViewModel : ViewModel() {
-    var alertWasDismissed: Boolean = false
+    //    var alertWasDismissed: Boolean = false
     val TAG = "AlertViewModel"
 
     val currentReminder = MutableLiveData<Reminder>(null)
@@ -22,9 +22,8 @@ class AlertViewModel : ViewModel() {
     val currentCalendar = MutableLiveData<Calendar>(Calendar.getInstance())
 
     //var minutesDelay = 0
-    private var origSnooze = 0
+     var origSnooze = 0
     var currentSnooze = 0
-
 
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
@@ -77,15 +76,19 @@ class AlertViewModel : ViewModel() {
     fun initCurrentReminderById(id: Long) {
         viewModelScope.launch {
             ReminderRepo().findById(id)?.let {
-                origSnooze = it.snooze
-                currentReminder.value = it
+                var reminderFromDb = it
+                //test
+               // reminderFromDb.snooze = 120
+
+                origSnooze = reminderFromDb.snooze
+                currentReminder.value = reminderFromDb
             }
 
         }
     }
 
 
-    fun resetSnooze(){
+    fun resetSnooze() {
         origSnooze = 0
         currentSnooze = 0
     }

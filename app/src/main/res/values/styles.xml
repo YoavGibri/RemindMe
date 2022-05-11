@@ -15,7 +15,7 @@
         <item name="cardUseCompatPadding">true</item>
     </style>
 
-    <style name="button_with_shadow">
+    <style name="button_with_shadow" parent="textView">
         <item name="android:elevation">@dimen/app_elevation</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:stateListAnimator">@null</item>
@@ -60,13 +60,21 @@
         <item name="tint">?attr/main_color_natural</item>
     </style>
 
-    <style name="settingsText">
+
+
+    <style name="textView">
+        <item name="fontFamily">@font/acme_regular</item>
+    </style>
+
+    <style name="settingsText" parent="textView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">5dp</item>
         <item name="android:textSize">@dimen/settings_screen_titles</item>
         <item name="android:textColor">?attr/main_color_natural_dark</item>
     </style>
+
+
 
     <style name="divider">
         <item name="android:background">@color/black</item>
@@ -86,6 +94,8 @@
         <item name="android:elevation">@dimen/app_elevation</item>
         <item name="android:background">@drawable/style_toggle_button</item>
     </style>
+
+
 
 
     <!--    <style name="buttonOverlay.black">-->

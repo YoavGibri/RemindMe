@@ -62,6 +62,11 @@ class FlowLog {
             logDebug(reminder, "Alert is alerting ${if (fromAlertManager) "from alert manager" else "from notification click"}")
         }
 
+        //user click
+        fun userClickDismissButton() {
+            logDebug( null, "User click - Dismiss Button")
+        }
+
         //alert dismissed
         fun alertDismissed(reminder: Reminder?) {
             logDebug(reminder, "Alert dismissed")
@@ -105,13 +110,15 @@ class FlowLog {
             var id = ""
             var time = ""
             var text = ""
+            var reminderDetails = ""
             reminder?.let {
                 id = "id: ${it.id},"
                 time = "time: ${Utils.fullDateByMilliseconds(it.nextAlarmWithSnooze())},"
                 text = "text: ${it.text}"
+                reminderDetails = Gson().toJson(it)
             }
 
-            val logText = "$id $message \n$text $time \n${reminder?.let { Gson().toJson(it) }}"
+            val logText = "$id $message \n$text $time \n$reminderDetails"
             Log.d(tag, logText)
             //   Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}:$logText", true)
 
@@ -126,10 +133,11 @@ class FlowLog {
         }
 
         private fun getDatabaseChildRef(): String {
-            val formatter = SimpleDateFormat("yyyy/MM/dd/ kk:mm:ss:S", Locale.getDefault())
+            val formatter = SimpleDateFormat("yyyy/MM/dd/ HH:mm:ss:SSS", Locale.getDefault())
             val cal = Calendar.getInstance().time
             return formatter.format(cal)
         }
+
 
 
 

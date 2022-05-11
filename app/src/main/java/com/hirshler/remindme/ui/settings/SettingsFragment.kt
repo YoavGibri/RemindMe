@@ -10,17 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
+import com.hirshler.remindme.ui.MainActivityFragment
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import com.hirshler.remindme.view.UserNameDialog
 
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : MainActivityFragment() {
 
     private var alarmSoundDialog: SelectAlarmSoundDialog? = null
     private lateinit var vm: SettingsViewModel
@@ -106,13 +106,19 @@ class SettingsFragment : Fragment() {
         binding.userNameDialog.setOnClickListener { UserNameDialog.showUserNameDialog(requireActivity()) }
 
         binding.colorSelector.setColorChangeListener {
-            startActivity(Intent(requireActivity(), MainActivity::class.java)
-                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true)},
-                    ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle() )
+//            startActivity(Intent(requireActivity(), MainActivity::class.java)
+//                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true)},
+//                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle() )
+
+            refreshActivity(
+                MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS,
+                options = ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
         }
 
         return binding.root
     }
+
 
     private fun maxAlarmSteamVolume() = (App.applicationContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager)
         .getStreamMaxVolume(AudioManager.STREAM_ALARM)

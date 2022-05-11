@@ -43,7 +43,7 @@ class Utils {
         fun fullDateByMilliseconds(millis: Long): String {
             if (millis == 0L) return "not available"
 
-            val formatter = SimpleDateFormat("dd/MM/yy kk:mm:ss", Locale.getDefault())
+            val formatter = SimpleDateFormat("dd/MM/yy HH:mm:ss", Locale.getDefault())
             val cal = Calendar.getInstance().apply { timeInMillis = millis }.time
             return formatter.format(cal)
         }

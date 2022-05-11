@@ -28,6 +28,7 @@ class MainActivity : BaseActivity() {
     companion object {
         const val ON_ACTIVITY_START_GO_TO_REMINDERS_LIST: String = "onActivityStartGoToRemindersList"
         const val ON_ACTIVITY_START_GO_TO_SETTINGS: String = "onActivityStartGoToSettings"
+        const val REMINDER_TO_EDIT: String = "reminderToEdit"
     }
 
 
@@ -42,7 +43,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val reminder = intent.getStringExtra("reminderToEdit")?.let { Gson().fromJson(it, Reminder::class.java) }
+        val reminder = intent.getStringExtra(REMINDER_TO_EDIT)?.let { Gson().fromJson(it, Reminder::class.java) }
 
         binding.viewPager.adapter = StateAdapter(this, reminder)
         binding.dotsIndicator.setViewPager2(binding.viewPager)
@@ -133,6 +134,10 @@ class MainActivity : BaseActivity() {
             binding.viewPager.setCurrentItem(0, true)
         } else
             super.onBackPressed()
+    }
+
+    fun refreshActivity(){
+
     }
 
 

@@ -114,7 +114,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
         Calendar.getInstance().apply {
 
             if (reminder.repeat) {
-                set(Calendar.MINUTE, reminder.alarmTimeOfDay)
+                setTimeOfDay(reminder.alarmTimeOfDay)
 
             } else {
 
@@ -123,7 +123,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
                 timeInMillis = reminder.nextAlarmWithSnooze()
             }
 
-            val time = SimpleDateFormat("kk:mm", Locale.getDefault()).format(time)
+            val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(time)
             return time
         }
     }

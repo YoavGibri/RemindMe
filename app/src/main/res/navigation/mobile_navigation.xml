@@ -16,14 +16,14 @@
         android:name="com.hirshler.remindme.ui.reminderlist.ReminderListFragment"
         android:label="@string/title_reminders_list"
         tools:layout="@layout/fragment_reminders_list">
-        <action
-            android:id="@+id/action_navigation_reminders_list_to_navigation_reminder"
-            app:destination="@id/navigation_reminder">
-            <argument
-                android:name="reminderToEdit"
-                android:defaultValue=""
-                app:argType="string" />
-        </action>
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_reminders_list_to_navigation_reminder"-->
+<!--            app:destination="@id/navigation_reminder">-->
+<!--            <argument-->
+<!--                android:name="reminderToEdit"-->
+<!--                android:defaultValue=""-->
+<!--                app:argType="string" />-->
+<!--        </action>-->
     </fragment>
 
     <fragment

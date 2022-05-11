@@ -61,8 +61,13 @@ class ColorSelectorView : ConstraintLayout, View.OnClickListener {
     }
 
     private fun setSelectedColor() {
-        if(!isInEditMode) {
-            pickers[overlays.indexOf(ThemeManager.getThemeColor())].setImageResource(R.drawable.icon_v)
+        if (!isInEditMode) {
+            try {
+                pickers[overlays.indexOf(ThemeManager.getThemeColor())].setImageResource(R.drawable.icon_v)
+
+            } catch (e: Exception) {
+
+            }
         }
     }
 

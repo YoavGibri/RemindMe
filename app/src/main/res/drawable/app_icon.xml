@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:drawable="@drawable/background_round_button_colored"
+            android:tint="?attr/main_color_natural" />
+<!--    todo: make dynamic app icon-->
+</layer-list>

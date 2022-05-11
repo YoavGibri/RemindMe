@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.hirshler.remindme.R
+import com.hirshler.remindme.pxToDp
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit
 class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
     AppCompatButton(context, attrs) {
 
+    private var initialTextSize = context.pxToDp(textSize).toFloat()
     private var currDays = MutableLiveData<Int>(0)
     private var callback: ((Int) -> Unit)? = null
     private var date = MutableLiveData<Calendar?>(null)
@@ -41,11 +43,17 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
         })
 
         date.observe(context as LifecycleOwner, { date ->
+
             if (date != null) {
                 val today = Calendar.getInstance()
                 val days = TimeUnit.DAYS.convert(date.time.time - today.time.time, TimeUnit.MILLISECONDS).toInt()
                 var dayDes = getDayDesByDays(days)
-                if(days > 6) dayDes += " ${SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)}"
+                if (days > 6) {
+                    dayDes += " ${SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)}"
+//                    textSize = initialTextSize - 8
+                } else {
+//                    textSize = initialTextSize
+                }
                 text = dayDes
             }
 //                text = SimpleDateFormat("dd/MM", Locale.getDefault()).format(date.time)
@@ -59,7 +67,9 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
             1 -> "Tomorrow"
             else -> {
                 today.add(Calendar.DAY_OF_MONTH, days)
-                getDayDesByDate(today)
+                var dayDes = getDayDesByDate(today)
+                if (days > 6) dayDes = dayDes.substring(0, 2)
+                return dayDes
             }
         }
 
@@ -80,6 +90,11 @@ class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
 
     fun setDate(year: Int, monthOfYear: Int, dayOfMonth: Int) {
         date.value = Calendar.getInstance().apply { set(year, monthOfYear, dayOfMonth) }
+
+    }
+
+    fun setDate(cal: Calendar) {
+        date.value = cal
 
     }
 

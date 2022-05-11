@@ -1,7 +1,6 @@
 package com.hirshler.remindme.ui.reminder
 
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +10,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.hirshler.remindme.*
-import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.activities.MainActivity.Companion.ON_ACTIVITY_START_GO_TO_REMINDERS_LIST
 import com.hirshler.remindme.databinding.FragmentReminderBinding
 import com.hirshler.remindme.managers.VoiceRecorderManager
 import com.hirshler.remindme.model.Reminder
+import com.hirshler.remindme.ui.MainActivityFragment
 import com.hirshler.remindme.view.RepeatDialog
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import com.hirshler.remindme.view.TimePickerDialog
@@ -28,7 +26,7 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 
-class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment() {
+class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActivityFragment() {
 
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
@@ -50,10 +48,9 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
         binding.debugSwitch.isChecked = AppSettings.getIsDebugMode()
 
         vm.currentCalendar.observe(viewLifecycleOwner, { calendar ->
-            binding.timePickerButton.text = SimpleDateFormat("kk:mm", Locale.getDefault()).format(calendar.time)
+//            binding.daysButton.setDate(calendar)
+            binding.timePickerButton.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
         })
-
-
 
 
         binding.text.addTextChangedListener(
@@ -126,16 +123,6 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
         binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> AppSettings.setIsDebugMode(isChecked) }
 
 
-
-        voiceRecorder = VoiceRecorderManager(requireActivity(), vm.currentReminder.value!!,
-            onRecordCallback = {
-                binding.recordButton.flash(200)
-                toast.show("Recording started")
-            },
-            onStopCallback = {
-                binding.recordButton.clearAnimation()
-            })
-
         binding.doneButton.setOnClickListener {
             when {
                 noTextAndNoViceRecording() -> {
@@ -159,13 +146,15 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
 
 
                         if (reminderToEdit != null) {
-                            startActivity(Intent(requireActivity(), MainActivity::class.java)
-                                .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
+//                            startActivity(Intent(requireActivity(), MainActivity::class.java)
+//                                .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
+                            refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
                         } else {
                             if (AppSettings.getCloseAppAfterReminderSet()) {
                                 requireActivity().finish()
                             } else
-                                startActivity(Intent(requireActivity(), MainActivity::class.java))
+//                                startActivity(Intent(requireActivity(), MainActivity::class.java))
+                                refreshActivity()
                         }
 
                     }, SECONDS_TO_AUTOCLOSE * 1000)
@@ -182,9 +171,9 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
                     binding.text.setText("")
 
                 } else if (reminderToEdit != null) {
-                    startActivity(Intent(requireActivity(), MainActivity::class.java)
-                        .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
-
+//                    startActivity(Intent(requireActivity(), MainActivity::class.java)
+//                        .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
+                    refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
                 } else {
                     isEnabled = false
                     requireActivity().onBackPressed()
@@ -192,14 +181,29 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
             }
         })
 
+        initVoiceRecorder(vm.currentReminder.value!!)
+
     }
 
     private fun setViewsFromReminder(reminder: Reminder) {
         reminder.apply {
             text.let { binding.text.setText(it) }
             vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarm() }
+            binding.daysButton.setDate(vm.currentCalendar.value!!)
             binding.playPreviewButton.visibility = if (voiceNotePath.isNotEmpty()) View.VISIBLE else View.GONE
+            initVoiceRecorder(this)
         }
+    }
+
+    private fun initVoiceRecorder(reminder: Reminder) {
+        voiceRecorder = VoiceRecorderManager(requireActivity(), reminder,
+            onRecordCallback = {
+                binding.recordButton.flash(200)
+                toast.show("Recording started")
+            },
+            onStopCallback = {
+                binding.recordButton.clearAnimation()
+            })
     }
 
     private fun noTextAndNoViceRecording() =
@@ -240,7 +244,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : Fragment(
             Locale.getDefault()
         ).format(vm.currentCalendar.value!!.time)
         val time =
-            SimpleDateFormat("kk:mm", Locale.getDefault()).format(vm.currentCalendar.value!!.time)
+            SimpleDateFormat("HH:mm", Locale.getDefault()).format(vm.currentCalendar.value!!.time)
         return "New reminder is set to $date at $time"
     }
 

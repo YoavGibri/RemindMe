@@ -21,10 +21,10 @@
 
         <TextView
             android:id="@+id/textView"
+            style="@style/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp"
             android:gravity="center"
             android:text="@string/remind_me_to"
             android:textColor="?attr/main_color_natural"
@@ -46,10 +46,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="10dp"
         android:clipToPadding="false"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/chooseAlarmSoundButton"
@@ -59,6 +59,7 @@
 
         <com.hirshler.remindme.view.AutoResizeEditText
             android:id="@+id/text"
+            style="@style/textView"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
@@ -73,6 +74,7 @@
             android:maxLength="70"
             android:maxLines="2"
             android:padding="10dp"
+            android:textAppearance="@style/textView"
             android:textSize="25dp"
             tools:ignore="Autofill,UnusedAttribute" />
 
@@ -98,6 +100,7 @@
 
             <TextView
                 android:id="@+id/textView2"
+                style="@style/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -110,15 +113,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
-                android:padding="5dp"
-                android:gravity="center|top">
+                android:gravity="center"
+                android:padding="5dp">
 
                 <TextView
                     android:id="@+id/textView3"
+                    style="@style/textView"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="end"
+                    android:gravity="end|center_vertical"
                     android:text="@string/minutes_delay_in"
                     android:textColor="?attr/main_color_natural"
                     android:textSize="30dp"
@@ -141,10 +144,10 @@
 
                 <TextView
                     android:id="@+id/textView5"
+                    style="@style/textView"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:gravity="start"
+                    android:gravity="start|center_vertical"
                     android:text="@string/minutes_delay_mins"
                     android:textColor="?attr/main_color_natural"
                     android:textSize="30dp"
@@ -156,6 +159,7 @@
 
             <TextView
                 android:id="@+id/textView6"
+                style="@style/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_set_title"
@@ -165,11 +169,11 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/timePickerButton"
+                style="@style/button_with_shadow"
                 android:layout_width="150dp"
                 android:layout_height="50dp"
                 android:layout_marginBottom="25dp"
                 android:background="@drawable/background_ellipse"
-                style="@style/button_with_shadow"
                 android:textColor="?attr/main_color_dark"
                 android:textSize="30dp"
                 android:textStyle="bold"
@@ -179,9 +183,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
                 android:clipToPadding="false"
-                android:gravity="center">
+                android:gravity="center"
+                android:padding="10dp">
 
                 <ImageButton
                     android:id="@+id/repeatAlarmDialogButton"
@@ -190,12 +194,12 @@
 
                 <com.hirshler.remindme.view.ToggleButtonDays
                     android:id="@+id/days_button"
+                    style="@style/button_with_shadow"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:background="@drawable/background_ellipse"
                     android:ems="8"
                     android:textAllCaps="false"
-                    style="@style/button_with_shadow"
                     android:textColor="?attr/main_color_dark"
                     android:textSize="25dp"
                     android:textStyle="bold"
@@ -217,11 +221,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
             android:layout_gravity="center"
             android:gravity="top|end"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp">
 
 
             <ImageButton
@@ -246,14 +250,14 @@
 
     <ImageButton
         android:id="@+id/doneButton"
+        style="@style/button_with_shadow"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"
         android:background="@drawable/background_round_button_colored"
-        style="@style/button_with_shadow"
         android:padding="45dp"
         android:scaleType="fitCenter"
-        android:tint="?attr/main_color_natural"
-        android:src="@drawable/icon_v" />
+        android:src="@drawable/icon_v"
+        app:tint="?attr/main_color_natural" />
 
 </LinearLayout>

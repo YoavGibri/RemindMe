@@ -9,7 +9,9 @@
     tools:context=".ui.settings.SettingsFragment"
     tools:layout_marginTop="50dp">
 
+
     <TextView
+        style="@style/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -66,6 +68,7 @@
                 android:text="@string/alarm_configuration" />
 
             <TextView
+            style="@style/textView"
                 android:id="@+id/currentAlarmSound"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -152,11 +155,13 @@
             android:text="Vibrate Mode"
             android:textColor="?attr/main_color_natural_dark"
             android:textSize="@dimen/settings_screen_titles"
+            style="@style/textView"
             tools:checked="false" />
 
         <View style="@style/divider"/>
 
         <androidx.appcompat.widget.AppCompatCheckBox
+            style="@style/textView"
             android:id="@+id/closeAppCheckBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -171,6 +176,7 @@
         <View style="@style/divider"/>
 
         <TextView
+            style="@style/textView"
             android:id="@+id/userNameDialog"
             android:layout_width="match_parent"
             android:layout_height="0dp"

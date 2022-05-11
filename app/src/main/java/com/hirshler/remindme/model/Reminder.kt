@@ -5,6 +5,7 @@ package com.hirshler.remindme.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.Gson
+import com.hirshler.remindme.setTimeOfDay
 import com.hirshler.remindme.timeOfDayInMinutes
 import java.util.*
 import java.util.Calendar.*
@@ -32,20 +33,8 @@ data class Reminder(
         set(value) {}
 
 
-//    val nextAlarmTimeWithSnooze: Long
-//        get() = nextAlarmWithSnooze()
-//
-//
-//    private fun nextAlarmWithSnooze(): Long {
-//        return nextAlarm(snooze)
-//    }
-
-
-//    val nextAlarmTime: Long
-//        get() = nextAlarm()
-
-    fun nextAlarm(): Long = nextAlarm(0)
-    fun nextAlarmWithSnooze(): Long = nextAlarm(snooze)
+    fun nextAlarm() = nextAlarm(0)
+    fun nextAlarmWithSnooze() = nextAlarm(snooze)
 
 
     private fun nextAlarm(thisSnooze: Int = 0): Long {
@@ -64,34 +53,12 @@ data class Reminder(
                     nextAlarm.add(DAY_OF_YEAR, 1)
                 }
 
-            val hours = alarmTimeOfDay / 60
-            val minutes = alarmTimeOfDay % 60
-            nextAlarm.set(HOUR_OF_DAY, hours)
-            nextAlarm.set(MINUTE, minutes)
+            nextAlarm.setTimeOfDay(alarmTimeOfDay)
 
             return nextAlarm.timeInMillis + (thisSnooze * 60000)
         }
 
         return manualAlarm + (thisSnooze * 60000)
-    }
-
-    private fun getNextDay(snooze: Int): Int {
-        val now = Calendar.getInstance()
-        val todayDayOfWeek = now.get(DAY_OF_WEEK)
-        val nowTimeOfDayMinutes = now.timeOfDayInMinutes()
-
-        val selectedWeekDays = weekDays.filter { it.value == true }.keys
-
-        if (selectedWeekDays.contains(todayDayOfWeek))
-            if (nowTimeOfDayMinutes < alarmTimeOfDay + snooze)
-                return todayDayOfWeek
-
-        var nextAlarmDay = selectedWeekDays.firstOrNull { day -> day > todayDayOfWeek }
-        if (nextAlarmDay == null) {
-            nextAlarmDay = selectedWeekDays.firstOrNull { day -> day > 0 }
-        }
-
-        return nextAlarmDay!!
     }
 
     fun lastAlarm(): Long {
@@ -115,6 +82,28 @@ data class Reminder(
 
         return manualAlarm
     }
+
+
+
+    private fun getNextDay(snooze: Int): Int {
+        val now = Calendar.getInstance()
+        val todayDayOfWeek = now.get(DAY_OF_WEEK)
+        val nowTimeOfDayMinutes = now.timeOfDayInMinutes()
+
+        val selectedWeekDays = weekDays.filter { it.value == true }.keys
+
+        if (selectedWeekDays.contains(todayDayOfWeek))
+            if (nowTimeOfDayMinutes < alarmTimeOfDay + snooze)
+                return todayDayOfWeek
+
+        var nextAlarmDay = selectedWeekDays.firstOrNull { day -> day > todayDayOfWeek }
+        if (nextAlarmDay == null) {
+            nextAlarmDay = selectedWeekDays.firstOrNull { day -> day > 0 }
+        }
+
+        return nextAlarmDay!!
+    }
+
 
     private fun getLastDay(): Int {
         val now = Calendar.getInstance()

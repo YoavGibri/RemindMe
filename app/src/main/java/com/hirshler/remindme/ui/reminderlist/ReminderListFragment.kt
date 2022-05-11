@@ -1,21 +1,19 @@
 package com.hirshler.remindme.ui.reminderlist
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.RemindersListAdapter
 import com.hirshler.remindme.RemindersListAdapter.ReminderClickListener
-import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentRemindersListBinding
 import com.hirshler.remindme.model.Reminder
+import com.hirshler.remindme.ui.MainActivityFragment
 
 @SuppressLint("NotifyDataSetChanged")
-class ReminderListFragment : Fragment() {
+class ReminderListFragment : MainActivityFragment() {
 
     private val reminders: MutableList<Reminder> = mutableListOf()
 
@@ -38,8 +36,9 @@ class ReminderListFragment : Fragment() {
 //                        .setPopUpTo(R.id.navigation_reminder, true)
 //                        .build()
 //                )
-                startActivity(Intent(requireActivity(), MainActivity::class.java).apply { putExtra("reminderToEdit", reminder.toString()) })
+                //startActivity(Intent(requireActivity(), MainActivity::class.java).apply { putExtra("reminderToEdit", reminder.toString()) })
                // requireActivity().finish()
+                refreshActivity(reminderToEdit = reminder)
             }
 
             override fun onDeleteClick(reminder: Reminder) {

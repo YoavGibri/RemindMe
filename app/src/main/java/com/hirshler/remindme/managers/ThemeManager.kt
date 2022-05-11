@@ -45,7 +45,9 @@ class ThemeManager {
         }
 
         fun setThemeColor(newColor: Int) {
-            SP.set().putInt(THEME_COLOR_KEY, newColor).apply()
+            if (newColor != -1) {
+                SP.set().putInt(THEME_COLOR_KEY, newColor).apply()
+            }
         }
 
         fun setThemeTexture(newTexture: Int) {

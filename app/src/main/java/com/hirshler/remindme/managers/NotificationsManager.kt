@@ -52,15 +52,15 @@ class NotificationsManager {
             val title = "You missed a reminder"
             val contentText = reminder.text.ifEmpty { "Voice reminder" }
 //            val missedTime = Calendar.getInstance().time
-            val missedTime = reminder.lastAlarm()
+            val missedTime = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarm() }.time
             val nextTime = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmWithSnooze() }.time
 
-            val formatter = SimpleDateFormat("kk:mm", Locale.getDefault())
+            val formatter = SimpleDateFormat("HH:mm", Locale.getDefault())
             var missedText = "Was set to ${formatter.format(missedTime)}"
             if (reminder.snoozeCount < 5) missedText += ", next alert on ${formatter.format(nextTime)}"
 
             val notification = NotificationCompat.Builder(activity, CHANNEL_ID)
-                .setSmallIcon(R.drawable.app_icon)
+                .setSmallIcon(R.drawable.app_icon_blue_cropped_v_cut)
                 .setContentTitle(title)
                 .setContentText(contentText)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)

@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 1,
-      "versionName": "1.26",
-      "outputFile": "RemindMe21-v1.26-release.apk"
+      "versionCode": 2,
+      "versionName": "2.4",
+      "outputFile": "RemindMe21-v2.4-release.apk"
     }
   ],
   "elementType": "File"
