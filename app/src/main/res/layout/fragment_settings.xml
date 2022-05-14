@@ -7,6 +7,7 @@
     android:paddingStart="25dp"
     android:paddingEnd="25dp"
     tools:context=".ui.settings.SettingsFragment"
+    tools:layout_marginBottom="50dp"
     tools:layout_marginTop="50dp">
 
 
@@ -50,9 +51,9 @@
         android:layout_gravity="center" />
 
     <LinearLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -68,8 +69,8 @@
                 android:text="@string/alarm_configuration" />
 
             <TextView
-            style="@style/textView"
                 android:id="@+id/currentAlarmSound"
+                style="@style/textView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,7 +90,7 @@
 
         </LinearLayout>
 
-        <View style="@style/divider"/>
+        <View style="@style/divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -115,7 +116,7 @@
 
         </LinearLayout>
 
-        <View style="@style/divider"/>
+        <View style="@style/divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,41 +144,34 @@
 
         </LinearLayout>
 
-        <View style="@style/divider"/>
+        <View style="@style/divider" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/vibrateCheckBox"
+            style="@style/checkBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:button="@drawable/checkbox_selector"
-            android:layoutDirection="rtl"
-            android:text="Vibrate Mode"
-            android:textColor="?attr/main_color_natural_dark"
-            android:textSize="@dimen/settings_screen_titles"
-            style="@style/textView"
-            tools:checked="false" />
+            android:text="@string/vibrate_mode"
+            android:textSize="@dimen/settings_screen_titles" />
 
-        <View style="@style/divider"/>
+        <View style="@style/divider" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
-            style="@style/textView"
             android:id="@+id/closeAppCheckBox"
+            style="@style/checkBox"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:button="@drawable/checkbox_selector"
-            android:layoutDirection="rtl"
-            android:text="Close App After Reminder Set"
-            android:textColor="?attr/main_color_natural_dark"
-            android:textSize="@dimen/settings_screen_titles"
-            tools:checked="true" />
+            android:text="@string/close_app_after_reminder_set"
+            android:textSize="@dimen/settings_screen_titles" />
 
-        <View style="@style/divider"/>
+
+        <View style="@style/divider" />
 
         <TextView
-            style="@style/textView"
             android:id="@+id/userNameDialog"
+            style="@style/textView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -188,14 +182,9 @@
             android:textColor="?attr/main_color_natural_dark"
             android:textSize="@dimen/settings_screen_titles" />
 
-        <View style="@style/divider"/>
+        <View style="@style/divider" />
 
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5" />
 
 
 </LinearLayout>

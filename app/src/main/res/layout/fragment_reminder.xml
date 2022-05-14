@@ -13,7 +13,8 @@
     android:paddingEnd="8dp"
     tools:context=".ui.reminder.ReminderFragment"
     tools:ignore="SpUsage,ContentDescription"
-    tools:layout_marginBottom="60dp">
+    tools:layout_marginBottom="50dp"
+    tools:layout_marginTop="50dp">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -94,8 +95,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center_horizontal"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
@@ -247,15 +248,16 @@
 
     </FrameLayout>
 
-
     <ImageButton
         android:id="@+id/doneButton"
         style="@style/button_with_shadow"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:adjustViewBounds="true"
+        android:layout_height="130dp"
         android:layout_gravity="center"
         android:background="@drawable/background_round_button_colored"
-        android:padding="45dp"
+        android:padding="40dp"
+        android:layout_margin="0dp"
         android:scaleType="fitCenter"
         android:src="@drawable/icon_v"
         app:tint="?attr/main_color_natural" />

@@ -8,6 +8,7 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
     tools:context=".ui.reminderlist.ReminderListFragment"
+    tools:layout_marginBottom="50dp"
     tools:layout_marginTop="50dp">
 
     <TextView
