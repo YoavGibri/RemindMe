@@ -66,11 +66,8 @@ class AlertActivity : BaseActivity() {
 
                     vm.setCalendarByReminder()
 
-                    if (reminder.snoozeCount < 5) {
-                        vm.currentSnooze = 5
-                        reminder.snoozeCount++
-                        updateReminder()
-                    }
+                    vm.currentSnooze = 5
+                    updateReminder()
 
 
                     firstLoad = false
@@ -109,7 +106,7 @@ class AlertActivity : BaseActivity() {
             //test
             //val reminder = vm.currentReminder.value
 
-                setDateTimeText(calendar, vm.origSnooze)
+            setDateTimeText(calendar, vm.origSnooze)
 
 //            setDateTimeText(Calendar.getInstance().apply { timeInMillis = vm.currentReminder.value!!.lastAlarm() }, vm.currentSnooze)
         }
@@ -242,8 +239,17 @@ class AlertActivity : BaseActivity() {
     override fun onDestroy() {
         cancelMissedAlertTimer()
 
-        if (!finishByUser)
+        if (!finishByUser) {
+
+            vm.currentReminder.value?.let {
+                if (it.snoozeCount < 5) {
+                    it.snoozeCount++
+                    updateReminder()
+                }
+            }
+
             NotificationsManager.showMissedAlertNotification(this@AlertActivity, vm.currentReminder.value!!)
+        }
 
         if (origAlarmVolume != -1) {
             audioManager.setStreamVolume(AudioManager.STREAM_ALARM, origAlarmVolume, 0)
