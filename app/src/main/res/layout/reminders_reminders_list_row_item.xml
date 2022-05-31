@@ -13,6 +13,7 @@
         android:id="@+id/imgTextAndVoice"
         style="@style/coloredButtonOverlay"
         android:src="@drawable/icon_text"
+        android:layout_margin="10dp"
         android:translationZ="1dp" />
 
     <LinearLayout

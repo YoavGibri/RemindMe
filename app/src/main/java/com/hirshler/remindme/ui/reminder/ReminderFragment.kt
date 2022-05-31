@@ -47,18 +47,18 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
 
         binding.debugSwitch.isChecked = AppSettings.getIsDebugMode()
 
-        vm.currentCalendar.observe(viewLifecycleOwner, { calendar ->
+        vm.currentCalendar.observe(viewLifecycleOwner) { calendar ->
 //            binding.daysButton.setDate(calendar)
             binding.timePickerButton.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
-        })
+        }
 
 
-        binding.text.addTextChangedListener(
+        binding.reminderText.addTextChangedListener(
             afterTextChanged = { vm.currentReminder.value?.text = it.toString() }
         )
 
 
-        binding.text.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
+        binding.reminderText.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
 
         binding.minutesButton.setOnToggleCallback { minutes ->
             vm.setMinutes(minutes)
@@ -167,8 +167,8 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 //if starting new reminder and some text is written, clear the text
-                if (binding.text.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
-                    binding.text.setText("")
+                if (binding.reminderText.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
+                    binding.reminderText.setText("")
 
                 } else if (reminderToEdit != null) {
 //                    startActivity(Intent(requireActivity(), MainActivity::class.java)
@@ -187,7 +187,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
 
     private fun setViewsFromReminder(reminder: Reminder) {
         reminder.apply {
-            text.let { binding.text.setText(it) }
+            text.let { binding.reminderText.setText(it) }
             vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarm() }
             binding.daysButton.setDate(vm.currentCalendar.value!!)
             binding.playPreviewButton.visibility = if (voiceNotePath.isNotEmpty()) View.VISIBLE else View.GONE
