@@ -28,7 +28,7 @@ data class Reminder(
         const val KEY_REMINDER_ID = "reminderId"
     }
 
-    var repeat: Boolean
+    var isRepeat: Boolean
         get() = weekDays.any { day -> day.value }
         set(value) {}
 
@@ -38,7 +38,7 @@ data class Reminder(
 
 
     private fun nextAlarm(thisSnooze: Int = 0): Long {
-        if (repeat) {
+        if (isRepeat) {
 
             val nextWeekDay = getNextDay(thisSnooze)
 
@@ -62,7 +62,7 @@ data class Reminder(
     }
 
     fun lastAlarm(): Long {
-        if (repeat) {
+        if (isRepeat) {
 
             val nextWeekDay = getLastDay()
 

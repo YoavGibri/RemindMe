@@ -13,6 +13,7 @@ import android.widget.SeekBar
 import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
+import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
 import com.hirshler.remindme.ui.MainActivityFragment
@@ -103,18 +104,18 @@ class SettingsFragment : MainActivityFragment() {
             alarmSoundDialog?.showGeneral()
         }
 
-        binding.userNameDialog.setOnClickListener { UserNameDialog.showUserNameDialog(requireActivity()) }
 
         binding.colorSelector.setColorChangeListener {
-//            startActivity(Intent(requireActivity(), MainActivity::class.java)
-//                .apply { putExtra(MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS, true)},
-//                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle() )
-
             refreshActivity(
                 MainActivity.ON_ACTIVITY_START_GO_TO_SETTINGS,
                 options = ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
             )
         }
+
+        binding.userNameDialog.setOnClickListener { UserNameDialog.showUserNameDialog(requireActivity()) }
+
+        val versionText = "v. ${BuildConfig.VERSION_CODE}/${BuildConfig.VERSION_NAME}"
+        binding.version.text = versionText
 
         return binding.root
     }

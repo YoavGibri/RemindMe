@@ -27,7 +27,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
                 )
 
             } else {
-
+//if repeat, show time without snooze but in (). no-repeat show time with snooze
                 RemindersRemindersListRowItemBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -111,26 +111,29 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
     }
 
     private fun generateTimeText(reminder: Reminder): String {
-        Calendar.getInstance().apply {
+        if (reminder.nextAlarmWithSnooze() == 0L)
+            return ""
 
-            if (reminder.repeat) {
-                setTimeOfDay(reminder.alarmTimeOfDay)
+        val nextAlarm = Calendar.getInstance().apply { timeInMillis = reminder.nextAlarmWithSnooze() }
+        val nextAlarmString = nextAlarm.format("HH:mm")
 
+        if (reminder.isRepeat) {
+            val timeOfDayString = Calendar.getInstance().apply { setTimeOfDay(reminder.alarmTimeOfDay) }.format("HH:mm")
+            return if (reminder.snooze != 0) {
+                "$timeOfDayString ($nextAlarmString)"
             } else {
-
-                if (reminder.nextAlarmWithSnooze() == 0L)
-                    return ""
-                timeInMillis = reminder.nextAlarmWithSnooze()
+                timeOfDayString
             }
-
-            val time = SimpleDateFormat("HH:mm", Locale.getDefault()).format(time)
-            return time
         }
+
+        return nextAlarmString
+
+
     }
 
 
     private fun generateDateText(reminder: Reminder): String {
-        if (reminder.repeat) {
+        if (reminder.isRepeat) {
 
             val days = reminder.weekDays
                 .filter { it.value == true }
@@ -168,7 +171,7 @@ class RemindersListAdapter(private val clickListener: ReminderClickListener, pri
             when {
                 it.id == null -> TYPE.TITLE
                 it.nextAlarmWithSnooze() < Calendar.getInstance().timeInMillis -> TYPE.ITEM_DISMISSED
-                it.repeat -> TYPE.ITEM_REPEAT
+                it.isRepeat -> TYPE.ITEM_REPEAT
                 else -> TYPE.ITEM_ACTIVE
             }
         }.ordinal

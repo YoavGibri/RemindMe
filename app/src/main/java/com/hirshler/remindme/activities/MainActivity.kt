@@ -2,7 +2,6 @@ package com.hirshler.remindme.activities
 
 import android.app.AlarmManager
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager.EXTRA_RINGTONE_PICKED_URI
 import android.net.Uri
@@ -14,6 +13,7 @@ import android.view.WindowManager
 import com.google.gson.Gson
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
+import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.StateAdapter
 import com.hirshler.remindme.databinding.ActivityMainBinding
 import com.hirshler.remindme.model.AlarmSound
@@ -63,7 +63,7 @@ class MainActivity : BaseActivity() {
 
 
 
-        if (AppSettings.getUserName() == "") {
+        if (BuildConfig.DEBUG && AppSettings.getUserName() == "") {
             UserNameDialog.showUserNameDialog(this)
         }
 
@@ -89,7 +89,7 @@ class MainActivity : BaseActivity() {
             }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-            if (!(App.applicationContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()) {
+            if (!(App.applicationContext().getSystemService(ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()) {
                 AlertDialog.Builder(this)
                     .setTitle("Allow Permission")
                     .setMessage("You are using Android version 12 or grater.\nWithout \"Alarms & Reminders\" permission the reminders will not show")
@@ -114,7 +114,7 @@ class MainActivity : BaseActivity() {
                 AppSettings.setGeneralAlarm(newSound)
             }
 
-            (binding.viewPager.adapter as StateAdapter)?.settingsFragment.refreshAlarmSoundsDialog()
+            (binding.viewPager.adapter as StateAdapter).settingsFragment.refreshAlarmSoundsDialog()
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

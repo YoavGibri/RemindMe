@@ -22,6 +22,7 @@ import kotlin.concurrent.timerTask
 
  */
 
+
 class AlertActivity : BaseActivity() {
 
     private var dateIsSet: Boolean = false
@@ -38,8 +39,11 @@ class AlertActivity : BaseActivity() {
     private var snoozeButtonTimer: Timer? = null
     private lateinit var missedAlertTimer: Timer
 
-    private val SECONDS_TO_NOTIFICATION: Long = 50
-    private val SNOOZE_BUTTON_DELAY_SECONDS: Long = 2
+    companion object {
+        const val SNOOZE_BUTTON_DELAY_SECONDS: Long = 2
+        const val SECONDS_TO_NOTIFICATION: Long = 50
+    }
+
 
     override fun setTheme(resId: Int) {
         Log.d("TAG", "AlertActivity: theme: $resId")
@@ -103,12 +107,7 @@ class AlertActivity : BaseActivity() {
         }
 
         vm.currentCalendar.observe(this) { calendar ->
-            //test
-            //val reminder = vm.currentReminder.value
-
-            setDateTimeText(calendar, vm.origSnooze)
-
-//            setDateTimeText(Calendar.getInstance().apply { timeInMillis = vm.currentReminder.value!!.lastAlarm() }, vm.currentSnooze)
+            setDateTimeText(calendar.cloneCalendar(), vm.origSnooze)
         }
 
 
@@ -122,7 +121,8 @@ class AlertActivity : BaseActivity() {
             cancelMissedAlertTimer()
             vm.currentSnooze = minutes
 
-            val currentTime = Calendar.getInstance().apply { vm.currentCalendar.value?.let { calendar -> this.timeInMillis = calendar.timeInMillis } }
+
+            val currentTime = Calendar.getInstance().timeInMillis(vm.currentCalendar.value?.timeInMillis)
 
             setDateTimeText(currentTime, minutes)
 
@@ -158,7 +158,7 @@ class AlertActivity : BaseActivity() {
             cancelMissedAlertTimer()
             vm.currentReminder.value?.apply {
 
-                if (repeat) {
+                if (isRepeat) {
                     snooze = 0
                     snoozeCount = 0
                     vm.saveReminderToDb()
@@ -214,7 +214,6 @@ class AlertActivity : BaseActivity() {
         if (minutesToAdd != 0) {
             cal.add(Calendar.MINUTE, minutesToAdd)
         }
-//        binding.dateTimePickerButton.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(cal.time)
         val time = cal.format("HH:mm")
         binding.dateTimePickerButton.text = time
     }

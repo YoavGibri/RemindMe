@@ -22,7 +22,7 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
 
     fun disable() {
         disabled = true
-        text = "-"
+        text = "0"
     }
 
     private val minutes: MutableList<Int> =
@@ -36,23 +36,18 @@ class ToggleButtonMinutes(context: Context, attrs: AttributeSet?) :
         val withZero = attributes.getBoolean(R.styleable.ToggleButtonMinutes_withZero, false)
         attributes.recycle()
 
-//        if (withZero) {
-//            minutes.add(0, 0)
-//            currMinutes.value = minutes[0]
-//        }
 
 
-        currMinutes.observe(context as LifecycleOwner, { minutes ->
+        currMinutes.observe(context as LifecycleOwner) { minutes ->
             text = minutes.toString()
             if (firstInit) {
                 firstInit = false
                 if (withZero) {
                     disable()
                 }
-            }
-            else
+            } else
                 callback?.invoke(minutes)
-        })
+        }
 
 
         setOnClickListener {

@@ -3,6 +3,7 @@
         <attr name="withZero" format="boolean" />
     </declare-styleable>
 
+    <attr name="app_icon" format="reference" />
     <attr name="main_color" format="color" />
     <attr name="main_color_dark" format="color" />
     <attr name="main_color_natural" format="color" />

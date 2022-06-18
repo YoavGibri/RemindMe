@@ -99,13 +99,8 @@ class FlowLog {
 
 
         private fun logDebug(reminder: Reminder?, message: String) {
-//            var reminderDetails = ""
-//            reminder?.let {
-//                reminderDetails = "id: ${it.id}, time: ${Utils.fullDateByMilliseconds(it.nextAlarmWithSnooze())}, text: ${it.text}"
-//            }
-//
-//            val logText = "$reminderDetails \n$message \n${reminder?.let { Gson().toJson(it) }}\n..."
-//            Log.d(tag, logText)
+            if (AppSettings.getUserName() == "")
+                return
 
             var id = ""
             var time = ""
@@ -120,11 +115,6 @@ class FlowLog {
 
             val logText = "$id $message \n$text $time \n$reminderDetails"
             Log.d(tag, logText)
-            //   Utils.writeToFile("\n\n${Utils.fullDateByMilliseconds(Calendar.getInstance().timeInMillis)}:$logText", true)
-
-//            App.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, Bundle()
-//                .apply { putString(FirebaseAnalytics.Param.ITEM_NAME, logText) })
-
 
             val database = Firebase.database("https://remind-me-2021-default-rtdb.europe-west1.firebasedatabase.app/")
             val myRef = database.getReference(AppSettings.getUserName())

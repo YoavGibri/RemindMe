@@ -39,7 +39,7 @@ class ReminderViewModel : ViewModel() {
 
     fun createReminder() {
         currentReminder.value?.apply {
-            if (weekDays.values.any { it == true }) {
+            if (isRepeat) {
                 alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
             } else {
                 manualAlarm = (
@@ -49,6 +49,8 @@ class ReminderViewModel : ViewModel() {
                             currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }
                         ).timeInMillis
             }
+            snooze = 0
+            snoozeCount = 0
         }
     }
 
@@ -65,11 +67,6 @@ class ReminderViewModel : ViewModel() {
 
     fun setAlert() {
         Log.d("viewmodel", "setAlerts")
-//        if (SP.getIsDebugMode()) {
-//                AlertsManager.setNextAlert(currentReminder.value!!.apply {
-//                    manualAlarm = Calendar.getInstance().apply { add(Calendar.SECOND, 10) }.timeInMillis
-//                })
-//        } else
         AlertsManager.setNextAlert(currentReminder.value!!)
     }
 

@@ -37,12 +37,12 @@ class AlertViewModel : ViewModel() {
     }
 
     fun updateCurrentReminder() {
-        currentReminder.value?.apply {
-            snooze = origSnooze + currentSnooze
-            if (weekDays.values.any { it == true }) {
-                alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
+        currentReminder.value?.let {
+            it.snooze = origSnooze + currentSnooze
+            if (it.isRepeat) {
+                it.alarmTimeOfDay = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeOfDayInMinutes()
             } else {
-                manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
+                it.manualAlarm = currentCalendar.value!!.apply { set(Calendar.SECOND, 0) }.timeInMillis
             }
         }
     }
@@ -76,9 +76,9 @@ class AlertViewModel : ViewModel() {
     fun initCurrentReminderById(id: Long) {
         viewModelScope.launch {
             ReminderRepo().findById(id)?.let {
-                var reminderFromDb = it
+                val reminderFromDb = it
                 //test
-               // reminderFromDb.snooze = 120
+               //reminderFromDb.snooze = 60
 
                 origSnooze = reminderFromDb.snooze
                 currentReminder.value = reminderFromDb
@@ -95,6 +95,7 @@ class AlertViewModel : ViewModel() {
 
     fun setCalendarByReminder() {
         currentCalendar.value = Calendar.getInstance().apply { timeInMillis = currentReminder.value!!.nextAlarm() }
+        Log.d(TAG, "setCalendarByReminder: ")
     }
 
 

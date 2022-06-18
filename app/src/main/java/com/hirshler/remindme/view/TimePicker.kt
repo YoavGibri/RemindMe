@@ -54,15 +54,6 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
                 }
             }
 
-//            setOnFocusChangeListener { v, hasFocus ->
-//                if (!hasFocus) {
-//                    val newMinute = text.toString()
-//                    if (newMinute != "") {
-//                        minute = newMinute.toInt()
-//                    }
-//
-//                }
-//            }
         }
 
 
@@ -84,5 +75,6 @@ class TimePicker(context: Context?, attrs: AttributeSet?) : TimePicker(context, 
             lastMinute = this.minute
         }
     }
+
 
 }

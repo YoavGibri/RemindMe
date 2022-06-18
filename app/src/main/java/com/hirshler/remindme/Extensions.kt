@@ -63,6 +63,16 @@ fun Calendar.format(pattern: String): String {
     return SimpleDateFormat(pattern, Locale.getDefault()).format(this.time)
 }
 
+fun Calendar.cloneCalendar(): Calendar {
+    val newCal = Calendar.getInstance()
+    newCal.timeInMillis = timeInMillis
+    return newCal
+}
+
+fun Calendar.timeInMillis(timeInMillis: Long?): Calendar {
+    return apply { this.timeInMillis = timeInMillis ?: 0 }
+}
+
 fun Context.dpToPx(dp: Int): Float {
     return (dp * resources.displayMetrics.density)
 }

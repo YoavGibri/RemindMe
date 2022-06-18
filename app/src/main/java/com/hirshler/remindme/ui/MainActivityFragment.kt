@@ -14,6 +14,10 @@ open class MainActivityFragment : Fragment() {
 
     val mainActivity get() = requireActivity() as MainActivity
 
+    fun closeApplication(){
+        requireActivity().finish()
+    }
+
     fun refreshActivity(
         goToScreen: String? = null, reminderToEdit: Reminder? = null, options: Bundle? = null
     ) {

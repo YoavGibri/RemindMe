@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.text.TextUtilsCompat
+import androidx.core.view.ViewCompat.LAYOUT_DIRECTION_RTL
+import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -45,150 +48,153 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.debugSwitch.isChecked = AppSettings.getIsDebugMode()
+        binding.apply {
 
-        vm.currentCalendar.observe(viewLifecycleOwner) { calendar ->
-//            binding.daysButton.setDate(calendar)
-            binding.timePickerButton.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
-        }
+            debugSwitch.isVisible = BuildConfig.DEBUG
+            debugSwitch.isChecked = AppSettings.getIsDebugMode()
 
 
-        binding.reminderText.addTextChangedListener(
-            afterTextChanged = { vm.currentReminder.value?.text = it.toString() }
-        )
+            vm.currentCalendar.observe(viewLifecycleOwner) { calendar ->
+//            daysButton.setDate(calendar)
+                timePickerButton.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(calendar.time)
+            }
+
+            val localeDirection = TextUtilsCompat.getLayoutDirectionFromLocale(Locale.getDefault())
+            val rtl = if (localeDirection == LAYOUT_DIRECTION_RTL) "\u200F" else ""
+            reminderText.hint = "$rtl${getString(R.string.write_something)}"
 
 
-        binding.reminderText.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
-
-        binding.minutesButton.setOnToggleCallback { minutes ->
-            vm.setMinutes(minutes)
-            Utils.hideKeyboard(binding.minutesButton)
-        }
-
-        binding.daysButton.setOnToggleCallback { days ->
-            vm.setDays(days)
-        }
-
-        binding.datePickerButton.setOnClickListener {
-            val c = vm.currentCalendar.value!!
-            val datePicker = DatePickerDialog(
-                requireActivity(), { _, year, monthOfYear, dayOfMonth ->
-                    vm.setDate(year, monthOfYear, dayOfMonth)
-                    binding.daysButton.setDate(year, monthOfYear, dayOfMonth)
-                },
-                c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
+            reminderText.addTextChangedListener(
+                afterTextChanged = { vm.currentReminder.value?.text = it.toString() }
             )
-            datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
-            datePicker.show()
-        }
 
-        binding.timePickerButton.setOnClickListener {
-            showTimePicker()
-        }
+            reminderText.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) Utils.hideKeyboard(v) }
 
-
-
-        binding.recordButton.setOnClickListener {
-            if (voiceRecorder.isRecording()) {
-                voiceRecorder.stopRecording()
-                binding.playPreviewButton.visibility = View.VISIBLE
-            } else {
-                voiceRecorder.startRecording()
+            minutesButton.setOnToggleCallback { minutes ->
+                vm.setMinutes(minutes)
+                Utils.hideKeyboard(minutesButton)
             }
-        }
 
-        binding.playPreviewButton.setOnClickListener {
-            voiceRecorder.playPreview()
-            binding.playPreviewButton.visibility = View.GONE
-            binding.stopPreviewButton.visibility = View.VISIBLE
-        }
-
-        binding.stopPreviewButton.setOnClickListener {
-            voiceRecorder.stopPreview()
-            binding.playPreviewButton.visibility = View.VISIBLE
-            binding.stopPreviewButton.visibility = View.GONE
-        }
-
-        binding.chooseAlarmSoundButton.setOnClickListener {
-            val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
-                vm.currentReminder.value?.alertRingtonePath = it.stringUri
+            daysButton.setOnToggleCallback { days ->
+                vm.setDays(days)
             }
-            alarmSoundDialog.showSpecific()
-        }
 
-        binding.repeatAlarmDialogButton.setOnClickListener {
-            RepeatDialog(requireActivity(), vm.currentReminder.value!!.weekDays).show()
-        }
+            datePickerButton.setOnClickListener {
+                val c = vm.currentCalendar.value!!
+                val datePicker = DatePickerDialog(
+                    requireActivity(), { _, year, monthOfYear, dayOfMonth ->
+                        vm.setDate(year, monthOfYear, dayOfMonth)
+                        daysButton.setDate(year, monthOfYear, dayOfMonth)
+                    },
+                    c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH)
+                )
+                datePicker.datePicker.minDate = Calendar.getInstance().timeInMillis
+                datePicker.show()
+            }
 
-        binding.debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> AppSettings.setIsDebugMode(isChecked) }
+            timePickerButton.setOnClickListener {
+                showTimePicker()
+            }
 
 
-        binding.doneButton.setOnClickListener {
-            when {
-                noTextAndNoViceRecording() -> {
-                    showErrorSnackBar(R.string.validation_error_no_text_or_voice)
-                }
-                alertIsInThePast() -> {
-                    showErrorSnackBar(R.string.error_past_time)
-                }
 
-                else -> {
+            recordButton.setOnClickListener {
+                if (voiceRecorder.isRecording()) {
                     voiceRecorder.stopRecording()
-
-                    vm.createReminder()
-                    vm.saveReminderToDb()
-                    vm.setAlert()
-
-                    showSuccessSnackBar(text = getAlertString())
-
-
-                    Timer().schedule(timerTask {
-
-
-                        if (reminderToEdit != null) {
-//                            startActivity(Intent(requireActivity(), MainActivity::class.java)
-//                                .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
-                            refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
-                        } else {
-                            if (AppSettings.getCloseAppAfterReminderSet()) {
-                                requireActivity().finish()
-                            } else
-//                                startActivity(Intent(requireActivity(), MainActivity::class.java))
-                                refreshActivity()
-                        }
-
-                    }, SECONDS_TO_AUTOCLOSE * 1000)
-
-
-                }
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                //if starting new reminder and some text is written, clear the text
-                if (binding.reminderText.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
-                    binding.reminderText.setText("")
-
-                } else if (reminderToEdit != null) {
-//                    startActivity(Intent(requireActivity(), MainActivity::class.java)
-//                        .apply { putExtra(ON_ACTIVITY_START_GO_TO_REMINDERS_LIST, true) })
-                    refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
+                    playPreviewButton.visibility = View.VISIBLE
                 } else {
-                    isEnabled = false
-                    requireActivity().onBackPressed()
+                    voiceRecorder.startRecording()
                 }
             }
-        })
 
-        initVoiceRecorder(vm.currentReminder.value!!)
+            playPreviewButton.setOnClickListener {
+                voiceRecorder.playPreview()
+                playPreviewButton.visibility = View.GONE
+                stopPreviewButton.visibility = View.VISIBLE
+            }
+
+            stopPreviewButton.setOnClickListener {
+                voiceRecorder.stopPreview()
+                playPreviewButton.visibility = View.VISIBLE
+                stopPreviewButton.visibility = View.GONE
+            }
+
+            chooseAlarmSoundButton.setOnClickListener {
+                val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
+                    vm.currentReminder.value?.alertRingtonePath = it.stringUri
+                }
+                alarmSoundDialog.showSpecific()
+            }
+
+            repeatAlarmDialogButton.setOnClickListener {
+                RepeatDialog(requireActivity(), vm.currentReminder.value!!.weekDays).show()
+            }
+
+            debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> AppSettings.setIsDebugMode(isChecked) }
+
+
+            doneButton.setOnClickListener {
+                when {
+                    noTextAndNoViceRecording() -> {
+                        showErrorSnackBar(R.string.validation_error_no_text_or_voice)
+                    }
+                    alertIsInThePast() -> {
+                        showErrorSnackBar(R.string.error_past_time)
+                    }
+
+                    else -> {
+                        voiceRecorder.stopRecording()
+
+                        vm.createReminder()
+                        vm.saveReminderToDb()
+                        vm.setAlert()
+
+                        showSuccessSnackBar(text = getAlertString())
+
+
+                        Timer().schedule(timerTask {
+
+
+                            if (reminderToEdit != null) {
+                                refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
+                            } else {
+                                if (AppSettings.getCloseAppAfterReminderSet()) {
+                                    closeApplication()
+                                } else
+                                    refreshActivity()
+                            }
+
+                        }, SECONDS_TO_AUTOCLOSE * 1000)
+
+
+                    }
+                }
+            }
+
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    //if starting new reminder and some text is written, clear the text
+                    if (binding.reminderText.text.toString().isNotEmpty() && vm.currentReminder.value?.id == null) {
+                        binding.reminderText.setText("")
+
+                    } else if (reminderToEdit != null) {
+                        refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
+                    } else {
+                        isEnabled = false
+                        requireActivity().onBackPressed()
+                    }
+                }
+            })
+
+            initVoiceRecorder(vm.currentReminder.value!!)
+        }
 
     }
 
     private fun setViewsFromReminder(reminder: Reminder) {
         reminder.apply {
             text.let { binding.reminderText.setText(it) }
-            vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarm() }
+            vm.currentCalendar.value = Calendar.getInstance().apply { timeInMillis = nextAlarmWithSnooze() }
             binding.daysButton.setDate(vm.currentCalendar.value!!)
             binding.playPreviewButton.visibility = if (voiceNotePath.isNotEmpty()) View.VISIBLE else View.GONE
             initVoiceRecorder(this)
@@ -210,7 +216,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
         vm.currentReminder.value?.text.isNullOrEmpty() && (vm.currentReminder.value?.voiceNotePath.isNullOrEmpty() && !voiceRecorder.isRecording())
 
     private fun alertIsInThePast(): Boolean =
-        vm.currentReminder.value?.repeat == false &&
+        vm.currentReminder.value?.isRepeat == false &&
                 vm.currentCalendar.value?.time?.before(Calendar.getInstance().time) == true
 
 

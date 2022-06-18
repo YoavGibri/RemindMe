@@ -14,7 +14,7 @@ class AppSettings {
         private const val KEY_USER_NAME: String = "username"
         private const val IS_DEBUG_MODE: String = "is_debug_mode"
         fun getIsDebugMode(): Boolean {
-            return SP.get().getBoolean(IS_DEBUG_MODE, false)
+            return BuildConfig.DEBUG && SP.get().getBoolean(IS_DEBUG_MODE, false)
         }
 
         fun setIsDebugMode(isDebug: Boolean) {

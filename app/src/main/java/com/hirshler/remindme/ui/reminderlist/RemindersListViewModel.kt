@@ -24,7 +24,7 @@ class RemindersListViewModel : ViewModel() {
 
         list.run {
             // Active
-            filter { !it.repeat && it.nextAlarmWithSnooze() > now }.sortedBy { it.nextAlarmWithSnooze() }
+            filter { !it.isRepeat && it.nextAlarmWithSnooze() > now }.sortedBy { it.nextAlarmWithSnooze() }
                 .let {
                     if (it.isNotEmpty()) {
                         newList.add(Reminder(isListTitle = true, text = "Active"))
@@ -33,7 +33,7 @@ class RemindersListViewModel : ViewModel() {
                 }
 
             //Repeat
-            filter { it.repeat }.sortedBy { it.nextAlarmWithSnooze() }
+            filter { it.isRepeat }.sortedBy { it.nextAlarmWithSnooze() }
                 .let {
                     if (it.isNotEmpty()) {
                         newList.add(Reminder(isListTitle = true, text = "Repeat"))
@@ -42,7 +42,7 @@ class RemindersListViewModel : ViewModel() {
                 }
 
             //Dismissed
-            filter { !it.repeat && it.nextAlarmWithSnooze() < now }.sortedByDescending { it.nextAlarmWithSnooze() }
+            filter { !it.isRepeat && it.nextAlarmWithSnooze() < now }.sortedByDescending { it.nextAlarmWithSnooze() }
                 .let {
                     if (it.isNotEmpty()) {
                         newList.add(Reminder(isListTitle = true, text = "Dismissed"))

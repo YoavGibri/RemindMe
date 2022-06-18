@@ -14,8 +14,9 @@ android {
         applicationId "com.hirshler.remindme"
         minSdk 24
         targetSdk 30
-        versionCode 3
-        versionName "2.5"
+        versionCode 4
+//        versionCode 3
+        versionName "2.6"
 
         archivesBaseName = "RemindMe21-v$versionName"
 
