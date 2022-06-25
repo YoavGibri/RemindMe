@@ -3,6 +3,7 @@ package com.hirshler.remindme
 import android.app.AlertDialog
 import android.app.Application
 import android.content.Context
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hirshler.remindme.managers.NotificationsManager
 import com.hirshler.remindme.room.AppDatabase
@@ -20,8 +21,12 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         NotificationsManager.createNotificationChannel()
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        MobileAds.initialize(this)
     }
 
 

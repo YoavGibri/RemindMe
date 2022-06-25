@@ -41,4 +41,8 @@
     <string name="vibrate_mode">Vibrate Mode</string>
     <string name="close_app_after_reminder_set">Close App After Reminder Set</string>
     <string name="title_activity_tutorial">TutorialActivity</string>
+    <string name="help_url">https://www.hirshler.net/remindmehelppage</string>
+    <string name="app_play_store_url">https://play.google.com/store/apps/details?id=com.hirshler.remindme</string>
+    <string name="check_my_app_at_play_store">Hey check out my app at: %1$s</string>
+    <string name="share_chooser_title">Share using</string>
 </resources>

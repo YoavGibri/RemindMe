@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
 import com.hirshler.remindme.BuildConfig
+import com.hirshler.remindme.R
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
 import com.hirshler.remindme.ui.MainActivityFragment
@@ -82,18 +83,18 @@ class SettingsFragment : MainActivityFragment() {
         }
 
         binding.moreInfoButton.setOnClickListener {
-            val url = "https://www.interpresence.land/effective-reminder-help"
+            val url = getString(R.string.help_url)
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
 
         binding.shareButton.setOnClickListener {
-            val shareText = "Hey check out my app at: https://play.google.com/store/apps/details?id=fujdevelopers.com.remindme"
+            val shareText = getString(R.string.check_my_app_at_play_store, getString(R.string.app_play_store_url))
             val intent = Intent(Intent.ACTION_SEND)
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, shareText)
-            startActivity(Intent.createChooser(intent, "Share using"))
+            startActivity(Intent.createChooser(intent, getString(R.string.share_chooser_title)))
         }
 
         binding.chooseAlarmSoundButton.setOnClickListener {

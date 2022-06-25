@@ -20,9 +20,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/long_text"
+            android:text="אבטיח"
             android:textColor="@color/white"
-            app:autoSizeMaxTextSize="80dp"
+            app:autoSizeMaxTextSize="50dp"
             app:autoSizeTextType="uniform"
             android:visibility="gone"
             android:padding="16dp"
@@ -37,7 +37,7 @@
             android:visibility="invisible"
             app:tint="@color/white"
             android:layout_marginHorizontal="100dp"
-            tools:visibility="visible" />
+             />
     </FrameLayout>
 
     <LinearLayout

@@ -45,9 +45,9 @@
 
         <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
             android:id="@+id/dots_indicator"
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             app:dotsColor="?attr/main_color_natural"
             app:dotsCornerRadius="8dp"
             app:dotsSize="16dp"
@@ -68,16 +68,18 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dots_indicator_container" />
 
-    <ImageView
+
+    <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
-        android:layout_width="320dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:src="@drawable/admob_banner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+    <!--    prod BANNER id-->
+    <!--        app:adUnitId="ca-app-pub-9013650091087201/3454015268"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

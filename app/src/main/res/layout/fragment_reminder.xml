@@ -18,22 +18,22 @@
 
 
     <TextView
-        android:layout_marginBottom="40dp"
         android:id="@+id/title"
         style="@style/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="35dp"
         android:gravity="center"
         android:text="@string/remind_me_to"
         android:textColor="?attr/main_color_natural"
         android:textSize="40dp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"
         android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@id/reminderText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/reminderText"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/debugSwitch"
@@ -51,13 +51,12 @@
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/background_reminder_text"
         android:elevation="@dimen/app_elevation"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:gravity="center_vertical"
-        android:textDirection="anyRtl"
         android:hint="@string/write_something"
         android:inputType="textMultiLine|textNoSuggestions"
         android:isScrollContainer="false"
@@ -65,6 +64,7 @@
         android:maxLines="2"
         android:padding="10dp"
         android:textAppearance="@style/textView"
+        android:textDirection="anyRtl"
         android:textSize="25dp"
         app:layout_constraintBottom_toTopOf="@+id/title_when"
         app:layout_constraintEnd_toStartOf="@id/recordButton"
@@ -75,8 +75,8 @@
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/chooseAlarmSoundButton"
         style="@style/coloredButtonOverlay"
-        android:src="@drawable/icon_ringtone"
         android:layout_marginStart="10dp"
+        android:src="@drawable/icon_ringtone"
         app:layout_constraintBottom_toBottomOf="@id/reminderText"
         app:layout_constraintEnd_toStartOf="@id/reminderText"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,7 +129,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/reminderText" />
-
 
 
     <com.hirshler.remindme.view.ToggleButtonMinutes
@@ -186,14 +185,14 @@
         android:id="@+id/timePickerLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.0"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@+id/days_button"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"
-        android:clipToPadding="false"
-        android:padding="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/minutes_button">
+        app:layout_constraintTop_toBottomOf="@id/minutes_button"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textExactlyAt"
@@ -203,8 +202,7 @@
             android:text="@string/time_set_title"
             android:textColor="?attr/main_color_natural"
             android:textSize="30dp"
-            android:typeface="sans"
-             />
+            android:typeface="sans" />
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -263,8 +261,8 @@
     <ImageButton
         android:id="@+id/doneButton"
         style="@style/button_with_shadow"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:adjustViewBounds="true"

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.WindowManager
+import com.google.android.gms.ads.AdRequest
 import com.google.gson.Gson
 import com.hirshler.remindme.App
 import com.hirshler.remindme.AppSettings
@@ -69,6 +70,9 @@ class MainActivity : BaseActivity() {
         if (BuildConfig.DEBUG && AppSettings.getUserName() == "") {
             UserNameDialog.showUserNameDialog(this)
         }
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
     }
 
