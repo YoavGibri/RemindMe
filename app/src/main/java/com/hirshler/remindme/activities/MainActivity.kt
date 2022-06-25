@@ -40,6 +40,9 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        if (AppSettings.firstLaunch())
+//            startActivity(Intent(applicationContext, TutorialActivity::class.java))
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

@@ -120,5 +120,16 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="Theme.RemindMe.blackOverlay.Fullscreen" parent="Theme.RemindMe.blackOverlay">
+        <item name="android:actionBarStyle">@style/Widget.Theme.RemindMe.blackOverlay.ActionBar.Fullscreen</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
+
+    <style name="ThemeOverlay.RemindMe.FullscreenContainer" parent="">
+        <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
+        <item name="fullscreenTextColor">@color/light_blue_A200</item>
+    </style>
+
 
 </resources>

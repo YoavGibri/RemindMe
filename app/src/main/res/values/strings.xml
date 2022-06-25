@@ -40,4 +40,5 @@
     <string name="long_text">טקסטיל לילדים את תחושת הביטחון האישי של כל אחד מאיתנו יש את מאמרו שלו</string>
     <string name="vibrate_mode">Vibrate Mode</string>
     <string name="close_app_after_reminder_set">Close App After Reminder Set</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
 </resources>

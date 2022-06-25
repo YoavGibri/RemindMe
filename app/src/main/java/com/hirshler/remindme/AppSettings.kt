@@ -13,6 +13,7 @@ class AppSettings {
 
         private const val KEY_USER_NAME: String = "username"
         private const val IS_DEBUG_MODE: String = "is_debug_mode"
+        private const val IS_FIRST_LAUNCH: String = "is_first_launch"
         fun getIsDebugMode(): Boolean {
             return BuildConfig.DEBUG && SP.get().getBoolean(IS_DEBUG_MODE, false)
         }
@@ -100,6 +101,14 @@ class AppSettings {
 
         fun getUserName(): String {
             return SP.get().getString(KEY_USER_NAME, "")!!
+        }
+
+        fun firstLaunch(): Boolean {
+            val firstLaunch = SP.get().getBoolean(IS_FIRST_LAUNCH, true)
+            if (firstLaunch) {
+                SP.set().putBoolean(IS_FIRST_LAUNCH, false).apply()
+            }
+            return firstLaunch
         }
 
 

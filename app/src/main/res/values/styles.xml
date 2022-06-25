@@ -31,7 +31,7 @@
         <item name="tint">?attr/main_color_natural</item>
         <item name="android:background">@drawable/background_round_button_colored</item>
     </style>
-<!--        <item name="android:layout_margin">10dp</item>-->
+    <!--        <item name="android:layout_margin">10dp</item>-->
 
     <style name="whiteButtonOverlay" parent="button_with_shadow">
         <item name="android:layout_width">@dimen/button_diameter</item>
@@ -50,19 +50,19 @@
     <!--        <item name="android:layout_margin">5dp</item>-->
 
     <!--    </style>-->
-<!--    <style name="colorPicker">-->
-<!--        <item name="android:layout_width">0dp</item>-->
-<!--        <item name="android:layout_weight">1</item>-->
-<!--        <item name="android:layout_height">match_parent</item>-->
-<!--        <item name="android:layout_margin">5dp</item>-->
-<!--        <item name="android:padding">20dp</item>-->
-<!--        <item name="android:src">@drawable/icon_v_transparent</item>-->
-<!--        <item name="android:scaleType">centerInside</item>-->
-<!--        <item name="android:adjustViewBounds">true</item>-->
-<!--        <item name="tint">?attr/main_color_natural</item>-->
-<!--    </style>-->
+    <!--    <style name="colorPicker">-->
+    <!--        <item name="android:layout_width">0dp</item>-->
+    <!--        <item name="android:layout_weight">1</item>-->
+    <!--        <item name="android:layout_height">match_parent</item>-->
+    <!--        <item name="android:layout_margin">5dp</item>-->
+    <!--        <item name="android:padding">20dp</item>-->
+    <!--        <item name="android:src">@drawable/icon_v_transparent</item>-->
+    <!--        <item name="android:scaleType">centerInside</item>-->
+    <!--        <item name="android:adjustViewBounds">true</item>-->
+    <!--        <item name="tint">?attr/main_color_natural</item>-->
+    <!--    </style>-->
 
-<style name="colorPicker">
+    <style name="colorPicker">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">20dp</item>
@@ -109,6 +109,15 @@
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">@dimen/app_elevation</item>
         <item name="android:background">@drawable/style_toggle_button</item>
+    </style>
+
+    <style name="Widget.Theme.RemindMe.blackOverlay.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.RemindMe.blackOverlay.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
 
 
