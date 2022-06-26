@@ -16,7 +16,7 @@ android {
         targetSdk 30
 //        versionCode 4
         versionCode 3
-        versionName "2.8"
+        versionName "2.9"
 
         archivesBaseName = "RemindMe21-v$versionName"
 

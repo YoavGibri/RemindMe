@@ -6,32 +6,6 @@
     android:layout_height="match_parent"
     android:background="?attr/background_texture">
 
-
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_host_fragment_activity_main"-->
-    <!--        android:name="androidx.navigation.fragment.NavHostFragment"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:defaultNavHost="true"-->
-    <!--        app:layout_constraintBottom_toTopOf="@id/nav_view"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/adView"-->
-    <!--        app:navGraph="@navigation/mobile_navigation" />-->
-
-
-    <!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-    <!--        android:id="@+id/nav_view"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="0dp"-->
-    <!--        android:layout_marginEnd="0dp"-->
-    <!--        android:background="?android:attr/windowBackground"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--        app:layout_constraintRight_toRightOf="parent"-->
-    <!--        app:menu="@menu/bottom_nav_menu" />-->
-
     <FrameLayout
         android:id="@+id/dots_indicator_container"
         android:layout_width="wrap_content"
@@ -74,12 +48,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:adUnitId="ca-app-pub-9013650091087201/3454015268"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <!--    prod BANNER id-->
-    <!--        app:adUnitId="ca-app-pub-9013650091087201/3454015268"-->
+    <!--    test BANNER id-->
+    <!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
