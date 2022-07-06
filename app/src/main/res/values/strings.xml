@@ -32,7 +32,7 @@
 
     <string name="alarm_configuration">Alarm Configuration</string>
     <string name="ok">OK</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel">Cancel</string>
     <string name="browse">Browse</string>
     <string name="username_dialog_title">הכנס שם משתמש</string>
     <string name="button_ok">OK</string>
@@ -45,4 +45,5 @@
     <string name="app_play_store_url">https://play.google.com/store/apps/details?id=com.hirshler.remindme</string>
     <string name="check_my_app_at_play_store">Hey check out my app at: %1$s</string>
     <string name="share_chooser_title">Share using</string>
+    <string name="main_ad_unit_id">ca-app-pub-9013650091087201/3454015268</string>
 </resources>

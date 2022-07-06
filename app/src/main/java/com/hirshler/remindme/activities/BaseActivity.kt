@@ -8,9 +8,10 @@ import com.hirshler.remindme.managers.ThemeManager
 open class BaseActivity : AppCompatActivity() {
 
 
-    override fun getTheme(): Resources.Theme {
-        val theme = super.getTheme()
-        ThemeManager.setAppTheme(theme)
-        return theme
+    override fun onApplyThemeResource(theme: Resources.Theme?, resid: Int, first: Boolean) {
+        super.onApplyThemeResource(theme, resid, first)
+        if (first && theme != null) {
+            ThemeManager.setAppTheme(theme)
+        }
     }
 }

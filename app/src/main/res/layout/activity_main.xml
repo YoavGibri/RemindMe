@@ -48,12 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:adSize="BANNER"
-        app:adUnitId="ca-app-pub-9013650091087201/3454015268"
+        app:adUnitId="@string/main_ad_unit_id"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-    <!--    test BANNER id-->
-    <!--        app:adUnitId="ca-app-pub-3940256099942544/6300978111"-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

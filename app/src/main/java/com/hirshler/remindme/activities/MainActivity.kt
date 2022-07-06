@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.WindowManager
 import com.google.android.gms.ads.AdRequest
 import com.google.gson.Gson
@@ -33,16 +32,8 @@ class MainActivity : BaseActivity() {
     }
 
 
-    override fun setTheme(resId: Int) {
-        Log.d("TAG", "MainActivity: theme: $resId")
-        super.setTheme(resId)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        if (AppSettings.firstLaunch())
-//            startActivity(Intent(applicationContext, TutorialActivity::class.java))
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
