@@ -7,7 +7,7 @@
     <!--    <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>-->
     <!--    <item name="colorOnSecondary">@color/secondaryTextColor</item>-->
 
-    <style name="Theme.RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="RemindMe" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <item name="main_color">@drawable/splash</item>
         <item name="main_color_natural">@color/natural_white</item>
@@ -20,7 +20,7 @@
 
     <!--region theme overlay-->
 
-    <style name="Theme.RemindMe.blackOverlay">
+    <style name="RemindMe.blackOverlay">
         <item name="main_color">@color/light_black</item>
         <item name="main_color_dark">@color/dark_black</item>
         <item name="button_background">@drawable/button_black</item>
@@ -30,7 +30,7 @@
 
     </style>
 
-    <style name="Theme.RemindMe.blueOverlay">
+    <style name="RemindMe.blueOverlay">
         <item name="main_color">@color/light_blue</item>
         <item name="main_color_dark">@color/dark_blue</item>
         <item name="button_background">@drawable/button_blue</item>
@@ -39,7 +39,7 @@
         <item name="icon_slider">@drawable/icon_slider_blue_small</item>
     </style>
 
-    <style name="Theme.RemindMe.redOverlay">
+    <style name="RemindMe.redOverlay">
         <item name="main_color">@color/light_red</item>
         <item name="main_color_dark">@color/dark_red</item>
         <item name="button_background">@drawable/button_red</item>
@@ -48,7 +48,7 @@
         <item name="icon_slider">@drawable/icon_slider_red_small</item>
     </style>
 
-    <style name="Theme.RemindMe.greenOverlay">
+    <style name="RemindMe.greenOverlay">
         <item name="main_color">@color/light_green</item>
         <item name="main_color_dark">@color/dark_green</item>
         <item name="button_background">@drawable/button_green</item>
@@ -57,7 +57,7 @@
         <item name="icon_slider">@drawable/icon_slider_green_small</item>
     </style>
 
-    <style name="Theme.RemindMe.pinkOverlay">
+    <style name="RemindMe.pinkOverlay">
         <item name="main_color">@color/light_pink</item>
         <item name="main_color_dark">@color/dark_pink</item>
         <item name="button_background">@drawable/button_pink</item>
@@ -66,7 +66,7 @@
         <item name="icon_slider">@drawable/icon_slider_pink_small</item>
     </style>
 
-    <style name="Theme.RemindMe.greyOverlay">
+    <style name="RemindMe.greyOverlay">
         <item name="main_color">@color/light_grey</item>
         <item name="main_color_dark">@color/dark_grey</item>
         <item name="button_background">@drawable/button_grey</item>
@@ -75,7 +75,7 @@
         <item name="icon_slider">@drawable/icon_slider_grey_small</item>
     </style>
 
-    <style name="Theme.RemindMe.purpleOverlay">
+    <style name="RemindMe.purpleOverlay">
         <item name="main_color">@color/light_purple</item>
         <item name="main_color_dark">@color/dark_purple</item>
         <item name="button_background">@drawable/button_purple</item>
@@ -84,7 +84,7 @@
         <item name="icon_slider">@drawable/icon_slider_purple_small</item>
     </style>
 
-    <style name="Theme.RemindMe.whiteOverlay">
+    <style name="RemindMe.whiteOverlay">
         <item name="main_color">@color/light_white</item>
         <item name="main_color_dark">@color/dark_white</item>
         <item name="main_color_natural">@color/natural_grey</item>
@@ -113,14 +113,14 @@
 
     <!--endregion-->
 
-    <style name="Theme.RemindMe.FullScreen">
+    <style name="RemindMe.FullScreen">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="Theme.RemindMe.blackOverlay.Fullscreen" parent="Theme.RemindMe.blackOverlay">
+    <style name="RemindMe.blackOverlay.Fullscreen" parent="RemindMe.blackOverlay">
         <item name="android:actionBarStyle">@style/Widget.Theme.RemindMe.blackOverlay.ActionBar.Fullscreen</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>

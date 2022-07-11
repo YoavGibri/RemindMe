@@ -6,7 +6,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import com.hirshler.remindme.R
-import com.hirshler.remindme.pxToDp
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -14,7 +13,7 @@ import java.util.concurrent.TimeUnit
 class ToggleButtonDays(context: Context, attrs: AttributeSet?) :
     AppCompatButton(context, attrs) {
 
-    private var initialTextSize = context.pxToDp(textSize).toFloat()
+
     private var currDays = MutableLiveData<Int>(0)
     private var callback: ((Int) -> Unit)? = null
     private var date = MutableLiveData<Calendar?>(null)

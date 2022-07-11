@@ -1,4 +1,6 @@
 <resources>
+    <string name="main_ad_unit_id">ca-app-pub-9013650091087201/3454015268</string>
+    <string name="alert_ad_unit_id">ca-app-pub-9013650091087201/8944156849</string>
     <string name="app_name">Remind Me 21</string>
     <string name="title_reminder">Reminder</string>
     <string name="title_reminders_list">Reminders List</string>
@@ -45,5 +47,16 @@
     <string name="app_play_store_url">https://play.google.com/store/apps/details?id=com.hirshler.remindme</string>
     <string name="check_my_app_at_play_store">Hey check out my app at: %1$s</string>
     <string name="share_chooser_title">Share using</string>
-    <string name="main_ad_unit_id">ca-app-pub-9013650091087201/3454015268</string>
+
+    <string name="draw_on_other_apps_permission_title">Allow Permission</string>
+    <string name="draw_on_other_apps_permission_message">In order to Remind Me to be able to show the reminders, please allow the permission to display on other apps</string>
+    <string name="draw_on_other_apps_permission_button_positive">Grant permission</string>
+    <string name="draw_on_other_apps_permission_button_negative">Cancel</string>
+
+    <string name="alarms_and_reminders_permission_title">Allow Permission</string>
+    <string name="alarms_and_reminders_permission_message"><![CDATA[In order to Remind Me to be able to show the reminders, please allow the "Alarms & Reminders permission]]></string>
+    <string name="alarms_and_reminders_permission_button_positive">Grant permission</string>
+    <string name="alarms_and_reminders_permission_button_negative">Cancel</string>
+
+
 </resources>

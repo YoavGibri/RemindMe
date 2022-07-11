@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.ads.AdRequest
 import com.hirshler.remindme.*
 import com.hirshler.remindme.databinding.ActivityAlertBinding
 import com.hirshler.remindme.managers.AlertsManager
@@ -57,6 +58,8 @@ class AlertActivity : BaseActivity() {
 
         vm = ViewModelProvider(this).get(AlertViewModel::class.java)
 
+         var initialTextSize = pxToDp(500f)
+         var initialTextSize2 = 500f.asDp
 
         vm.currentReminder.observe(this) { reminder ->
             reminder?.apply {
@@ -117,14 +120,20 @@ class AlertActivity : BaseActivity() {
         vm.initCurrentReminderById(id)
 
 
-        binding.minutesButton.setOnToggleCallback { minutes ->
+        binding.minutesButton.setOnToggleCallback { minutesToSnooze ->
             cancelMissedAlertTimer()
-            vm.currentSnooze = minutes
+            vm.currentSnooze = minutesToSnooze
 
 
-            val currentTime = Calendar.getInstance().timeInMillis(vm.currentCalendar.value?.timeInMillis)
+            val now = Calendar.getInstance()
+//                    .setTimeInMillis(
+//                        vm.currentCalendar.value
+//                            ?.cloneCalendar()?.apply {
+//                                add(Calendar.MINUTE, vm.currentSnooze)
+//                            }?.timeInMillis
+//                    )
 
-            setDateTimeText(currentTime, minutes)
+            setDateTimeText(now, minutesToSnooze)
 
 
             snoozeButtonTimer?.cancel()
@@ -188,11 +197,15 @@ class AlertActivity : BaseActivity() {
             }, SECONDS_TO_NOTIFICATION * 1000)
         }
 
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
     }
 
     private fun showDateTimePicker() {
         val dateTimePicker = DateTimePickerDialog(
-            this, vm.currentCalendar.value!!
+//            this, vm.currentCalendar.value!!.cloneCalendar().apply { add(Calendar.MINUTE, vm.currentSnooze) }
+            this, Calendar.getInstance()
         ) { year, month, dayOfMonth, hour, minute ->
             vm.setDate(year, month, dayOfMonth)
             vm.resetSnooze()

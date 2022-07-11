@@ -14,8 +14,12 @@ android {
         applicationId "com.hirshler.remindme"
         minSdk 24
         targetSdk 30
-//        versionCode 4
+
+        //google play:
+//        versionCode 5
+        //apk:
         versionCode 3
+        
         versionName "3.0"
 
         archivesBaseName = "RemindMe21-v$versionName"
@@ -86,7 +90,6 @@ dependencies {
     implementation("com.squareup.okio:okio:3.0.0")
 
 //    implementation 'com.google.android.gms:play-services-ads:21.0.0'
-
 
 
     testImplementation 'junit:junit:4.+'

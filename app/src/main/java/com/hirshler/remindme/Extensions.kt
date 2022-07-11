@@ -69,7 +69,7 @@ fun Calendar.cloneCalendar(): Calendar {
     return newCal
 }
 
-fun Calendar.timeInMillis(timeInMillis: Long?): Calendar {
+fun Calendar.setTimeInMillis(timeInMillis: Long?): Calendar {
     return apply { this.timeInMillis = timeInMillis ?: 0 }
 }
 
@@ -80,3 +80,5 @@ fun Context.dpToPx(dp: Int): Float {
 fun Context.pxToDp(px: Float): Int {
     return (px / resources.displayMetrics.density).toInt()
 }
+
+val Float.asDp: Int get() = (this / App.applicationContext().resources.displayMetrics.density).toInt()

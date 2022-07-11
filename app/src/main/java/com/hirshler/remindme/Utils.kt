@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import com.hirshler.remindme.activities.AlertActivity
 import com.hirshler.remindme.model.Reminder
 import java.io.File
 import java.io.FileInputStream
@@ -27,8 +28,8 @@ class Utils {
 
         @SuppressLint("WrongConstant")
         fun getAlertIntent(reminderId: Long): Intent {
-            return Intent().apply {
-                setClassName(App.applicationContext().packageName, App.applicationContext().packageName + ".activities.AlertActivity")
+            return Intent(App.applicationContext(), AlertActivity::class.java).apply {
+                //setClassName(App.applicationContext().packageName, App.applicationContext().packageName + ".activities.AlertActivity")
                 putExtra(Reminder.KEY_REMINDER_ID, reminderId)
                 addFlags(
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +

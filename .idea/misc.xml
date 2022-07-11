@@ -32,6 +32,7 @@
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/round_corners_dialog_background.xml" value="0.168125" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/seekbar_thumb.xml" value="0.22179487179487178" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/splash.xml" value="0.282" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/splash_button_background.xml" value="0.2935" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/drawable/style_toggle_button.xml" value="0.30427350427350425" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/activity_alert.xml" value="0.18" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/activity_alert_old.xml" value="0.25" />
@@ -45,6 +46,7 @@
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/date_time_picker_dialog.xml" value="0.1987179487179487" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/dialog_date_time_picker.xml" value="0.1987179487179487" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_home.xml" value="0.3546875" />
+        <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_image.xml" value="0.30085470085470084" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_log.xml" value="0.2764525993883792" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_overview.xml" value="0.2873417721518987" />
         <entry key="..\:/Users/Yoav/AndroidStudioProjects/Work/hirshler/RemindMe/app/src/main/res/layout/fragment_overview_1.xml" value="0.3546875" />

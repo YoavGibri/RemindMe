@@ -6,7 +6,7 @@ import com.hirshler.remindme.SP
 
 private const val THEME_COLOR_KEY = "theme_color_key"
 private const val THEME_TEXTURE_KEY = "theme_texture_key"
-private const val DEFAULT_THEME_COLOR = R.style.Theme_RemindMe_blueOverlay
+private const val DEFAULT_THEME_COLOR = R.style.RemindMe_blueOverlay
 private const val DEFAULT_THEME_TEXTURE = R.style.textureOverlayBamboo
 
 class ThemeManager {

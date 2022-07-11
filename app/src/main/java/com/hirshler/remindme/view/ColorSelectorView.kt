@@ -47,14 +47,14 @@ class ColorSelectorView : ConstraintLayout, View.OnClickListener {
 
 
         overlays = mutableListOf(
-            R.style.Theme_RemindMe_blackOverlay,
-            R.style.Theme_RemindMe_blueOverlay,
-            R.style.Theme_RemindMe_greenOverlay,
-            R.style.Theme_RemindMe_greyOverlay,
-            R.style.Theme_RemindMe_pinkOverlay,
-            R.style.Theme_RemindMe_redOverlay,
-            R.style.Theme_RemindMe_whiteOverlay,
-            R.style.Theme_RemindMe_purpleOverlay,
+            R.style.RemindMe_blackOverlay,
+            R.style.RemindMe_blueOverlay,
+            R.style.RemindMe_greenOverlay,
+            R.style.RemindMe_greyOverlay,
+            R.style.RemindMe_pinkOverlay,
+            R.style.RemindMe_redOverlay,
+            R.style.RemindMe_whiteOverlay,
+            R.style.RemindMe_purpleOverlay,
         )
 
         setSelectedColor()

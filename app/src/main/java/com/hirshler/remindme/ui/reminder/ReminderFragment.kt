@@ -1,7 +1,12 @@
 package com.hirshler.remindme.ui.reminder
 
+import android.app.AlarmManager
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.TextUtilsCompat
 import androidx.core.view.ViewCompat.LAYOUT_DIRECTION_RTL
 import androidx.core.view.isVisible
@@ -134,39 +140,44 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
 
 
             doneButton.setOnClickListener {
-                when {
-                    noTextAndNoViceRecording() -> {
-                        showErrorSnackBar(R.string.validation_error_no_text_or_voice)
-                    }
-                    alertIsInThePast() -> {
-                        showErrorSnackBar(R.string.error_past_time)
-                    }
 
-                    else -> {
-                        voiceRecorder.stopRecording()
-
-                        vm.createReminder()
-                        vm.saveReminderToDb()
-                        vm.setAlert()
-
-                        showSuccessSnackBar(text = getAlertString())
+                if (permissionsOk()) {
 
 
-                        Timer().schedule(timerTask {
+                    when {
+                        noTextAndNoViceRecording() -> {
+                            showErrorSnackBar(R.string.validation_error_no_text_or_voice)
+                        }
+                        alertIsInThePast() -> {
+                            showErrorSnackBar(R.string.error_past_time)
+                        }
+
+                        else -> {
+                            voiceRecorder.stopRecording()
+
+                            vm.createReminder()
+                            vm.saveReminderToDb()
+                            vm.setAlert()
+
+                            showSuccessSnackBar(text = getAlertString())
 
 
-                            if (reminderToEdit != null) {
-                                refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
-                            } else {
-                                if (AppSettings.getCloseAppAfterReminderSet()) {
-                                    closeApplication()
-                                } else
-                                    refreshActivity()
-                            }
-
-                        }, SECONDS_TO_AUTOCLOSE * 1000)
+                            Timer().schedule(timerTask {
 
 
+                                if (reminderToEdit != null) {
+                                    refreshActivity(goToScreen = ON_ACTIVITY_START_GO_TO_REMINDERS_LIST)
+                                } else {
+                                    if (AppSettings.getCloseAppAfterReminderSet()) {
+                                        closeApplication()
+                                    } else
+                                        refreshActivity()
+                                }
+
+                            }, SECONDS_TO_AUTOCLOSE * 1000)
+
+
+                        }
                     }
                 }
             }
@@ -272,6 +283,40 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
             setViewsFromReminder(reminderToEdit)
             FlowLog.reminderEditStart(reminderToEdit)
         }
+    }
+
+    private fun permissionsOk(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            if (!Settings.canDrawOverlays(requireActivity())) {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.draw_on_other_apps_permission_title)
+                    .setMessage(R.string.draw_on_other_apps_permission_message)
+                    .setPositiveButton(R.string.draw_on_other_apps_permission_button_positive) { _, _ ->
+                        val myIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                        startActivity(myIntent)
+                    }
+                    .setNegativeButton(R.string.draw_on_other_apps_permission_button_negative) { _, _ -> }
+                    .setCancelable(false)
+                    .show()
+                return false
+            }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+            if (!(App.applicationContext().getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()) {
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(R.string.alarms_and_reminders_permission_title)
+                    .setMessage(R.string.alarms_and_reminders_permission_message)
+                    .setPositiveButton(R.string.alarms_and_reminders_permission_button_positive) { _, _ ->
+                        val myIntent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                        startActivity(myIntent)
+                    }
+                    .setNegativeButton(R.string.alarms_and_reminders_permission_button_negative) { _, _ -> }
+                    .setCancelable(false)
+                    .show()
+                return false
+            }
+
+        return true
     }
 
 
