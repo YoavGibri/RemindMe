@@ -10,6 +10,7 @@ import com.hirshler.remindme.ui.settings.SettingsFragment
 
 class StateAdapter(activity: FragmentActivity, val reminder: Reminder?) : FragmentStateAdapter(activity) {
     lateinit var settingsFragment: SettingsFragment
+    lateinit var reminderFragment: ReminderFragment
 
     override fun getItemCount(): Int {
         return if (reminder != null) 1 else 3
@@ -23,12 +24,9 @@ class StateAdapter(activity: FragmentActivity, val reminder: Reminder?) : Fragme
 
         } else when (position) {
 
-            0 -> ReminderFragment()
+            0 -> ReminderFragment().also { reminderFragment = it }
             1 -> ReminderListFragment()
-            2 -> {
-                settingsFragment = SettingsFragment()
-                return settingsFragment
-            }
+            2 -> SettingsFragment().also { settingsFragment = it  }
             else -> SettingsFragment()
         }
 

@@ -16,6 +16,7 @@ import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.ui.infosplash.SplashImagesAdapter
 import com.hirshler.remindme.view.SelectAlarmSoundDialog.Companion.REQUEST_CODE_GENERAL_ALARM_SOUND
+import com.hirshler.remindme.view.SelectAlarmSoundDialog.Companion.REQUEST_CODE_REMINDER_ALARM_SOUND
 import com.hirshler.remindme.view.UserNameDialog
 
 class MainActivity : BaseActivity() {
@@ -74,17 +75,25 @@ class MainActivity : BaseActivity() {
     }
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_GENERAL_ALARM_SOUND) {
-            val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
-            uri?.let {
-                val newSound = AlarmSound(uri.toString())
-                AppSettings.addSoundToAlarmSounds(newSound)
-                AppSettings.setGeneralAlarm(newSound)
+        when (requestCode) {
+            REQUEST_CODE_GENERAL_ALARM_SOUND -> {
+                val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
+                uri?.let {
+                    val newSound = AlarmSound(uri.toString())
+                    (binding.viewPager.adapter as StateAdapter).settingsFragment.onSystemAlarmSoundsResult(newSound)
+                }
             }
 
-            (binding.viewPager.adapter as StateAdapter).settingsFragment.refreshAlarmSoundsDialog()
+            REQUEST_CODE_REMINDER_ALARM_SOUND -> {
+                val uri = data?.getParcelableExtra<Uri>(EXTRA_RINGTONE_PICKED_URI)
+                uri?.let {
+                    val newSound = AlarmSound(uri.toString())
+                    (binding.viewPager.adapter as StateAdapter).reminderFragment.onSystemAlarmSoundsResult(newSound)
+                }
+            }
+
+
         }
         super.onActivityResult(requestCode, resultCode, data)
     }

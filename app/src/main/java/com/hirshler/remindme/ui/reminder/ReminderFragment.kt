@@ -25,8 +25,10 @@ import com.hirshler.remindme.*
 import com.hirshler.remindme.activities.MainActivity.Companion.ON_ACTIVITY_START_GO_TO_REMINDERS_LIST
 import com.hirshler.remindme.databinding.FragmentReminderBinding
 import com.hirshler.remindme.managers.VoiceRecorderManager
+import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.model.Reminder
 import com.hirshler.remindme.ui.MainActivityFragment
+import com.hirshler.remindme.view.FromScreen
 import com.hirshler.remindme.view.RepeatDialog
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import com.hirshler.remindme.view.TimePickerDialog
@@ -37,6 +39,7 @@ import kotlin.concurrent.timerTask
 
 class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActivityFragment() {
 
+    private var alarmSoundDialog: SelectAlarmSoundDialog? = null
     private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
@@ -126,10 +129,11 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
             }
 
             chooseAlarmSoundButton.setOnClickListener {
-                val alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
-                    vm.currentReminder.value?.alertRingtonePath = it.stringUri
+                alarmSoundDialog = SelectAlarmSoundDialog(requireActivity(), FromScreen.REMINDER) { newAlarmSound ->
+                    vm.currentReminder.value?.alertRingtonePath = newAlarmSound.stringUri
                 }
-                alarmSoundDialog.showSpecific()
+                val alarmSound = vm.currentReminder.value?.alertRingtonePath?.let { if (it.isNotEmpty()) AlarmSound(it) else null }
+                alarmSoundDialog?.showDialog(alarmSound)
             }
 
             repeatAlarmDialogButton.setOnClickListener {
@@ -317,6 +321,12 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
             }
 
         return true
+    }
+
+    fun onSystemAlarmSoundsResult(newSound: AlarmSound) {
+        AppSettings.addSoundToAlarmSounds(newSound)
+        vm.currentReminder.value?.alertRingtonePath = newSound.stringUri
+        alarmSoundDialog?.refresh(newSound)
     }
 
 

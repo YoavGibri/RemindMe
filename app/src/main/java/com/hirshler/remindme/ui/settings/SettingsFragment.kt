@@ -17,7 +17,9 @@ import com.hirshler.remindme.BuildConfig
 import com.hirshler.remindme.R
 import com.hirshler.remindme.activities.MainActivity
 import com.hirshler.remindme.databinding.FragmentSettingsBinding
+import com.hirshler.remindme.model.AlarmSound
 import com.hirshler.remindme.ui.MainActivityFragment
+import com.hirshler.remindme.view.FromScreen
 import com.hirshler.remindme.view.SelectAlarmSoundDialog
 import com.hirshler.remindme.view.UserNameDialog
 
@@ -98,11 +100,11 @@ class SettingsFragment : MainActivityFragment() {
         }
 
         binding.chooseAlarmSoundButton.setOnClickListener {
-            alarmSoundDialog = SelectAlarmSoundDialog(requireActivity()) {
+            alarmSoundDialog = SelectAlarmSoundDialog(requireActivity(), FromScreen.SETTINGS) {
                 AppSettings.setGeneralAlarm(it)
                 setAlarmTextFromSettings()
             }
-            alarmSoundDialog?.showGeneral()
+            alarmSoundDialog?.showDialog(AppSettings.getGeneralAlarm())
         }
 
 
@@ -136,7 +138,13 @@ class SettingsFragment : MainActivityFragment() {
         binding.currentAlarmSound.text = alarmSound.displayName
     }
 
-    fun refreshAlarmSoundsDialog() {
+//    fun refreshAlarmSoundsDialog() {
+//        alarmSoundDialog?.refresh()
+//    }
+
+    fun onSystemAlarmSoundsResult(newSound: AlarmSound) {
+        AppSettings.addSoundToAlarmSounds(newSound)
+        AppSettings.setGeneralAlarm(newSound)
         alarmSoundDialog?.refresh()
     }
 

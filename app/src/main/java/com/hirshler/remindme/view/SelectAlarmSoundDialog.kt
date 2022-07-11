@@ -12,28 +12,21 @@ import com.hirshler.remindme.SP
 import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.AlarmSound
 
-class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -> Unit) {
+class SelectAlarmSoundDialog(val context: Activity, val fromScreen: FromScreen, val callback: (AlarmSound) -> Unit) {
 
     companion object {
         const val REQUEST_CODE_GENERAL_ALARM_SOUND: Int = 2354
+        const val REQUEST_CODE_REMINDER_ALARM_SOUND: Int = 392567
     }
 
     private var dialog: AlertDialog? = null
     private val rm = RingManager(context)
 
 
-    fun showGeneral() {
-        showDialog(true)
-    }
-
-    fun showSpecific() {
-        showDialog(false)
-    }
-
-    private fun showDialog(withBrowse: Boolean = false) {
+    fun showDialog(alarmToSelect: AlarmSound? = null) {
         val list = SP.getAlarmSoundsList()
-        val generalAlarmSound = AppSettings.getGeneralAlarm()
-        val checkedItem = list.indexOf(generalAlarmSound)
+        val selectedAlarm = alarmToSelect ?: AppSettings.getGeneralAlarm()
+        val checkedItem = list.withIndex().first { alarm -> alarm.value.stringUri == selectedAlarm.stringUri }.index
 
         val builder = AlertDialog.Builder(context)
             .setTitle(R.string.alarm_configuration)
@@ -53,12 +46,12 @@ class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -
             .setOnDismissListener { rm.stop() }
 
 
-        if (withBrowse) {
-            builder.setNegativeButton(R.string.browse) { dialog, which ->
-                rm.stop()
-                goToSystemAlarmSounds()
-            }
+//        if (withBrowse) {
+        builder.setNegativeButton(R.string.browse) { dialog, which ->
+            rm.stop()
+            goToSystemAlarmSounds()
         }
+//        }
         dialog = builder.create()
 
         dialog?.window?.setBackgroundDrawable(AppCompatResources.getDrawable(context, R.drawable.round_corners_dialog_background))
@@ -70,12 +63,17 @@ class SelectAlarmSoundDialog(val context: Activity, val callback: (AlarmSound) -
     private fun goToSystemAlarmSounds() {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
-        context.startActivityForResult(intent, REQUEST_CODE_GENERAL_ALARM_SOUND)
+        val requestCode = if (fromScreen == FromScreen.REMINDER) REQUEST_CODE_REMINDER_ALARM_SOUND else REQUEST_CODE_GENERAL_ALARM_SOUND
+        context.startActivityForResult(intent, requestCode)
     }
 
-    fun refresh() {
+    fun refresh(selectedAlarm: AlarmSound? = null) {
         dialog?.dismiss()
-        showGeneral()
+        showDialog(selectedAlarm)
     }
 
+}
+
+enum class FromScreen {
+    REMINDER, SETTINGS
 }

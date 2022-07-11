@@ -58,9 +58,6 @@ class AlertActivity : BaseActivity() {
 
         vm = ViewModelProvider(this).get(AlertViewModel::class.java)
 
-         var initialTextSize = pxToDp(500f)
-         var initialTextSize2 = 500f.asDp
-
         vm.currentReminder.observe(this) { reminder ->
             reminder?.apply {
 
