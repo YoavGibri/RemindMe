@@ -48,8 +48,6 @@ class DateTimePickerDialog(
         binding.timePicker.apply {
             hour = calendar.get(Calendar.HOUR_OF_DAY)
             minute = calendar.get(Calendar.MINUTE)
-
-
         }
 
 

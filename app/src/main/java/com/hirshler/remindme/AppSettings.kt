@@ -81,14 +81,17 @@ class AppSettings {
         private fun defaultAlarm() = AlarmSound("android.resource://" + App.applicationContext().packageName + "/" + R.raw.default_alarm, "Default Alarm")
         private fun noAlarm() = AlarmSound("", "Silent")
 
-        fun addSoundToAlarmSounds(sound: AlarmSound) {
+        fun addSoundToAlarmSounds(newAlarmSound: AlarmSound) {
             val alarmsSounds = SP.getAlarmSoundsList()
 
-            alarmsSounds.add(sound)
-            if (alarmsSounds.size > 6)
-                alarmsSounds.removeAt(1)
+            if (alarmsSounds.firstOrNull { alarm -> alarm.stringUri == newAlarmSound.stringUri } == null) {
 
-            SP.setAlarmSoundsList(alarmsSounds)
+                alarmsSounds.add(newAlarmSound)
+                if (alarmsSounds.size > 8)
+                    alarmsSounds.removeAt(2)
+
+                SP.setAlarmSoundsList(alarmsSounds)
+            }
         }
 
         fun initNewAlarmSoundsList(): MutableList<AlarmSound> {

@@ -20,7 +20,7 @@ class StateAdapter(activity: FragmentActivity, val reminder: Reminder?) : Fragme
 
         return if (reminder != null) {
 
-            ReminderFragment(reminder)
+            ReminderFragment(reminder).also { reminderFragment = it }
 
         } else when (position) {
 

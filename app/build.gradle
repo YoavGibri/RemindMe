@@ -20,7 +20,7 @@ android {
         //apk:
         versionCode 3
         
-        versionName "3.0"
+        versionName "3.1"
 
         archivesBaseName = "RemindMe21-v$versionName"
 
