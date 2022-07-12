@@ -138,9 +138,6 @@ class SettingsFragment : MainActivityFragment() {
         binding.currentAlarmSound.text = alarmSound.displayName
     }
 
-//    fun refreshAlarmSoundsDialog() {
-//        alarmSoundDialog?.refresh()
-//    }
 
     fun onSystemAlarmSoundsResult(newSound: AlarmSound) {
         AppSettings.addSoundToAlarmSounds(newSound)

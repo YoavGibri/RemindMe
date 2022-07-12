@@ -4,9 +4,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import com.hirshler.remindme.App
 
-//data class AlarmSound(var uri: Uri, var displayName: String = "") {
 data class AlarmSound(var stringUri: String, var displayName: String = "") {
-
 
     init {
         if (displayName.isEmpty())

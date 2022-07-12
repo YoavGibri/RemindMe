@@ -18,18 +18,6 @@ class SP {
 
         fun get() = sp
 
-        private const val DEFAULT_RING_PATH: String = "default_ring_path"
-        fun getDefaultRingtonePath(): String {
-            return sp.getString(DEFAULT_RING_PATH, "")!!
-        }
-
-        fun setDefaultRingtonePath(path: String) {
-            sp.edit { putString(DEFAULT_RING_PATH, path) }
-        }
-
-
-
-
         private const val ALARM_SOUNDS: String = "alarm_sounds"
         fun getAlarmSoundsList(): MutableList<AlarmSound> {
             val listJson = sp.getString(ALARM_SOUNDS, null)

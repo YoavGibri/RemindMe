@@ -36,11 +36,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.timerTask
 
+private const val SECONDS_TO_AUTO_CLOSE: Long = 2
 
 class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActivityFragment() {
 
     private var alarmSoundDialog: SelectAlarmSoundDialog? = null
-    private val SECONDS_TO_AUTOCLOSE: Long = 2
     private lateinit var vm: ReminderViewModel
     private var _binding: FragmentReminderBinding? = null
     private lateinit var voiceRecorder: VoiceRecorderManager
@@ -49,7 +49,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        vm = ViewModelProvider(this).get(ReminderViewModel::class.java)
+        vm = ViewModelProvider(this)[ReminderViewModel::class.java]
         _binding = FragmentReminderBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -140,7 +140,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
                 RepeatDialog(requireActivity(), vm.currentReminder.value!!.weekDays).show()
             }
 
-            debugSwitch.setOnCheckedChangeListener { buttonView, isChecked -> AppSettings.setIsDebugMode(isChecked) }
+            debugSwitch.setOnCheckedChangeListener { _, isChecked -> AppSettings.setIsDebugMode(isChecked) }
 
 
             doneButton.setOnClickListener {
@@ -178,7 +178,7 @@ class ReminderFragment(private val reminderToEdit: Reminder? = null) : MainActiv
                                         refreshActivity()
                                 }
 
-                            }, SECONDS_TO_AUTOCLOSE * 1000)
+                            }, SECONDS_TO_AUTO_CLOSE * 1000)
 
 
                         }

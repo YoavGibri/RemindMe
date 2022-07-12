@@ -84,7 +84,6 @@ data class Reminder(
     }
 
 
-
     private fun getNextDay(snooze: Int): Int {
         val now = Calendar.getInstance()
         val todayDayOfWeek = now.get(DAY_OF_WEEK)

@@ -12,7 +12,7 @@ import com.hirshler.remindme.SP
 import com.hirshler.remindme.managers.RingManager
 import com.hirshler.remindme.model.AlarmSound
 
-class SelectAlarmSoundDialog(val context: Activity, val fromScreen: FromScreen, val callback: (AlarmSound) -> Unit) {
+class SelectAlarmSoundDialog(val context: Activity, private val fromScreen: FromScreen, val callback: (AlarmSound) -> Unit) {
 
     companion object {
         const val REQUEST_CODE_GENERAL_ALARM_SOUND: Int = 2354
@@ -28,10 +28,10 @@ class SelectAlarmSoundDialog(val context: Activity, val fromScreen: FromScreen, 
         val selectedAlarm = alarmToSelect ?: AppSettings.getGeneralAlarm()
         val checkedItem = list.withIndex().first { alarm -> alarm.value.stringUri == selectedAlarm.stringUri }.index
 
-        val builder = AlertDialog.Builder(context)
+        dialog = AlertDialog.Builder(context)
             .setTitle(R.string.alarm_configuration)
             .setSingleChoiceItems(ArrayAdapter(context, android.R.layout.select_dialog_singlechoice, list), checkedItem)
-            { d, w ->
+            { d, _ ->
                 val selectedSound = list[(d as AlertDialog).listView.checkedItemPosition]
                 rm.stop()
                 if (selectedSound.stringUri.isNotEmpty()) {
@@ -39,20 +39,17 @@ class SelectAlarmSoundDialog(val context: Activity, val fromScreen: FromScreen, 
                     rm.play(vibrate = false)
                 }
             }
-            .setPositiveButton(R.string.ok) { dialog, which ->
+            .setPositiveButton(R.string.ok) { dialog, _ ->
                 rm.stop()
                 callback(list[(dialog as AlertDialog).listView.checkedItemPosition])
             }
             .setOnDismissListener { rm.stop() }
 
-
-//        if (withBrowse) {
-        builder.setNegativeButton(R.string.browse) { dialog, which ->
-            rm.stop()
-            goToSystemAlarmSounds()
-        }
-//        }
-        dialog = builder.create()
+            .setNegativeButton(R.string.browse) { _, _ ->
+                rm.stop()
+                goToSystemAlarmSounds()
+            }
+            .create()
 
         dialog?.window?.setBackgroundDrawable(AppCompatResources.getDrawable(context, R.drawable.round_corners_dialog_background))
 
